@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->text('designation');
-            $table->unsignedInteger('zone_id');
             $table->unsignedInteger('employe_id');
             $table->unsignedInteger('quartier_id');
 
-            $table->foreign('zone_id')
+            $table->foreign('quartier_id')
                 ->references('id')
-                ->on('zones')
+                ->on('quartiers')
                 ->onDelete('set null');
 
             $table->foreign('employe_id')
