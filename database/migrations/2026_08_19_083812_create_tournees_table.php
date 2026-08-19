@@ -16,6 +16,19 @@ return new class extends Migration
             $table->enum('statut', ['PREVU', 'EN_COUR', 'TERMINEE']);
             $table->date('date');
             $table->string('itineraire');
+            $table->unsignedInteger('employe_id');
+            $table->unsignedInteger('zone_id');
+
+            $table->foreign('employe_id')
+                ->references('id')
+                ->on('employes')
+                ->onDelete('set null');
+
+            $table->foreign('zone_id')
+                ->references('id')
+                ->on('zones')
+                ->onDelete('set null');
+    
             $table->timestamps();
         });
     }
