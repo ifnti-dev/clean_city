@@ -18,14 +18,17 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
+            RoleSeeder::class,
+            PermissionSeeder::class,
+            RoleAndPermission::class,
             ClientSeeder::class,
             ProduitSeeder::class,
             NotificationSeeder::class,
-            TourneeSeeder::class,
             EmployeSeeder::class,
-            ZoneSeeder::class,
-            TypeHabitatSeeder::class,
             QuartierSeeder::class,
+            ZoneSeeder::class,
+            TourneeSeeder::class,
+            TypeHabitatSeeder::class,
             AbonnementSeeder::class,
             MenageSeeder::class,
             CommandeSeeder::class,
