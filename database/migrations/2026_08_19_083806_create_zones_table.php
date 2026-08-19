@@ -15,12 +15,8 @@ return new class extends Migration
             $table->id();
             $table->text('designation');
             $table->unsignedInteger('employe_id');
-            $table->unsignedInteger('quartier_id');
-
-            $table->foreign('quartier_id')
-                ->references('id')
-                ->on('quartiers')
-                ->onDelete('set null');
+            
+            
 
             $table->foreign('employe_id')
                 ->references('id')

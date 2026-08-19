@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->decimal('montant', 8, 3);
             $table->boolean('est_acceptee');
-            $table->text('raison');
+            $table->text('raison')->nullable();
             $table->timestamps();
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
+            $table->unsignedInteger('client_id');
+            $table->foreign('client_id')
                 ->references('id')
-                ->on('users')
+                ->on('clients')
                 ->onDelete('set null');
         });
     }
