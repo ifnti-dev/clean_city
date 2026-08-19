@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class RoleAndPermission extends Seeder
+class RoleAndPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -48,7 +48,7 @@ class RoleAndPermission extends Seeder
 
         
 
-        $roles_livreure = Role::where('name', 'delivery_person')->first();
+        $roles_livreure = Role::where('name', 'livreure')->first();
         $roles_livreure->syncPermissions(
             Permission::where('name', 'livraison.confirmer' )
                 ->orWhere('name', 'livraison.demarer')
