@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class MethodePaiementSeeder extends Seeder
 {
@@ -13,5 +14,20 @@ class MethodePaiementSeeder extends Seeder
     public function run(): void
     {
         //
+
+        DB::table('methode_paiements')->insert([
+            [
+                'nom' => 'ESPECE',
+                'sold' => 12000,
+                
+            ]
+        ]);
+
+
+
+
+
+       
+
     }
 }

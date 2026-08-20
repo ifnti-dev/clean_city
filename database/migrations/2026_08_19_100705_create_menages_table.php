@@ -21,9 +21,11 @@ return new class extends Migration
             $table->boolean('est_radier');
             $table->boolean('est_valide');
             $table->timestamps();
+
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('quartier_id');
             $table->unsignedBigInteger('type_habitat_id');
+
 
             $table->foreign('user_id')
                 ->references('id')

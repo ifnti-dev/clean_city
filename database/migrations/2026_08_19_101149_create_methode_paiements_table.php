@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->integer('sold');
-            $table->enum('type', ['MOBILE_MONEY', 'ESPECE']);
+            $table->enum('type', ['MOBILE_MONEY', 'ESPECE'])->default('ESPECE');
             $table->timestamps();
         });
     }
