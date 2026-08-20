@@ -17,6 +17,9 @@ class ZoneSeeder extends Seeder
         DB::table('zones')->insert([
             [
                 'designation' => 'sokode',
+            ],
+            [
+                'designation' => 'kdambara',
             ]
         ]);
     }

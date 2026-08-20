@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AbonnementController;
+use App\Http\Controllers\ClientContoller;
 use App\Http\Controllers\ProfileController;
+use App\Models\Abonnement;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,3 +21,11 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+//::middleware('auth')->
+Route::prefix('/responssable')->group(function () {
+    Route::resource('abonnees', AbonnementController::class);
+    Route::resource('clients', ClientContoller::class);
+})->name('responssable');
+
+

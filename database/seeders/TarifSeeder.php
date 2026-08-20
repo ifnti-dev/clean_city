@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TarifSeeder extends Seeder
 {
@@ -13,5 +14,15 @@ class TarifSeeder extends Seeder
     public function run(): void
     {
         //
+        DB::table('tarifs')->insert([
+            [
+                'designation' => 'une fois par semaine',
+                'montant' => 1000,
+            ],
+            [
+                'designation' => 'deux fois par semaine',
+                'montant' => 1000,
+            ]
+        ]);
     }
 }

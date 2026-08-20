@@ -14,10 +14,25 @@ class MenageSeeder extends Seeder
     public function run(): void
     {
         //
+
+        //   $table->string('code');
+        //     $table->string('designation')->nullable();
+        //     $table->string('latitude')->nullable();
+        //     $table->string('longtitude')->nullable();
+        //     $table->boolean('est_abonnee');
+        //     $table->boolean('est_radier');
+        //     $table->boolean('est_valide');
+        //     $table->timestamps();
+        //     $table->unsignedInteger('user_id');
+        //     $table->unsignedInteger('quartier_id')->nullable();
+        //     $table->unsignedInteger('type_habitat_id')->nullable();
+
         DB::table('menages')->insert([
             [
                 'code' => '10001',
                 'designation' => 'hotele',
+                'latitude' => 100,
+                'longtitude' => 100,
                 'est_abonnee' => true,
                 'est_radier' => false,
                 'est_valide' => true,
@@ -25,9 +40,8 @@ class MenageSeeder extends Seeder
                 'quartier_id' => 1,
                 'type_habitat_id' => 1
                
-                
-
-            ],    
+            ],  
+              
         ]);
     }
 }
