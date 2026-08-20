@@ -23,8 +23,9 @@ class Client extends Model
         return $this->hasMany(Menage::class);
     }
 
+
     public function commandes(): HasMany
     {
-        return $this->hasMany(Zone::class);
+        return $this->hasMany(Commande::class);
     }
 }

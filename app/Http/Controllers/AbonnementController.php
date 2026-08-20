@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Abonnement;
-use App\Models\Menage;
+use App\Models\Client;
 use Illuminate\Http\Request;
 
 class AbonnementController extends Controller
@@ -17,8 +18,6 @@ class AbonnementController extends Controller
         $abonnements = Abonnement::all();
         // dd($abonnements->menage());
 
-
-
         // dd(Menage::first()->abonnement());
         return view('abonnees.index', compact('abonnements'));
     }
@@ -29,6 +28,8 @@ class AbonnementController extends Controller
     public function create()
     {
         //
+        $clients = Client::with('user')->get();
+        return view('abonnees.create', compact('clients'));
     }
 
     /**
