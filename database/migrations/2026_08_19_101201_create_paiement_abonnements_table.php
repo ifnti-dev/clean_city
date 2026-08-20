@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('paiement_abonnements', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('nb_mois');
+            $table->unsignedBigInteger('nb_mois');
             $table->date('date_debut');
             $table->date('date_fin');
             $table->json('mois');  //a demander a monsieur
             $table->timestamps();
-            $table->unsignedInteger('methode_paiement_id');
+            $table->unsignedBigInteger('methode_paiement_id');
 
             $table->foreign('methode_paiement_id')
                 ->references('id')
                 ->on('methode_paiements')
-                ->onDelete('set null');
+                ->onDelete('cascade');
         });
     }
 

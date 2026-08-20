@@ -17,11 +17,11 @@ return new class extends Migration
             $table->boolean('est_acceptee');
             $table->text('raison')->nullable();
             $table->timestamps();
-            $table->unsignedInteger('client_id');
+            $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')
                 ->references('id')
                 ->on('clients')
-                ->onDelete('set null');
+                ->onDelete('cascade');
         });
     }
 

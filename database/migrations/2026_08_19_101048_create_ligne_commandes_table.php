@@ -14,21 +14,21 @@ return new class extends Migration
        Schema::create('ligne_commandes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedInteger('produit_id');
-            $table->unsignedInteger('commande_id');
-            $table->unsignedInteger('quantite');
-            $table->unsignedInteger('prix_courrant');
-            $table->unsignedInteger('montant');
+            $table->unsignedBigInteger('produit_id');
+            $table->unsignedBigInteger('commande_id');
+            $table->unsignedBigInteger('quantite');
+            $table->unsignedBigInteger('prix_courrant');
+            $table->unsignedBigInteger('montant');
 
             $table->foreign('produit_id')
                 ->references('id')
                 ->on('produits')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->foreign('commande_id')
                 ->references('id')
                 ->on('commandes')
-                ->onDelete('set null');    
+                ->onDelete('cascade');    
 
 
         });

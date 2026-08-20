@@ -14,15 +14,7 @@ return new class extends Migration
         Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->text('designation');
-            $table->unsignedInteger('employe_id');
             
-            
-
-            $table->foreign('employe_id')
-                ->references('id')
-                ->on('employes')
-                ->onDelete('set null');
-
     
 
             $table->timestamps();

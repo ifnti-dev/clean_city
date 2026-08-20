@@ -21,24 +21,24 @@ return new class extends Migration
             $table->boolean('est_radier');
             $table->boolean('est_valide');
             $table->timestamps();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('quartier_id');
-            $table->unsignedInteger('type_habitat_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('quartier_id');
+            $table->unsignedBigInteger('type_habitat_id');
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->foreign('quartier_id')
                 ->references('id')
                 ->on('quartiers')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->foreign('type_habitat_id')
                 ->references('id')
                 ->on('type_habitats')
-                ->onDelete('set null');
+                ->onDelete('cascade');
         });
     }
 

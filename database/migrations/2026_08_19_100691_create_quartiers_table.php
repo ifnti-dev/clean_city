@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('quartiers', function (Blueprint $table) {
             $table->id();
             $table->string('designation')->nullable();
-            $table->unsignedInteger('zone_id');
+            $table->unsignedBigInteger('zone_id');
 
             $table->foreign('zone_id')
                 ->references('id')
                 ->on('zones')
-                ->onDelete('set null');
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

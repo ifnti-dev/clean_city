@@ -14,14 +14,16 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedInteger('user_id');
+          $table->unsignedBigInteger('user_id')->nullable();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
+$table->foreign('user_id')
+    ->references('id')
+    ->on('users')
+    ->onDelete('cascade');
+
         });
     }
+
 
     /**
      * Reverse the migrations.
