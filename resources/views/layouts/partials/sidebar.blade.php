@@ -26,7 +26,7 @@
             <div id="navPages" class="collapse " data-bs-parent="#sideNavbar">
                <ul class="nav flex-col">
                   <li class="nav-item">
-                     <a class="nav-link " href="./profile.html"> Clients </a>
+                     <a class="nav-link " href="{{ route('clients.index') }}"> Clients </a>
                   </li>
                   <li class="nav-item">
                      <a class="nav-link " href="{{route('abonnees.index')}}"> Abonnée </a>

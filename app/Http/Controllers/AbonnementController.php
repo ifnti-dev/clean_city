@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
 
 class AbonnementController extends Controller
@@ -21,6 +22,12 @@ class AbonnementController extends Controller
     public function create()
     {
         //
+
+        $client = Client::with('user')->get();
+        return view('abonnees.create', compact('client'));
+
+
+       
     }
 
     /**

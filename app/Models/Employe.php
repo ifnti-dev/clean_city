@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employe extends Model
@@ -14,5 +15,9 @@ class Employe extends Model
     
     public function tournees():HasMany {
         return $this->hasMany(Tournee::class);
+    }
+
+    public function user():BelongsTo {
+        return $this->belongsTo(User::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -60,6 +61,13 @@ class ClientSeeder extends Seeder
                 "user_id" => 3
             ]
         ]);
+
+
+        $client = User::where('contacte', '97896545')->first();
+        $client->assignRole('client');
         
     }
 }
+
+
+        

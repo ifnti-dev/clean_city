@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+           
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
@@ -21,6 +22,10 @@ return new class extends Migration
                 ->onDelete('cascade');
         });
     }
+
+
+
+    
 
 
     /**
