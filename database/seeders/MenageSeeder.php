@@ -37,18 +37,11 @@ class MenageSeeder extends Seeder
                 'est_radier' => false,
                 'est_valide' => true,
                 'user_id' => 1,
-<<<<<<< HEAD
-                'quartier_id'=>1,
-                'type_habitat_id'=>1
-            ],
-=======
                 'quartier_id' => 1,
                 'type_habitat_id' => 1
                
-                
-
-            ],    
->>>>>>> sourouya
+            ],  
+              
         ]);
     }
 }

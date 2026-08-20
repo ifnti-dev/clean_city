@@ -17,6 +17,9 @@ class TypeHabitatSeeder extends Seeder
         DB::table('type_habitats')->insert([
             [
                 'designation' => 'hotele',
+            ],
+            [
+                'designation' => 'bar',
             ]
         ]);
     }

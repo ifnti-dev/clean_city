@@ -20,7 +20,12 @@ class MethodePaiementSeeder extends Seeder
                 'nom' => 'ESPECE',
                 'sold' => 12000, 
                 
-            ]
+            ],
+            [
+                'nom' => 'ESPECE',
+                'sold' => 12000, 
+                
+            ],
         ]);
 
 

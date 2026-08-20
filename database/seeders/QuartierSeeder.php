@@ -18,6 +18,10 @@ class QuartierSeeder extends Seeder
             [
                 'designation' => 'komah',
                 'zone_id' => 1,
+            ],
+            [
+                'designation' => 'bamabodolo',
+                'zone_id' => 2,
             ]
         ]);
     }
