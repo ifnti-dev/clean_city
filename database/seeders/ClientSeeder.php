@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ClientSeeder extends Seeder
 {
@@ -23,7 +24,7 @@ class ClientSeeder extends Seeder
                 "prenom" =>"abdoulaye",
                 "contacte" => "71852914" ,
                 "email" => "abdoulaye@gmail.com",
-                "password" => "11111111",
+                "password" =>Hash::make("11111111"),
               
 
             ],
@@ -32,7 +33,7 @@ class ClientSeeder extends Seeder
                 "prenom" =>"alic",
                 "contacte" => "97896545" ,
                 "email" => "kodjovi@gmail.com",
-                "password" => "1234567890",
+                "password" => Hash::make("1234567890"),
               
 
             ],
@@ -41,7 +42,7 @@ class ClientSeeder extends Seeder
                 "prenom" =>"reine",
                 "contacte" => "90000000" ,
                 "email" => "assih@gmail.com",
-                "password" => "12345678901",
+                "password" => Hash::make("12345678901"),
               
 
             ],

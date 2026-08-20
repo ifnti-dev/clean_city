@@ -29,7 +29,7 @@
                      <a class="nav-link " href="./profile.html"> Clients </a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link " href="./settings.html"> Abonnée </a>
+                     <a class="nav-link " href="{{route('abonnees.index')}}"> Abonnée </a>
                   </li>
 
                   <li class="nav-item">

@@ -12,7 +12,7 @@ class AbonnementController extends Controller
     public function index()
     {
         //
-        dd('ddddd');
+       return view('abonnees.index');
     }
 
     /**
