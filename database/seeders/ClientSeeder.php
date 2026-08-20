@@ -19,11 +19,11 @@ class ClientSeeder extends Seeder
 
         DB::table('users')->insert([
             [
-                "nom" =>"Abalo",
-                "prenom" =>"KOFFI",
-                "contacte" => "90255777" ,
-                "email" => "abalo@gmail.com",
-                "password" => "123456789",
+                "nom" =>"abdoulaye",
+                "prenom" =>"abdoulaye",
+                "contacte" => "71852914" ,
+                "email" => "abdoulaye@gmail.com",
+                "password" => "11111111",
               
 
             ],
