@@ -13,5 +13,6 @@ class LigneCommandeSeeder extends Seeder
     public function run(): void
     {
         //
+        
     }
 }

@@ -22,8 +22,8 @@ return new class extends Migration
             $table->boolean('est_valide');
             $table->timestamps();
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('quartier_id');
-            $table->unsignedInteger('type_habitat_id');
+            $table->unsignedInteger('quartier_id')->nullable();
+            $table->unsignedInteger('type_habitat_id')->nullable();
 
             $table->foreign('user_id')
                 ->references('id')
