@@ -1,6 +1,5 @@
-@extends('layouts.base')
 
-@section('content')
+
     <x-guest-layout>
 
         <div class="flex justify-center items-center mb-6">
@@ -166,4 +165,3 @@
 
     </x-guest-layout>
 
-@endsection    
