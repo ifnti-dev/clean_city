@@ -18,7 +18,7 @@ class MethodePaiementSeeder extends Seeder
         DB::table('methode_paiements')->insert([
             [
                 'nom' => 'ESPECE',
-                'sold' => 12000,
+                'sold' => 12000, 
                 
             ]
         ]);

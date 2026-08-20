@@ -17,13 +17,16 @@ class AbonnementSeeder extends Seeder
         DB::table('abonnements')->insert([
             [
                 'date_debut' => now(),
+                'menage_id' => 1,
             ],
             [
                 'date_debut' => now(),
+                'menage_id' => 1,
                 
             ],
             [
                 'date_debut' => now(),
+                'menage_id' => 1,
                 
             ],
         ]);

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('produit_id');
             $table->unsignedBigInteger('commande_id');
             $table->unsignedBigInteger('quantite');
-            $table->unsignedBigInteger('prix_courrant');
+            $table->unsignedBigInteger('prix_courant');
             $table->unsignedBigInteger('montant');
 
             $table->foreign('produit_id')
