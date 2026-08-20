@@ -41,16 +41,16 @@
     <main>
         <!-- start the project -->
         <!-- app layout -->
-        <div id="app-layout" class="overflow-x-hidden flex"><!-- start navbar -->
+        <div id="app-layout" class="overflow-x-hidden flex bg-white"><!-- start navbar -->
             @include('layouts.partials.sidebar')
 
 
-            <div id="app-layout-content"
+            <div id="app-layout-content  "
                 class="min-h-screen w-full min-w-[100vw] md:min-w-0 ml-[15.625rem] [transition:margin_0.25s_ease-out]">
                 <!-- start navbar -->
                 @include('layouts.partials.navbar')
 
-                <div class="h-16 pl-2 pr-2 pt-2">
+                <div class="h-16 pl-2 pr-2 pt-2 bg-white">
                     @yield('content')
                 </div>
 
