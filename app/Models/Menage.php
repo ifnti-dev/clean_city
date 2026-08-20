@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Models\Abonnement;
 use App\Models\Client;
@@ -17,7 +17,7 @@ class Menage extends Model
 {
     //
     //
-    protected $table = 'manages';
+    protected $table = 'menages';
     protected $fillable = [
         'code',
         'designation',
@@ -43,7 +43,7 @@ class Menage extends Model
     }
 
     public function client(): BelongsTo{
-        return $this->belongsTo(Client::class, 'user_id','id');
+        return $this->belongsTo(Client::class);
     }
 
     public function notifications():BelongsToMany{

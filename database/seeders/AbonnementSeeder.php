@@ -21,14 +21,9 @@ class AbonnementSeeder extends Seeder
             ],
             [
                 'date_debut' => now(),
-                'menage_id' => 1,
+                'menage_id' => 2,
                 
-            ],
-            [
-                'date_debut' => now(),
-                'menage_id' => 1,
-                
-            ],
+            ]
         ]);
     }
 }
