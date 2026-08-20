@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TypeHabitatSeeder extends Seeder
 {
@@ -13,5 +14,10 @@ class TypeHabitatSeeder extends Seeder
     public function run(): void
     {
         //
+        DB::table('type_habitats')->insert([
+            [
+                'designation' => 'hotele',
+            ]
+        ]);
     }
 }

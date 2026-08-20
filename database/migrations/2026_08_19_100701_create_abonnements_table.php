@@ -16,6 +16,13 @@ return new class extends Migration
             $table->date('date_debut');
             $table->date('date_fin')->nullable();
             $table->enum('etat', ['ACTIF', 'INACTIF'])->default('INACTIF');
+             $table->unsignedBigInteger('menage_id');
+
+
+            $table->foreign('menage_id')
+                ->references('id')
+                ->on('menages')
+                ->onDelete('cascade');
             
             $table->timestamps();
         });
