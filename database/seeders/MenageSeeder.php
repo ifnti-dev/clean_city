@@ -30,13 +30,26 @@ class MenageSeeder extends Seeder
         DB::table('menages')->insert([
             [
                 'code' => '10001',
+                'designation' => 'ifnti',
+                'latitude' => 100,
+                'longtitude' => 100,
+                'est_abonnee' => true,
+                'est_radier' => false,
+                'est_valide' => true,
+                'client_id' => 1,
+                'quartier_id' => 1,
+                'type_habitat_id' => 1
+               
+            ],  
+            [
+                'code' => '10001',
                 'designation' => 'hotele',
                 'latitude' => 100,
                 'longtitude' => 100,
                 'est_abonnee' => true,
                 'est_radier' => false,
                 'est_valide' => true,
-                'user_id' => 1,
+                'client_id' => 1,
                 'quartier_id' => 1,
                 'type_habitat_id' => 1
                

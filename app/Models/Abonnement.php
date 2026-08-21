@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Menage;
+use App\Models\Menage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -18,3 +18,13 @@ class Abonnement extends Model
     
     
 }
+
+
+
+
+
+
+
+
+
+

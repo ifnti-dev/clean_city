@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="fr">
 
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width" />
@@ -33,17 +34,18 @@
 
     <link rel="stylesheet" href="./assets/libs/apexcharts/dist/apexcharts.css" />
 
+    <title>Dash UI - TailwindCSS HTML Admin Template Free</title>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans antialiased">
 
-        <main>
-            <!-- start the project -->
-            <!-- app layout -->
-            <div id="app-layout" class="overflow-x-hidden flex"><!-- start navbar -->
-                @include('layouts.partials.sidebar')
+    <main>
+        <!-- start the project -->
+        <!-- app layout -->
+        <div id="app-layout" class="overflow-x-hidden flex"><!-- start navbar -->
+            <x-sidebar/>
 
 
                 <div id="app-layout-content"
@@ -52,16 +54,16 @@
                     <x-navbar />
 
                     <div class="h-16 pl-2 pr-2 pt-2">
-                         {{ $slot }}
+                        {{ $slot }}
                     </div>
 
                 </div>
-            </div>
-            <!-- end of project -->
-        </main>
+        </div>
+        <!-- end of project -->
+    </main>
 
 
-    
+
 
     <script src="./assets/libs/feather-icons/dist/feather.min.js"></script>
     <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

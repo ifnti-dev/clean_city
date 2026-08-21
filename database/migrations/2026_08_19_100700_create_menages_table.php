@@ -22,14 +22,14 @@ return new class extends Migration
             $table->boolean('est_valide');
             $table->timestamps();
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('quartier_id');
             $table->unsignedBigInteger('type_habitat_id');
 
 
-            $table->foreign('user_id')
+            $table->foreign('client_id')
                 ->references('id')
-                ->on('users')
+                ->on('clients')
                 ->onDelete('cascade');
 
             $table->foreign('quartier_id')
