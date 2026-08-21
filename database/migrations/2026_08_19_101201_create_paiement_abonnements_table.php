@@ -17,8 +17,20 @@ return new class extends Migration
             $table->date('date_debut');
             $table->date('date_fin');
             $table->json('mois');  //a demander a monsieur
+            $table->unsignedInteger('abonnement_id');
+            $table->unsignedInteger('tarif_id');
             $table->timestamps();
             $table->unsignedBigInteger('methode_paiement_id');
+
+            $table->foreign('abonnement_id')
+                ->references('id')
+                ->on('abonnements')
+                ->onDelete('cascade');
+
+            $table->foreign('tarif_id')
+                ->references('id')
+                ->on('tarifs')
+                ->onDelete('cascade');
 
             $table->foreign('methode_paiement_id')
                 ->references('id')
@@ -26,6 +38,7 @@ return new class extends Migration
                 ->onDelete('cascade');
         });
     }
+    
 
     /**
      * Reverse the migrations.

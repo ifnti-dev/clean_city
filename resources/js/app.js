@@ -1,9 +1,10 @@
 import './bootstrap';
-import './bootstrap.bundle.min';
 import './feather.min';
+import './bootstrap.bundle.min';
+import './simplebar.min';
 import './theme.min';
 
-import './simplebar.min';
+
 
 
 

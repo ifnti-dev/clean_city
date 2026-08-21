@@ -1,7 +1,8 @@
-<x-guest-layout>
+<x-app-layout>
 
+    <x-slot class="">
     <div class="flex justify-center items-center mb-6">
-        <h3 class="text-blue-700 font-bold text-xl">
+        <h3 class="text-blue-700 font-bold pt-7 text-2xl">
            Editer un client
         </h3>
     </div>
@@ -132,11 +133,13 @@
         </div>
 
         <!-- Bouton -->
-        <div class="flex items-center justify-center mt-6 w-full">
-            <x-primary-button class="w-full justify-center rounded rounded-5">
+        <div class="flex items-center justify-center mt-6 pb-5 w-full">
+            <x-primary-button class="w-full justify-center  rounded rounded-5 hover:bg-indigo-800">
                 {{ __('Enregistrer') }}
             </x-primary-button>
         </div>
     </form>
 
-</x-guest-layout>
+</x-slot>
+
+</x-app-layout>
