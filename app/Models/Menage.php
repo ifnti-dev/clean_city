@@ -21,33 +21,40 @@ class Menage extends Model
     protected $fillable = [
         'code',
         'designation',
+        'client_id',
+        'type_habitat_id',
+        'quartier_id',
         'latitude',
-        'longtitude',
+        'longitude',
         'est_abonnee',
         'est_radier',
         'est_valide'
 
     ];
 
-    
-    public function abonnement():HasOne {
+
+    public function abonnement(): HasOne
+    {
         return $this->hasOne(Abonnement::class);
     }
-    
-    public function typeHabitat(): BelongsTo{
-        return $this->belongsTo(TypeHabitat::class, 'typeHabitat_id', 'id');
+
+    public function typeHabitat(): BelongsTo
+    {
+        return $this->belongsTo(TypeHabitat::class);
     }
 
-    public function quartier(): BelongsTo{
-        return $this->belongsTo(Quartier::class, 'quartier_id', 'id');
+    public function quartier(): BelongsTo
+    {
+        return $this->belongsTo(Quartier::class);
     }
 
-    public function client(): BelongsTo{
+    public function client(): BelongsTo
+    {
         return $this->belongsTo(Client::class);
     }
 
-    public function notifications():BelongsToMany{
+    public function notifications(): BelongsToMany
+    {
         return $this->belongsToMany(Notification::class);
     }
-        
 }

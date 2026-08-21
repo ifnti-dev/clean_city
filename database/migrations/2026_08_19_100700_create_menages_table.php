@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('designation')->nullable();
             $table->string('latitude')->nullable();
-            $table->string('longtitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->boolean('est_abonnee');
             $table->boolean('est_radier');
             $table->boolean('est_valide');

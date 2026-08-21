@@ -24,7 +24,7 @@ require __DIR__.'/auth.php';
 
 //::middleware('auth')->
 // Route::prefix('/responssable')->group(function () {
-    Route::resource('abonnees', AbonnementController::class);
+    Route::resource('abonnements', AbonnementController::class);
     Route::resource('clients', ClientContoller::class);
 // })->name('responssable');
 
