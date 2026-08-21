@@ -38,6 +38,17 @@ class AbonnementController extends Controller
     public function store(Request $request)
     {
         //
+        
+        $validated = $request->validate([
+            "date_debut" => "required|date:after_now ",
+            "date_fin" => "date",
+            "client_id" => "required|integer|exists:clients,id",
+            "designation" => "required|string|min:3|unique:menages",
+            "longitude" => "required|integer",
+            "latitude" => "required|integer",
+        ]);
+
+        dd($validated);
     }
 
     /**

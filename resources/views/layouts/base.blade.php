@@ -42,7 +42,7 @@
         <!-- start the project -->
         <!-- app layout -->
         <div id="app-layout" class="overflow-x-hidden flex"><!-- start navbar -->
-            @include('layouts.partials.sidebar')
+            <x-sidebar />
 
 
             <div id="app-layout-content"
@@ -54,11 +54,11 @@
                     @yield('content')
                 </div>
 
-                    
-                    
-            
 
-                
+
+
+
+
             </div>
         </div>
         <!-- end of project -->
