@@ -48,20 +48,14 @@
             <div id="app-layout-content"
                 class="min-h-screen w-full min-w-[100vw] md:min-w-0 ml-[15.625rem] [transition:margin_0.25s_ease-out]">
                 <!-- start navbar -->
-                @include('layouts.partials.navbar')
+                <x-navbar />
 
                 <div class="h-16 pl-2 pr-2 pt-2">
                     @yield('content')
+
                 </div>
-
-
-
-
-
-
             </div>
-        </div>
-        <!-- end of project -->
+            <!-- end of project -->
     </main>
 
     <script src="./assets/libs/apexcharts/dist/apexcharts.min.js"></script>
