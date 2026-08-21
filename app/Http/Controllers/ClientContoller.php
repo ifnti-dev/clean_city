@@ -64,7 +64,6 @@ class ClientContoller extends Controller
 
         });
 
-        DB::commit();
 
         return to_route('clients.index');
     }
@@ -75,7 +74,7 @@ class ClientContoller extends Controller
     public function show(Client $client)
     {
         //
-        $clients = Client::with('user')->get();
+        
         return view('clients.show', compact('client'));
     }
 
@@ -125,8 +124,21 @@ class ClientContoller extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Client $client)
     {
         //
+
+        $menage = DB::table('menages as m')->join('clients as c', 'm.id', '=', 'm.client_id')->select('est_abonnee')->get();
+        if(!$menage){
+            $client->delete();
+            return to_route('clients.index');
+        }else{
+            dd('vous avez des menages actifs');
+        }
+        
+
+        
+       
+
     }
 }
