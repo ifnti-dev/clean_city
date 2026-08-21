@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width" />
     <meta name="description"
         content="Dash UI - TailwindCSS HTML Admin Template Free and open-source Github, provides developers with everything need to create Web Application & Kick start project" />
-    <link rel="shortcut icon" type="image/x-icon" href="/public/assets/images/favicon/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="./public/assets/images/favicon/favicon.ico" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Libs CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" />
-    <link rel="stylesheet" href="/public/assets/libs/simplebar/dist/simplebar.min.css" />
+    <link rel="stylesheet" href="./public/assets/libs/simplebar/dist/simplebar.min.css" />
 
     <!-- Theme CSS -->
-    <link rel="stylesheet" href="/public/assets/css/theme.min.css">
+    <link rel="stylesheet" href="./public/assets/css/theme.min.css">
     <!-- Analytics Code -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
     <script>
@@ -32,7 +32,7 @@
         gtag("config", "G-M8S4MT3EYG");
     </script>
 
-    <link rel="stylesheet" href="/public/assets/libs/apexcharts/dist/apexcharts.css" />
+    <link rel="stylesheet" href="./public/assets/libs/apexcharts/dist/apexcharts.css" />
 
     <title>Dash UI - TailwindCSS HTML Admin Template Free</title>
 </head>
@@ -60,13 +60,13 @@
         <!-- end of project -->
     </main>
 
-    <script src="/public/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-    <script src="/public/assets/libs/feather-icons/dist/feather.min.js"></script>
-    <script src="/public/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/public/assets/libs/simplebar/dist/simplebar.min.js"></script>
+    <script src="./public/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="./public/assets/libs/feather-icons/dist/feather.min.js"></script>
+    <script src="./public/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./public/assets/libs/simplebar/dist/simplebar.min.js"></script>
 
     <!-- Theme JS -->
-    <script src="/public/assets/js/theme.min.js"></script>
+    <script src="./public/assets/js/theme.min.js"></script>
 
 </body>
 
