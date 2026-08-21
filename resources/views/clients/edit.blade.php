@@ -2,13 +2,13 @@
 
     <div class="flex justify-center items-center mb-6">
         <h3 class="text-blue-700 font-bold text-xl">
-            Inscription
+           Editer un client
         </h3>
     </div>
 
-    <form method="POST" action="{{ route('register') }}">
+    <form action="{{ route('clients.update', $client->id) }}" method="POST" >
         @csrf
-
+        @method('PUT')
         <!-- Nom -->
         <div class="mt-4">
             <x-input-label for="nom" :value="__('Nom')" />
@@ -18,7 +18,7 @@
                 class="block mt-1 w-full"
                 type="text"
                 name="nom"
-                :value="old('nom')"
+                value="{{ old('nom',  $client->user->nom) }}"
                 required
                 autofocus
                 autocomplete="family-name"
@@ -39,7 +39,7 @@
                 class="block mt-1 w-full"
                 type="text"
                 name="prenom"
-                :value="old('prenom')"
+                value="{{ old('prenom',  $client->user->prenom) }}"
                 required
                 autocomplete="given-name"
             />
@@ -59,7 +59,7 @@
                 class="block mt-1 w-full"
                 type="text"
                 name="contacte"
-                :value="old('contacte')"
+                value="{{ old('contacte',  $client->user->contacte) }}"
                 required
                 autocomplete="tel"
             />
@@ -79,7 +79,7 @@
                 class="block mt-1 w-full"
                 type="email"
                 name="email"
-                :value="old('email')"
+                value="{{ old('email',  $client->user->email) }}"
                 required
                 autocomplete="username"
             />
@@ -131,34 +131,12 @@
             />
         </div>
 
-
-        
-
-
-
-        
-
         <!-- Bouton -->
         <div class="flex items-center justify-center mt-6 w-full">
-            <x-primary-button class="w-full justify-center">
+            <x-primary-button class="w-full justify-center rounded rounded-5">
                 {{ __('Enregistrer') }}
             </x-primary-button>
         </div>
-
-        <!-- Connexion -->
-        <div class="flex justify-center gap-2 mt-5 w-full text-sm">
-            <p class="text-gray-600">
-                Vous avez déjà un compte ?
-            </p>
-
-            <a
-                class="text-blue-700 font-medium hover:underline"
-                href="{{ route('login') }}"
-            >
-                {{ __('Se connecter') }}
-            </a>
-        </div>
-
     </form>
 
 </x-guest-layout>

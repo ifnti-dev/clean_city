@@ -1,14 +1,14 @@
 
-
+    
     <x-guest-layout>
 
         <div class="flex justify-center items-center mb-6">
             <h3 class="text-blue-700 font-bold text-xl">
-                Inscription
+               Ajouter un client
             </h3>
         </div>
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('clients.store') }}">
             @csrf
 
             <!-- Nom -->
@@ -136,30 +136,13 @@
 
             
 
-
-
-            
-
             <!-- Bouton -->
             <div class="flex items-center justify-center mt-6 w-full">
-                <x-primary-button class="w-full justify-center">
+                <x-primary-button class="w-full justify-center rounded rounded-5">
                     {{ __('Enregistrer') }}
                 </x-primary-button>
             </div>
 
-            <!-- Connexion -->
-            <div class="flex justify-center gap-2 mt-5 w-full text-sm">
-                <p class="text-gray-600">
-                    Vous avez déjà un compte ?
-                </p>
-
-                <a
-                    class="text-blue-700 font-medium hover:underline"
-                    href="{{ route('login') }}"
-                >
-                    {{ __('Se connecter') }}
-                </a>
-            </div>
 
         </form>
 
