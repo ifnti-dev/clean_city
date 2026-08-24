@@ -8,10 +8,9 @@
             </h3>
         </div>
 
-        <div class="">
+        <div class="bg-white  rounded-md shadow m-6 p-6">
             <form method="POST" action="{{ route('clients.store') }}" >
             @csrf
-
             <!-- Nom -->
             <div class="mt-4">
                 <x-input-label for="nom" :value="__('Nom')" />
@@ -24,6 +23,7 @@
                     :value="old('nom')"
                     required
                     autofocus
+                    placeholder="nom"
                     autocomplete="family-name"
                 />
 
@@ -44,6 +44,7 @@
                     name="prenom"
                     :value="old('prenom')"
                     required
+                    placeholder="prenom"
                     autocomplete="given-name"
                 />
 
@@ -64,6 +65,7 @@
                     name="contacte"
                     :value="old('contacte')"
                     required
+                    placeholder="cotacte"
                     autocomplete="tel"
                 />
 
@@ -84,6 +86,7 @@
                     name="email"
                     :value="old('email')"
                     required
+                    placeholder="email"
                     autocomplete="username"
                 />
 
@@ -93,58 +96,63 @@
                 />
             </div>
 
-            <!-- Mot de passe -->
-            <div class="mt-4">
-                <x-input-label for="password" :value="__('Mot de passe')" />
+            <div class="flex gap-5 justify-between">
+                <!-- Mot de passe -->
+                <div class="mt-4 w-full">
+                    <x-input-label for="password" :value="__('Mot de passe')" />
 
-                <x-text-input
-                    id="password"
-                    class="block mt-1 w-full"
-                    type="password"
-                    name="password"
-                    required
-                    autocomplete="new-password"
-                />
+                    <x-text-input
+                        id="password"
+                        class="block mt-1 w-full"
+                        type="password"
+                        name="password"
+                        required
+                        placeholder="............."
+                        autocomplete="new-password"
+                    />
 
-                <x-input-error
-                    :messages="$errors->get('password')"
-                    class="mt-2"
-                />
+                    <x-input-error
+                        :messages="$errors->get('password')"
+                        class="mt-2"
+                    />
+                </div>
+
+                <!-- Confirmation du mot de passe -->
+                <div class="mt-4 w-full">
+                    <x-input-label
+                        for="password_confirmation"
+                        :value="__('Confirmation du mot de passe')"
+                    />
+
+                    <x-text-input
+                        id="password_confirmation"
+                        class="block mt-1 w-full"
+                        type="password"
+                        name="password_confirmation"
+                        required
+                        placeholder="............."
+                        autocomplete="new-password"
+                    />
+
+                    <x-input-error
+                        :messages="$errors->get('password_confirmation')"
+                        class="mt-2"
+                    />
+                </div>
             </div>
-
-            <!-- Confirmation du mot de passe -->
-            <div class="mt-4">
-                <x-input-label
-                    for="password_confirmation"
-                    :value="__('Confirmation du mot de passe')"
-                />
-
-                <x-text-input
-                    id="password_confirmation"
-                    class="block mt-1 w-full"
-                    type="password"
-                    name="password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <x-input-error
-                    :messages="$errors->get('password_confirmation')"
-                    class="mt-2"
-                />
-            </div>
+            
 
 
             
 
             <!-- Bouton -->
-            <div class="flex items-center justify-center mt-6 w-full">
-                <x-primary-button class="w-full justify-center rounded rounded-5">
+            <div class="flex items-center justify-end ml-auto mt-6 w-40">
+                <x-primary-button class="w-full justify-center">
                     {{ __('Enregistrer') }}
                 </x-primary-button>
             </div>
 
-
+      
         </form>
         </div>
         
