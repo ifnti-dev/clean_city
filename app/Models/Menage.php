@@ -28,7 +28,7 @@ class Menage extends Model
         'longitude',
         'est_abonnee',
         'est_radier',
-        'est_valide'
+        'est_en_regle'
 
     ];
 

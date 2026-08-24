@@ -21,7 +21,7 @@ class MenageSeeder extends Seeder
         //     $table->string('longtitude')->nullable();
         //     $table->boolean('est_abonnee');
         //     $table->boolean('est_radier');
-        //     $table->boolean('est_valide');
+        //     $table->boolean('est_en_regle');
         //     $table->timestamps();
         //     $table->unsignedInteger('user_id');
         //     $table->unsignedInteger('quartier_id')->nullable();
@@ -35,7 +35,7 @@ class MenageSeeder extends Seeder
                 'longitude' => 100,
                 'est_abonnee' => true,
                 'est_radier' => false,
-                'est_valide' => true,
+                'est_en_regle' => true,
                 'client_id' => 1,
                 'quartier_id' => 1,
                 'type_habitat_id' => 1
@@ -48,7 +48,7 @@ class MenageSeeder extends Seeder
                 'longitude' => 100,
                 'est_abonnee' => true,
                 'est_radier' => false,
-                'est_valide' => true,
+                'est_en_regle' => false,
                 'client_id' => 1,
                 'quartier_id' => 1,
                 'type_habitat_id' => 1

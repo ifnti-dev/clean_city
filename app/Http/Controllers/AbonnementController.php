@@ -7,9 +7,11 @@ use App\Models\Abonnement;
 use App\Models\Client;
 use App\Models\Menage;
 use App\Models\Quartier;
+use App\Models\Tarif;
 use App\Models\TypeHabitat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use SweetAlert2\Laravel\Swal;
 
 class AbonnementController extends Controller
 {
@@ -23,6 +25,25 @@ class AbonnementController extends Controller
         // dd($abonnements->menage());
 
         // dd(Menage::first()->abonnement());
+
+        // dd(session("desabonnee"));
+
+        if (session(('desabonnee'))) {
+            // Toast with pause on hover
+            Swal::success([
+                'title' => 'Auto close alert',
+                'position' => 'top-center',
+                'icon' => 'succes',
+                'Contribution'=>'email',
+                'showConfirmButton' => true ,
+                'timer' => 2000,
+               
+        
+            ]);
+            session('desabonnee');
+        }
+
+
         return view('abonnees.index', compact('abonnements'));
     }
 
@@ -34,8 +55,9 @@ class AbonnementController extends Controller
         //
         $clients = Client::get();
         $quartiers = Quartier::get();
+        $tarifs = Tarif::get();
         $type_habitats = TypeHabitat::get();
-        return view('abonnees.create', compact('clients', 'type_habitats', 'quartiers'));
+        return view('abonnees.create', compact('tarifs', 'clients', 'type_habitats', 'quartiers'));
     }
 
     /**
@@ -50,6 +72,7 @@ class AbonnementController extends Controller
             "date_fin" => "date|nullable",
             "client_id" => "required|integer|exists:clients,id",
             "designation" => "required|string|min:3|unique:menages",
+            "tarif_id" => "required|integer|exists:tarifs,id",
             "longitude" => "required|integer",
             "latitude" => "required|integer",
             'type_habitat_id' =>  "required|integer|exists:type_habitats,id",
@@ -60,7 +83,10 @@ class AbonnementController extends Controller
 
         DB::transaction(function () use ($validated) {
 
-            $code = 12453 + $validated['latitude'];
+            $code = "0000" . Menage::latest('id')->first()->id;
+            $code = substr($code, -5);
+            // dd($code);
+
             $menage = Menage::create([
                 'code' => $code,
                 'designation' => $validated['designation'],
@@ -68,7 +94,7 @@ class AbonnementController extends Controller
                 'longitude' => $validated['longitude'],
                 'est_abonnee' => true,
                 'est_radier' => false,
-                'est_valide' => true,
+                'est_en_regle' => true,
                 'client_id' => $validated['client_id'],
                 'type_habitat_id' => $validated['type_habitat_id'],
                 'quartier_id' => $validated['quartier_id'],
@@ -78,12 +104,13 @@ class AbonnementController extends Controller
             Abonnement::create([
                 'date_debut' => $validated['date_debut'],
                 'date_fin' => $validated['date_fin'] ? $validated['date_debut'] : null,
-                'etat' => "INACTIF",
+                // 'etat' => "ACTIF",
+                'tarif_id' => $validated['tarif_id'],
                 'menage_id' => $menage->id,
             ]);
         });
 
-        return to_route('abonnees.index');
+        return to_route('abonnements.index');
     }
 
     /**
@@ -92,7 +119,9 @@ class AbonnementController extends Controller
     public function show(string $id)
     {
         //
+        dd("show");
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -105,7 +134,7 @@ class AbonnementController extends Controller
         $clients = Client::get();
         $quartiers = Quartier::get();
         $type_habitats = TypeHabitat::get();
-        return view('abonnees.edit', compact('abonnement','clients', 'type_habitats', 'quartiers'));
+        return view('abonnees.edit', compact('abonnement', 'clients', 'type_habitats', 'quartiers'));
     }
 
     /**
@@ -114,6 +143,7 @@ class AbonnementController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        dd("update");
     }
 
     /**
@@ -122,5 +152,44 @@ class AbonnementController extends Controller
     public function destroy(string $id)
     {
         //
+        dd("delete");
+    }
+
+
+
+
+    public function annulerUnAbonnement(Abonnement $abonnement)
+    {
+        //
+        dd("annulerUnAbonnement");
+    }
+
+
+    public function validerUnAbonnement(Abonnement $abonnement)
+    {
+        //
+        // dd("valider");
+        $abonnement->update(
+            ['etat' => 'ACTIF']
+        );
+        return to_route('abonnements.index');
+    }
+
+    public function desabonneeUnAbonnement(Abonnement $abonnement)
+    {
+        //
+        // dd("desabonnee");
+        $abonnement->update(
+            ['etat' => 'INACTIF']
+        );
+
+        return to_route('abonnements.index')->with("desabonnee", "vouse avez Desabonnée " . $abonnement->menage->designation);
+    }
+
+
+    public function radierUnAbonnement(Abonnement $abonnement)
+    {
+        //
+        dd("radier");
     }
 }

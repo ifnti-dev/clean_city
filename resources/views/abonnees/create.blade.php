@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot>
-        <!-- <div class="flex flex-col items-center justify-center g-0 h-screen px-4"> -->
+        
         <!-- card -->
 
         <!-- {{$errors}} -->
@@ -25,7 +25,7 @@
                 <form method="POST" action="{{ route('abonnements.store') }}">
                     @csrf
 
-                    <div class="flex gap-5 justify-between">
+                    <div class="grid grid-cols-2 gap-5 max-sm:grid-cols-1 max-sm:gap-2 ">
 
                         <div class="mt-4 w-full">
                             <x-input-label for="date_debut" :value="__('Date Debut')" />
@@ -42,18 +42,35 @@
                         </div>
                     </div>
 
-                    <!-- le client -->
-                    <div class="mt-4">
-                        <x-input-label for="client" :value="__('Client')" />
-                        <select name="client_id" id="client_id" class="w-full rounded-lg">
-                            <option value="">Choisissez Le Client </option>
-                            @foreach ( $clients as $client )
-                            <option @selected(old('client_id')==$client->id) value="{{ $client->id }}">{{ $client->user->nom }}</option>
-                            @endforeach
-                        </select>
-                        <x-input-error :messages="$errors->get('client->id')" class="mt-2" />
-                    </div>
+                    <div class="grid grid-cols-2 gap-5 max-sm:grid-cols-1 max-sm:gap-2 ">
 
+                        <!-- le client -->
+                        <div class="mt-4">
+                            <x-input-label for="client" :value="__('Client')" />
+                            <select name="client_id" id="client_id" class="w-full rounded-lg">
+                                <option value="">Choisissez Le Client </option>
+                                @foreach ( $clients as $client )
+                                <option @selected(old('client_id')==$client->id) value="{{ $client->id }}">{{
+                                    $client->user->nom }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('client_id')" class="mt-2" />
+                        </div>
+
+                         <!-- le client -->
+                        <div class="mt-4">
+                            <x-input-label for="tarif" :value="__('Tarif')" />
+                            <select name="tarif_id" id="tarif_id" class="w-full rounded-lg">
+                                <option value="">Choisissez Le Tarif </option>
+                                @foreach ( $tarifs as $tarif )
+                                <option @selected(old('tarif_id')==$tarif->id) value="{{ $tarif->id }}">{{
+                                    $tarif->designation}} ( {{ $tarif->montant }} Fcfa)</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('tarif_id')" class="mt-2" />
+                        </div>
+
+                    </div>
                     <!-- nom menage -->
                     <div class="mt-4">
                         <x-input-label for="designation" :value="__('Designation')" />
@@ -63,13 +80,14 @@
                     </div>
 
 
-                    <div class="flex gap-5 justify-between">
+                    <div class="grid grid-cols-2 gap-5 max-sm:grid-cols-1 max-sm:gap-2 ">
                         <div class="mt-4 w-full">
                             <x-input-label for="type_habitat" :value="__('Type Habitat')" />
                             <select name="type_habitat_id" id="type_habitat_id" class="w-full rounded-lg">
                                 <option value="">Choisissez Le Type d'habitat </option>
                                 @foreach ( $type_habitats as $type_habitat )
-                                <option @selected(old('type_habitat_id')==$type_habitat->id) value="{{ $type_habitat->id }}">{{ $type_habitat->designation }}</option>
+                                <option @selected(old('type_habitat_id')==$type_habitat->id) value="{{ $type_habitat->id
+                                    }}">{{ $type_habitat->designation }}</option>
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('type_habitat_id')" class="mt-2" />
@@ -80,7 +98,8 @@
                             <select name="quartier_id" id="quartier_id" class="w-full rounded-lg">
                                 <option value="">Choisissez Le Quartier</option>
                                 @foreach ( $quartiers as $quartier )
-                                <option @selected(old('quartier_id')==$quartier->id) value="{{ $quartier->id }}">{{ $quartier->designation }}</option>
+                                <option @selected(old('quartier_id')==$quartier->id) value="{{ $quartier->id }}">{{
+                                    $quartier->designation }}</option>
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('quartier_id')" class="mt-2" />
@@ -91,7 +110,7 @@
 
 
 
-                    <div class="flex gap-5 justify-between">
+                    <div class="grid grid-cols-2 gap-5 max-sm:grid-cols-1 max-sm:gap-2 ">
                         <div class="mt-4 w-full">
                             <x-input-label for="longitude" :value="__('Longitude')" />
                             <x-text-input id="longitude" class="block mt-1 w-full" type="text" name="longitude"
