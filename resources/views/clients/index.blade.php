@@ -42,7 +42,7 @@
                                     <td class="py-3 px-6 text-left">{{ $client->user->email }}</td>
                                     <td class=" flex item-center gap-6 px-3 py-3 text-left ">
 
-                                        <a href="{{ route('clients.show', $client->id) }}">  <x-primary-button class="w-full justify-center"> Voire </x-peimary-button> </a>
+                                        <a href="{{ route('clients.show', $client->id) }}">  <x-secondary-button class="bg-blue-800"> Voire </x-secondary-button> </a>
                                     
                                         <a href="{{ route('clients.edit', $client->id) }}"> 
                                             <x-secondary-button>
