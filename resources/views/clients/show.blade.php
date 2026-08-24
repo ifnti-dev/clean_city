@@ -2,7 +2,7 @@
 
     <x-slot>
         <div class="flex items-center justify-between mt-6 w-full">
-            <h1 class="text-xl">Liste des clients<h1>
+            <h1 class="text-xl"> Detaile du client <h1>
         </div>
 
 
@@ -16,7 +16,6 @@
                             <th scope="col" class="px-6 py-3">Prenom</th>
                             <th scope="col" class="px-6 py-3">Contacte</th>
                             <th scope="col" class="px-6 py-3">Email</th>
-                            <th scope="col" class="px-6 py-3">Action</th>
                         </tr>
                     </thead>
 
