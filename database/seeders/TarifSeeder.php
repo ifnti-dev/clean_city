@@ -21,7 +21,7 @@ class TarifSeeder extends Seeder
             ],
             [
                 'designation' => 'deux fois par semaine',
-                'montant' => 1000,
+                'montant' => 2000,
             ]
         ]);
     }

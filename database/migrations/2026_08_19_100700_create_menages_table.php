@@ -8,6 +8,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * 98473856
      */
     public function up(): void
     {
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->string('longitude')->nullable();
             $table->boolean('est_abonnee');
             $table->boolean('est_radier');
-            $table->boolean('est_valide');
+            $table->boolean('est_en_regle');
             $table->timestamps();
 
             $table->unsignedBigInteger('client_id');

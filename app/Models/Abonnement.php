@@ -10,7 +10,7 @@ class Abonnement extends Model
 {
     //
     protected $table = 'abonnements';
-    protected $fillable = ['date_debut', 'date_fin', 'etat','menage_id'];
+    protected $fillable = ['date_debut', 'date_fin', 'etat','menage_id','tarif_id'];
     
     public function menage():BelongsTo {
         return $this->belongsTo(Menage::class);
