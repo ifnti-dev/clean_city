@@ -35,11 +35,11 @@ class ClientContoller extends Controller
         //
         if (session(('supprimer'))) {
             // Toast with pause on hover
-            Swal::success([
+            Swal::error([
                 'title' => session('supprimer'),
-                'icon' => 'succes',
+                'icon' => 'error',
                 'showConfirmButton' => true ,
-                'timer' => 2000,           
+                'timer' => 20000,           
             ]);
             session('supprimer');
         }
