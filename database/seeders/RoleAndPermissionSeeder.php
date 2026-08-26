@@ -26,7 +26,6 @@ class RoleAndPermissionSeeder extends Seeder
         $roles_responssable = Role::where('name', 'responssable')->first();
         $roles_responssable->syncPermissions(
             Permission::all()
-                
         );
 
 

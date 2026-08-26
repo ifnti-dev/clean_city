@@ -45,6 +45,11 @@ class PermissionSeeder extends Seeder
             'produit.creer',
             'produit.modifier',
             'produit.supprimer',
+
+            'ramassage.voire',
+            'ramassage.creer',
+            'ramassage.modifier',
+            'ramassage.supprimer',
             
             'abonnement.voire',
             'abonnement.creer',

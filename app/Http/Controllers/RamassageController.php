@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
 use App\Models\Employe;
-use App\Models\Tarif;
 use App\Models\Tournee;
-use App\Models\TypeHabitat;
 use App\Models\Zone;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use SweetAlert2\Laravel\Swal;
 
-class RamassageController extends Controller
+class RamassageController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:ramassage.voire', only: ['index', 'show']),
+            new Middleware('permission:ramassage.creer', only: ['create', 'store']),
+            new Middleware('permission:ramassage.modifier', only: ['edite', 'update']),
+            new Middleware('permission:ramassage.supprimer', only: ['destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -98,7 +106,7 @@ class RamassageController extends Controller
         ]);
 
         //envoyer un message a l'employer et a tout les menages de la zone
-        
+
 
         return redirect()->route('ramassages.index')->with('success', 'Ramassage créé avec succès.');
     }
