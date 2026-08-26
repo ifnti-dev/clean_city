@@ -28,6 +28,8 @@
                                 <th scope="col" class="px-6 py-3">Prenom</th>
                                 <th scope="col" class="px-6 py-3">Contacte</th>
                                 <th scope="col" class="px-6 py-3">Email</th>
+                                <th scope="col" class="px-6 py-3">Designation menage</th>
+                               
                                 <th scope="col" class="px-6 py-3">Action</th>
                             </tr>
                         </thead>
@@ -40,6 +42,15 @@
                                     <td class="py-3 px-6 text-left">{{ $client->user->prenom }}</td>
                                     <td class="py-3 px-6 text-left">{{ $client->user->contacte }}</td>
                                     <td class="py-3 px-6 text-left">{{ $client->user->email }}</td>
+                                    <td class="py-3 px-6 text-left">
+                                        @forelse ($client->menages as $menage)
+                                            <div>{{ $menage->designation }}</div>
+                                        @empty
+                                            Aucun menage
+                                        @endforelse
+                                    </td>
+
+                                    
                                     <td class=" flex item-center gap-6 px-3 py-3 text-left ">
 
                                         <a href="{{ route('clients.show', $client->id) }}">  <x-secondary-button class="bg-blue-800"> Voire </x-secondary-button> </a>

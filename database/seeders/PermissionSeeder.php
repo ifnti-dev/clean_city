@@ -29,6 +29,11 @@ class PermissionSeeder extends Seeder
             'employe.supprimer',
             'employe.suspendre',
 
+            'client.voire',
+            'client.creer',
+            'client.modifier',
+            'client.supprimer',
+
             'tarif.voire',
             'tarif.creer',
             'tarif.modifier',

@@ -48,8 +48,8 @@ class MenageSeeder extends Seeder
                 'longitude' => 100,
                 'est_abonnee' => true,
                 'est_radier' => false,
-                'est_en_regle' => false,
-                'client_id' => 1,
+                'est_en_regle' => 0,
+                'client_id' => 2,
                 'quartier_id' => 1,
                 'type_habitat_id' => 1
                

@@ -24,9 +24,7 @@ class AbonnementController extends Controller
         //
         $abonnements = Abonnement::all();
         // dd($abonnements->menage());
-
         // dd(Menage::first()->abonnement());
-
         // dd(session("desabonnee"));
 
         if (session(('desabonnee'))) {
