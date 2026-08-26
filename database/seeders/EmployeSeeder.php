@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeSeeder extends Seeder
 {
@@ -20,7 +22,7 @@ class EmployeSeeder extends Seeder
                 "prenom" =>"cendrine",
                 "contacte" => "90298677" ,
                 "email" => "liza@gmail.com",
-                "password" => "123456789",
+                "password" => Hash::make("123456789"),
               
 
             ],
@@ -29,7 +31,7 @@ class EmployeSeeder extends Seeder
                 "prenom" =>"ali",
                 "contacte" => "97896375" ,
                 "email" => "kodjo@gmail.com",
-                "password" => "1234567890",
+                "password" => Hash::make("123456789"),
               
 
             ],
@@ -38,7 +40,7 @@ class EmployeSeeder extends Seeder
                 "prenom" =>"alice",
                 "contacte" => "90003000" ,
                 "email" => "assia@gmail.com",
-                "password" => "12345678901",
+                "password" => Hash::make("123456789"),
               
 
             ],
@@ -56,5 +58,10 @@ class EmployeSeeder extends Seeder
                 "user_id" => 6
             ]
         ]);
+
+
+        $client = User::where('contacte', '97896545')->first();
+        $client->assignRole('client');
+
     }
 }

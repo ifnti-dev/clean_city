@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\User;
-use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use SweetAlert2\Laravel\Swal;
 
-class ClientContoller extends Controller
+class ClientContoller extends Controller implements HasMiddleware
 {
     /**
      * Display a listing of the resource.
