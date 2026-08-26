@@ -36,8 +36,6 @@ class ClientContoller extends Controller implements HasMiddleware
         //
         
         $search = $request->input('search');
-       
-        
 
         if (session(('supprimer'))) {
             // Toast with pause on hover
