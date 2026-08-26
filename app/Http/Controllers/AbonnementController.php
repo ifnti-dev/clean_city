@@ -11,23 +11,28 @@ use App\Models\Tarif;
 use App\Models\TypeHabitat;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Override;
 use SweetAlert2\Laravel\Swal;
 
+
 class AbonnementController extends Controller implements HasMiddleware
 {
 
-    #[Override]
-    public static function middleware()
+    public static function middleware(): array
     {
         return [
-            "permission"
+            new Middleware('permission:abonnement.voire', only: ['index', 'show']),
+            new Middleware('permission:abonnement.creer', only: ['create', 'store']),
+            new Middleware('permission:abonnement.modifier', only: ['edite', 'update']),
+            new Middleware('permission:abonnement.supprimer', only: ['destroy']),
         ];
     }
 
     /**
      * Display a listing of the resource.
+
      */
     public function index(Request $request)
     {
@@ -168,8 +173,8 @@ class AbonnementController extends Controller implements HasMiddleware
         });
 
         return to_route('abonnements.index')->with([
-            "success" => "L'Abonnement de  " . strtoupper($menage->designation) . " est Creer",
-            "text" => "Voici le Code du Menage: " . strtoupper($menage->code)
+            // "success" => "L'Abonnement de  " . strtoupper($menage->designation) . " est Creer",
+            // "text" => "Voici le Code du Menage: " . strtoupper($menage->code)
 
         ]);
 

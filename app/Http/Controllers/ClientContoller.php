@@ -4,20 +4,63 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\User;
+
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use SweetAlert2\Laravel\Swal;
 
-class ClientContoller extends Controller
+class ClientContoller extends Controller implements HasMiddleware
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:client.voire', only:['index', 'show']),
+            new Middleware('permission:client.creer', only:['create', 'store']),
+            new Middleware('permission:client.modifier', only:['edite', 'update']),
+            new Middleware('permission:client.supprimer', only:['destroy']),
+           
+        ];
+    }
+
+
+    public function index(Request $request)
     {
         //
-        $clients = Client::with('user')->get();
-        return view('clients.index', compact('clients'));
+        
+        $search = $request->input('search');
+        // $query = Client::with(['user', 'menages'])->get();
+        
+        // if($search){
+        //     $query->where('nom', 'like', "%$search%");
+
+        // }
+        
+        
+
+        if (session(('supprimer'))) {
+            // Toast with pause on hover
+            Swal::error([
+                'title' => session('supprimer'),
+                'icon' => 'error',
+                'showConfirmButton' => true ,
+                'timer' => 20000,           
+            ]);
+           
+        }
+
+        
+        $clients = Client::with(['user', 'menages'])->get();
+    
+        return view('clients.index', compact('clients', 'search'));
+
     }
 
     /**
@@ -26,7 +69,6 @@ class ClientContoller extends Controller
     public function create()
     {
         //
-        
         return view('clients.create');
     }
 
@@ -66,6 +108,7 @@ class ClientContoller extends Controller
 
 
         return to_route('clients.index');
+        //envoyer un message apres creation
     }
 
     /**
@@ -74,7 +117,8 @@ class ClientContoller extends Controller
     public function show(Client $client)
     {
         //
-        
+       
+        $client->load(['user', 'menages']);
         return view('clients.show', compact('client'));
     }
 
@@ -116,6 +160,8 @@ class ClientContoller extends Controller
 
 
         return to_route('clients.index');
+
+        //envoyer un message apres modification
     
     }
 
@@ -133,12 +179,12 @@ class ClientContoller extends Controller
             $client->delete();
             return to_route('clients.index');
         }else{
-            dd('vous avez des menages actifs');
+           
+            return to_route('clients.index')->with("supprimer", "vous avez des menages actifs" );
         }
         
 
         
-       
 
     }
 }

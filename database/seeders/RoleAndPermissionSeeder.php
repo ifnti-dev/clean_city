@@ -54,5 +54,14 @@ class RoleAndPermissionSeeder extends Seeder
                 ->orWhere('name', 'livraison.demarer')
                 ->get()
         );
+
+        $roles_agent_collecte_fonds = Role::where('name', 'agent_collecte_fonds')->first();
+        $roles_agent_collecte_fonds->syncPermissions(
+            Permission::where('name', 'client.voire')
+                ->orWhere('name', 'client.creer')
+                ->orWhere('name', 'client.modifier')
+                ->orWhere('name', 'client.supprimer')
+                ->get()
+        );
     }
 }

@@ -4,8 +4,6 @@ use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\ClientContoller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RamassageController;
-use App\Models\Abonnement;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
