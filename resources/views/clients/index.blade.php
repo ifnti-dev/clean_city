@@ -24,7 +24,7 @@
             <div class="card shadow mb-6 p-5 m-7">
                 <form method="get" action="{{ route('clients.index') }}">
                     @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 ">
                         {{-- Recherche --}}
                         <div class="lg:col-span-2">
                             <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
@@ -34,9 +34,7 @@
                             <input type="text" name="search" id="search" value="{{ $search }}"
                                 placeholder="Nom, prenom, contacte, email ..."
                                 class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                        </div>
-
-                        
+                        </div>   
                     </div>
 
                     {{-- Boutons --}}

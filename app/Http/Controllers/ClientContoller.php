@@ -36,13 +36,7 @@ class ClientContoller extends Controller implements HasMiddleware
         //
         
         $search = $request->input('search');
-        // $query = Client::with(['user', 'menages'])->get();
-        
-        // if($search){
-        //     $query->where('nom', 'like', "%$search%");
-
-        // }
-        
+       
         
 
         if (session(('supprimer'))) {
