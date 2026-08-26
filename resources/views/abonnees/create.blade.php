@@ -7,16 +7,16 @@
         <!-- {{$errors}} -->
         <div class=" flex justify-center items-center bg-white  rounded-md shadow m-6 p-6 lg:flex ">
             <!-- card body -->
-            <div class="p-2 w-full">
-                <div class="flex justify-between items-baseline">
-                    <h3 class="text-blue-700 font-medium text-2xl">
-                        Ajoute d'un Abonnement
+            <div class="p-2 w-full ">
+                <div class="flex justify-between  items-baseline ">
+                    <h3 class="text-blue-700 font-medium text-2xl  max-sm:text-lg">
+                        Ajout d'un Abonnement
                     </h3>
 
-                    <div class="flex items-center justify-center mt-6 w-60">
+                    <div class="flex items-center justify-end  mt-6 w-60 max-sm:w-full max-sm:w-30">
                         <a href="{{ route('abonnements.index') }}">
-                            <x-primary-button class="w-full justify-center">
-                                {{ __("Liste d'abonnements") }}
+                            <x-primary-button class="w-full justify-center max-sm:py-2 max-sm:text-sm">
+                                {{ __("Listes") }}
                             </x-primary-button>
                         </a>
                     </div>

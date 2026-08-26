@@ -19,106 +19,6 @@
                     </div>
                 </div>
 
-                {{-- Filtres --}}
-                <div class="card shadow mb-6 p-5">
-
-                    <form method="GET" action="{{ route('abonnements.index') }}">
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-
-                            {{-- Recherche --}}
-                            <div class="lg:col-span-2">
-                                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
-                                    Recherche
-                                </label>
-
-                                <input type="text" name="search" id="search" value="{{ request('search') }}"
-                                    placeholder="Code, ménage ou responsable..."
-                                    class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                            </div>
-
-                            {{-- Etat --}}
-                            <div>
-                                <label for="etat" class="block text-sm font-medium text-gray-700 mb-1">
-                                    État
-                                </label>
-
-                                <select name="etat" id="etat"
-                                    class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                                    <option value="">Tous</option>
-
-                                    <option value="ACTIF" {{ request('etat')==='ACTIF' ? 'selected' : '' }}>
-                                        Actif
-                                    </option>
-
-                                    <option value="INACTIF" {{ request('etat')==='INACTIF' ? 'selected' : '' }}>
-                                        Inactif
-                                    </option>
-                                </select>
-                            </div>
-
-                            {{-- En règle --}}
-                            <div>
-                                <label for="en_regle" class="block text-sm font-medium text-gray-700 mb-1">
-                                    En règle
-                                </label>
-
-                                <select name="en_regle" id="en_regle"
-                                    class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                                    <option value="">Tous</option>
-
-                                    <option value="1" {{ request('en_regle')==='1' ? 'selected' : '' }}>
-                                        Oui
-                                    </option>
-
-                                    <option value="0" {{ request('en_regle')==='0' ? 'selected' : '' }}>
-                                        Non
-                                    </option>
-                                </select>
-                            </div>
-
-                            {{-- Date début --}}
-                            <div>
-                                <label for="date_debut" class="block text-sm font-medium text-gray-700 mb-1">
-                                    Date début
-                                </label>
-
-                                <input type="date" name="date_debut" id="date_debut" value="{{ request('date_debut') }}"
-                                    class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                            </div>
-
-                            {{-- Date fin --}}
-                            <div>
-                                <label for="date_fin" class="block text-sm font-medium text-gray-700 mb-1">
-                                    Date fin
-                                </label>
-
-                                <input type="date" name="date_fin" id="date_fin" value="{{ request('date_fin') }}"
-                                    class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                            </div>
-
-                        </div>
-
-                        {{-- Boutons --}}
-                        <div class="flex justify-end gap-3 mt-5">
-
-                            <a href="{{ route('abonnements.index') }}">
-                                <x-secondary-button type="button"
-                                    class="bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200">
-                                    Réinitialiser
-                                </x-secondary-button>
-                            </a>
-
-                            <x-primary-button type="submit">
-                                Filtrer
-                            </x-primary-button>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
                 <div class="relative overflow-x-auto card shadow">
                     <table class="text-left w-full whitespace-nowrap">
                         <thead class="">
@@ -176,7 +76,7 @@
                             <td class="py-3 px-6 text-left">---</td>
                             @endif
 
-                            <td class="py-3 px-6 text-left flex  items-center gap-2">
+                            <td class="py-3 px-6 text-left flex justify-end gap-2">
 
 
                                 <a href="{{ route('abonnements.show', $abonnement->id) }}">
@@ -195,25 +95,16 @@
                                 </a>
 
 
-                                <!-- <form action="{{ route('abonnements.annuler', $abonnement->id) }}" method="post">
+                                <form action="{{ route('abonnements.annuler', $abonnement->id) }}" method="post">
                                     @csrf
 
                                     <x-secondary-button type="submit"
                                         class="bg-fuchsia-700 text-white border-fuchsia-700 hover:bg-fuchsia-600 hover:border-fuchsia-600 focus:ring-fuchsia-700">
                                         Annuler
                                     </x-secondary-button>
-                                </form> -->
-
-                                @if ($abonnement->menage->est_en_regle==0 || $abonnement->etat=="ACTIF" )
+                                </form>
 
 
-
-                                @else
-
-                                @endif
-
-
-                                @if ($abonnement->etat=="INACTIF" )
                                 <form action="{{ route('abonnements.valider', $abonnement->id) }}" method="post">
                                     @csrf
 
@@ -223,16 +114,6 @@
                                     </x-secondary-button>
                                 </form>
 
-                                <form action="{{ route('abonnements.radier', $abonnement->id) }}" method="post">
-                                    @csrf
-
-                                    <x-secondary-button type="submit"
-                                        class="bg-teal-700 text-white border-teal-700 hover:bg-teal-600 hover:border-teal-600 focus:ring-teal-300">
-                                        Radier
-                                    </x-secondary-button>
-                                </form>
-
-                                @elseif($abonnement->menage->est_en_regle==0 && $abonnement->etat=="INACTIF" )
 
                                 <form action="{{ route('abonnements.desabonnee', $abonnement->id) }}" method="post">
                                     @csrf
@@ -242,7 +123,16 @@
                                         Désabonner
                                     </x-secondary-button>
                                 </form>
-                                @endif
+
+
+                                <form action="{{ route('abonnements.radier', $abonnement->id) }}" method="post">
+                                    @csrf
+
+                                    <x-secondary-button type="submit"
+                                        class="bg-teal-700 text-white border-teal-700 hover:bg-teal-600 hover:border-teal-600 focus:ring-teal-300">
+                                        Radier
+                                    </x-secondary-button>
+                                </form>
 
                             </td>
 
@@ -256,11 +146,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="m-4">
-                    {{$abonnements->links()}}
-                </div>
             </div>
-
         </div>
     </x-slot>
 </x-app-layout>
