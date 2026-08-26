@@ -36,10 +36,9 @@ class ClientContoller extends Controller
         if (session(('supprimer'))) {
             // Toast with pause on hover
             Swal::success([
-                'title' => 'Auto close alert',
+                'title' => session('supprimer'),
                 'position' => 'top-center',
                 'icon' => 'succes',
-                'Contribution'=>'email',
                 'showConfirmButton' => true ,
                 'timer' => 2000,           
             ]);

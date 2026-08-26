@@ -18,33 +18,84 @@ class AbonnementController extends Controller
 {
     /**
      * Display a listing of the resource.
-    */
-    public function index()
+
+     */
+    public function index(Request $request)
     {
         //
-        $abonnements = Abonnement::all();
-        // dd($abonnements->menage());
-        // dd(Menage::first()->abonnement());
-        // dd(session("desabonnee"));
+        $query = Abonnement::with([
+            'menage.client.user'
+        ]);
 
-        if (session(('desabonnee'))) {
-            // Toast with pause on hover
-            Swal::success([
-                'title' => 'Auto close alert',
-                'position' => 'top-center',
-                'icon' => 'succes',
-                'Contribution'=>'email',
-                'showConfirmButton' => true ,
-                'timer' => 2000,
-               
-        
-            ]);
-            session('desabonnee');
+        // dump($query->get());
+
+        // Recherche
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->whereHas('menage', function ($q) use ($search) {
+                $q->where('code', 'like', "%{$search}%")
+                    ->orWhere('designation', 'like', "%{$search}%");
+            })
+                ->orWhereHas('menage.client.user', function ($q) use ($search) {
+                    $q->where('nom', 'like', "%{$search}%");
+                });
+        }
+
+        // Filtre état
+        if ($request->filled('etat')) {
+            $query->where('etat', $request->etat);
+        }
+
+        // Filtre en règle
+        if ($request->filled('en_regle')) {
+            $query->whereHas('menage', function ($q) use ($request) {
+                $q->where('est_en_regle', $request->en_regle);
+            });
+        }
+
+        // Date début
+        if ($request->filled('date_debut')) {
+            $query->whereDate('date_debut', '>=', $request->date_debut);
+        }
+
+        // Date fin
+        if ($request->filled('date_fin')) {
+            $query->whereDate('date_fin', '<=', $request->date_fin);
         }
 
 
+        if (session(('success'))) {
+            // Toast with pause on hover
+            if (session('text')) {
+                Swal::success([
+                    'title' => session('success'),
+                    'text' => session('text'),
+                    'showConfirmButton' => true,
+                ]);
+            } else {
+                Swal::success([
+                    'title' => session('success'),
+                    'text' => session('text'),
+                    'timer' => 2000,
+                    'showConfirmButton' => false,
+                ]);
+            }
+        }
+
+        if (session(('erros'))) {
+            Swal::error([
+                'title' => session('erros'),
+                'timer' => 2000,
+                'showConfirmButton' => false,
+            ]);
+        }
+
+        $abonnements = $query->latest()->paginate(8);
         return view('abonnees.index', compact('abonnements'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -52,10 +103,10 @@ class AbonnementController extends Controller
     public function create()
     {
         //
-        $clients = Client::get();
-        $quartiers = Quartier::get();
-        $tarifs = Tarif::get();
-        $type_habitats = TypeHabitat::get();
+        $clients = Client::all();
+        $quartiers = Quartier::all();
+        $tarifs = Tarif::all();
+        $type_habitats = TypeHabitat::all();
         return view('abonnees.create', compact('tarifs', 'clients', 'type_habitats', 'quartiers'));
     }
 
@@ -107,18 +158,26 @@ class AbonnementController extends Controller
                 'tarif_id' => $validated['tarif_id'],
                 'menage_id' => $menage->id,
             ]);
+
+            return to_route('abonnements.index')->with([
+                "success" => "L'Abonnement de  " . strtoupper($menage->designation) . " est Creer",
+                "text" => "Voici le Code du Menage: " . strtoupper($menage->code)
+
+            ]); //" est creer avec succes, 
         });
 
-        return to_route('abonnements.index');
+
+        return to_route('abonnements.index')->with("erros", "Ressayer la creation de cette abonnement  ");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Abonnement $abonnement)
     {
         //
-        dd("show");
+        // dd($abonnement->tarif->designation);
+        return view('abonnees.show', compact('abonnement'));
     }
 
 
@@ -127,68 +186,108 @@ class AbonnementController extends Controller
      */
     public function edit(Abonnement $abonnement)
     {
-        //
-
         // dd($abonnement);
-        $clients = Client::get();
-        $quartiers = Quartier::get();
-        $type_habitats = TypeHabitat::get();
-        return view('abonnees.edit', compact('abonnement', 'clients', 'type_habitats', 'quartiers'));
+        $clients = Client::all();
+        $quartiers = Quartier::all();
+        $tarifs = Tarif::all();
+        $type_habitats = TypeHabitat::all();
+        return view('abonnees.edit', compact('abonnement', 'tarifs', 'clients', 'type_habitats', 'quartiers'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Abonnement $abonnement)
     {
-        //
-        dd("update");
+        // dd($request->all());
+
+        $validated = $request->validate([
+            "date_debut" => "required|date:after_now ",
+            "date_fin" => "date|nullable",
+            "client_id" => "required|integer|exists:clients,id",
+            "designation" => "required|string|min:3|unique:menages,designation," . $abonnement->menage->id,
+            "tarif_id" => "required|integer|exists:tarifs,id",
+            "longitude" => "required|integer",
+            "latitude" => "required|integer",
+            'type_habitat_id' =>  "required|integer|exists:type_habitats,id",
+            'quartier_id' =>  "required|integer|exists:quartiers,id",
+        ]);
+
+        DB::transaction(function () use ($validated, $abonnement) {
+
+            $abonnement->menage->update([
+                'designation' => $validated['designation'],
+                'latitude' => $validated['latitude'],
+                'longitude' => $validated['longitude'],
+                'est_abonnee' => true,
+                'est_radier' => false,
+                'est_en_regle' => true,
+                'client_id' => $validated['client_id'],
+                'type_habitat_id' => $validated['type_habitat_id'],
+                'quartier_id' => $validated['quartier_id'],
+            ]);
+
+            $abonnement->update([
+                'date_debut' => $validated['date_debut'],
+                'date_fin' => $validated['date_fin'] ? $validated['date_debut'] : null,
+                'tarif_id' => $validated['tarif_id'],
+            ]);
+        });
+
+        return to_route('abonnements.index')->with([
+            "success" => "L'Abonnement de  " . strtoupper($abonnement->menage->designation) . " est Modifier",
+            "text" => "Voici le Code du Menage: " . $abonnement->menage->code
+
+        ]); //" est creer avec succes,
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Abonnement $abonnement)
     {
         //
-        dd("delete");
+        // dd("delete");
+        $abonnement->delete();
+        return to_route('abonnements.index')->with("success", "L'Abonnement de  " . strtoupper($abonnement->menage->designation) . " est Supprimer");
     }
 
 
-
-
-    public function annulerUnAbonnement(Abonnement $abonnement)
-    {
-        //
-        dd("annulerUnAbonnement");
-    }
+    // public function annulerUnAbonnement(Abonnement $abonnement)
+    // {
+    //     //
+    //     dd("annulerUnAbonnement");
+    //     return to_route('abonnements.index')->with("success", "Vouse avez Desabonnée " . strtoupper($abonnement->menage->designation));
+    // }
 
 
     public function validerUnAbonnement(Abonnement $abonnement)
     {
-        //
         // dd("valider");
         $abonnement->update(
             ['etat' => 'ACTIF']
         );
-        return to_route('abonnements.index');
+        return to_route('abonnements.index')->with("success", "Vouse avez Valider l'abonnement de " . strtoupper($abonnement->menage->designation));
     }
 
     public function desabonneeUnAbonnement(Abonnement $abonnement)
     {
-        //
         // dd("desabonnee");
         $abonnement->update(
             ['etat' => 'INACTIF']
         );
-
-        return to_route('abonnements.index')->with("desabonnee", "vouse avez Desabonnée " . $abonnement->menage->designation);
+        return to_route('abonnements.index')->with("success", "Vouse avez Desabonnée " . strtoupper($abonnement->menage->designation));
     }
 
 
-    public function radierUnAbonnement(Abonnement $abonnement)
+    public function radierUnMenage(Abonnement $abonnement)
     {
-        //
-        dd("radier");
+        // dd("radier");
+        $abonnement->menage->update(
+            ['est_radier' => true]
+        );
+        return to_route('abonnements.index')->with("success", "Vouse avez Radier " . strtoupper($abonnement->menage->designation));
     }
 }

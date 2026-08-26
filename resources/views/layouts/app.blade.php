@@ -19,8 +19,8 @@
     @include('sweetalert2::index')
 
     <!-- Theme CSS -->
-    {{--
-    <link rel="stylesheet" href="./assets/css/theme.min.css"> --}}
+  
+    <!-- <link rel="stylesheet" href="./assets/css/theme.min.css">  -->
     <!-- Analytics Code -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
     <script>
@@ -34,7 +34,7 @@
         gtag("config", "G-M8S4MT3EYG");
     </script>
 
-    <link rel="stylesheet" href="./assets/libs/apexcharts/dist/apexcharts.css" />
+    <!-- <link rel="stylesheet" href="./assets/libs/apexcharts/dist/apexcharts.css" /> -->
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/css/style.css','resources/js/app.js'])

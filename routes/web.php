@@ -31,7 +31,7 @@ require __DIR__ . '/auth.php';
 //::middleware('auth')->
 // Route::prefix('/responssable')->group(function () {
 Route::resource('abonnements', AbonnementController::class);
-Route::post('/abonnements/{abonnement}/radier', [AbonnementController::class, 'radierUnAbonnement'])->name('abonnements.radier');
+Route::post('/abonnements/{abonnement}/radier', [AbonnementController::class, 'radierUnMenage'])->name('abonnements.radier');
 Route::post('/abonnements/{abonnement}/annuler', [AbonnementController::class, 'annulerUnAbonnement'])->name('abonnements.annuler');
 Route::post('/abonnements/{abonnement}/valider', [AbonnementController::class, 'validerUnAbonnement'])->name('abonnements.valider');
 Route::post('/abonnements/{abonnement}/desabonnee', [AbonnementController::class, 'desabonneeUnAbonnement'])->name('abonnements.desabonnee');
