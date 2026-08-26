@@ -9,15 +9,17 @@ class Zone extends Model
 {
     //
     //
-        protected $table = 'tournees';
-    protected $fillable = ['status','date','itineraire'];
-    
-    public function tournees():HasMany {
+    protected $table = 'zones';
+    protected $fillable = ['designation'];
+
+    public function tournees(): HasMany
+    {
         return $this->hasMany(Tournee::class);
     }
 
 
-     public function quartiers():HasMany {
+    public function quartiers(): HasMany
+    {
         return $this->hasMany(Quartier::class);
     }
 }

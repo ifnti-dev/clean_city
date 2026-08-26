@@ -10,12 +10,26 @@ use App\Models\Quartier;
 use App\Models\Tarif;
 use App\Models\TypeHabitat;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
+use Override;
 use SweetAlert2\Laravel\Swal;
 
 
-class AbonnementController extends Controller
+class AbonnementController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:abonnement.voire', only: ['index', 'show']),
+            new Middleware('permission:abonnement.creer', only: ['create', 'store']),
+            new Middleware('permission:abonnement.modifier', only: ['edite', 'update']),
+            new Middleware('permission:abonnement.supprimer', only: ['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
 
@@ -28,21 +42,20 @@ class AbonnementController extends Controller
         ]);
 
         // dump($query->get());
-        
+
         // Recherche
         if ($request->filled('search')) {
             $search = $request->search;
 
             $query->whereHas('menage', function ($q) use ($search) {
-                $q->where('code', 'like', "%{$search}%")
-                    ->orWhere('designation', 'like', "%{$search}%");
-            })
-                ->orWhereHas('menage.client.user', function ($q) use ($search) {
-                    $q->where('nom', 'like', "%{$search}%");
-                });
+                $q->where('code', 'like', "%$search%")
+                    ->orWhere('designation', 'like', "%$search%");
+            })->orWhereHas('menage.client.user', function ($q) use ($search) {
+                $q->where('nom', 'like', "%$search%");
+            });
         }
 
-        // Filtre état
+
         if ($request->filled('etat')) {
             $query->where('etat', $request->etat);
         }
@@ -118,7 +131,7 @@ class AbonnementController extends Controller
         //
 
         $validated = $request->validate([
-            "date_debut" => "required|date:after_now ",
+            "date_debut" => "required|date|after_or_equal:today ",
             "date_fin" => "date|nullable",
             "client_id" => "required|integer|exists:clients,id",
             "designation" => "required|string|min:3|unique:menages",
@@ -154,17 +167,16 @@ class AbonnementController extends Controller
             Abonnement::create([
                 'date_debut' => $validated['date_debut'],
                 'date_fin' => $validated['date_fin'] ? $validated['date_debut'] : null,
-                // 'etat' => "ACTIF",
                 'tarif_id' => $validated['tarif_id'],
                 'menage_id' => $menage->id,
             ]);
-
-            return to_route('abonnements.index')->with([
-                "success" => "L'Abonnement de  " . strtoupper($menage->designation) . " est Creer",
-                "text" => "Voici le Code du Menage: " . strtoupper($menage->code)
-
-            ]); //" est creer avec succes, 
         });
+
+        return to_route('abonnements.index')->with([
+            // "success" => "L'Abonnement de  " . strtoupper($menage->designation) . " est Creer",
+            // "text" => "Voici le Code du Menage: " . strtoupper($menage->code)
+
+        ]);
 
 
         return to_route('abonnements.index')->with("erros", "Ressayer la creation de cette abonnement  ");
@@ -234,6 +246,8 @@ class AbonnementController extends Controller
                 'tarif_id' => $validated['tarif_id'],
             ]);
         });
+
+        // envoyer un message au client , qu'il a ete adhere a espoir plus
 
         return to_route('abonnements.index')->with([
             "success" => "L'Abonnement de  " . strtoupper($abonnement->menage->designation) . " est Modifier",
