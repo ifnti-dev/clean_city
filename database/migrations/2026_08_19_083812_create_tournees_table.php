@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('tournees', function (Blueprint $table) {
             $table->id();
-            $table->enum('statut', ['PREVU', 'EN_COUR', 'TERMINEE']);
+            $table->enum('statut', ['PREVU', 'EN_COUR', 'TERMINEE'])->default('PREVU');
             $table->date('date');
-            $table->string('itineraire');
+            $table->string('itineraire')->nullable();
             $table->unsignedBigInteger('employe_id');
             $table->unsignedBigInteger('zone_id');
 

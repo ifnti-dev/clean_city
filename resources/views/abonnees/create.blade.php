@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot>
-        
+
         <!-- card -->
 
         <!-- {{$errors}} -->
@@ -57,8 +57,8 @@
                             <x-input-error :messages="$errors->get('client_id')" class="mt-2" />
                         </div>
 
-                         <!-- le client -->
-                        <div class="mt-4">
+                        <!-- le tarif -->
+                        <!-- <div class="mt-4">
                             <x-input-label for="tarif" :value="__('Tarif')" />
                             <select name="tarif_id" id="tarif_id" class="w-full rounded-lg">
                                 <option value="">Choisissez Le Tarif </option>
@@ -68,7 +68,7 @@
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('tarif_id')" class="mt-2" />
-                        </div>
+                        </div> -->
 
                     </div>
                     <!-- nom menage -->

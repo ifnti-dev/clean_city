@@ -19,14 +19,14 @@
                     </div>
                 </div>
 
-                {{-- Filtres --}}
+                {{--filtre --}}
                 <div class="card shadow mb-6 p-5">
 
                     <form method="GET" action="{{ route('abonnements.index') }}">
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
 
-                            {{-- Recherche --}}
+                            {{-- recherche --}}
                             <div class="lg:col-span-2">
                                 <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
                                     Recherche
@@ -37,7 +37,7 @@
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
 
-                            {{-- Etat --}}
+                      
                             <div>
                                 <label for="etat" class="block text-sm font-medium text-gray-700 mb-1">
                                     État
@@ -57,7 +57,7 @@
                                 </select>
                             </div>
 
-                            {{-- En règle --}}
+                            {{-- en regle --}}
                             <div>
                                 <label for="en_regle" class="block text-sm font-medium text-gray-700 mb-1">
                                     En règle
@@ -77,7 +77,7 @@
                                 </select>
                             </div>
 
-                            {{-- Date début --}}
+                            {{-- Date debut --}}
                             <div>
                                 <label for="date_debut" class="block text-sm font-medium text-gray-700 mb-1">
                                     Date début
@@ -182,7 +182,7 @@
                                 <a href="{{ route('abonnements.show', $abonnement->id) }}">
                                     <x-secondary-button
                                         class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
-                                        Show
+                                        Voir
                                     </x-secondary-button>
                                 </a>
 

@@ -18,8 +18,8 @@
         <!-- navbar nav -->
         <ul class="flex ml-auto items-center">
             <li class="dropdown stopevent mr-2">
-                <a class="text-gray-600" href="#" role="button" id="dropdownNotification"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="text-gray-600" href="#" role="button" id="dropdownNotification" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -136,10 +136,14 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="./index.html">
-                                <i class="w-4 h-4" data-feather="power"></i>
-                                Sign Out
-                            </a>
+                            <form action="{{route('logout')}}" method="post">
+                                @csrf
+                                <button type="submit" class="dropdown-item" href="{{route('logout')}}">
+                                    <i class="w-4 h-4" data-feather="power"></i>
+                                    Deconnexion
+                                </button>
+                            </form>
+
                         </li>
                     </ul>
                 </div>

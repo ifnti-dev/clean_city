@@ -38,7 +38,7 @@
                   </li>
 
                   <li class="nav-item">
-                     <a class="nav-link " href="./pricing.html">Ramassage</a>
+                     <a class="nav-link " href="{{route('ramassages.index')}}">Ramassage</a>
                   </li>
                   
                </ul>
