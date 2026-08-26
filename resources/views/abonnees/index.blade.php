@@ -232,7 +232,7 @@
                                     </x-secondary-button>
                                 </form>
 
-                                @elseif($abonnement->menage->est_en_regle==0 && $abonnement->etat=="INACTIF" )
+                                @elseif($abonnement->menage->est_en_regle==0 && $abonnement->etat=="ACTIF" )
 
                                 <form action="{{ route('abonnements.desabonnee', $abonnement->id) }}" method="post">
                                     @csrf
