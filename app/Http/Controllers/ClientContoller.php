@@ -37,7 +37,6 @@ class ClientContoller extends Controller
             // Toast with pause on hover
             Swal::success([
                 'title' => session('supprimer'),
-                'position' => 'top-center',
                 'icon' => 'succes',
                 'showConfirmButton' => true ,
                 'timer' => 2000,           
