@@ -18,11 +18,11 @@ class EmployeSeeder extends Seeder
         //
          DB::table('users')->insert([
             [
-                "nom" =>"liza",
-                "prenom" =>"cendrine",
+                "nom" =>"abdoulaye",
+                "prenom" =>"abdoulaye",
                 "contacte" => "90298677" ,
-                "email" => "liza@gmail.com",
-                "password" => Hash::make("123456789"),
+                "email" => "abdoulaye@gmail.com",
+                "password" => Hash::make("11111111"),
               
 
             ],
@@ -61,6 +61,10 @@ class EmployeSeeder extends Seeder
                 "user_id" => 6
             ]
         ]);
+
+        $respo = User::where('contacte', '90298677')->first();
+        $respo->assignRole('responssable');
+
 
 
         $employe = User::where('contacte', '90003000')->first();
