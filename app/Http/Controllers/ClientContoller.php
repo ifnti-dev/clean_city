@@ -29,7 +29,6 @@ class ClientContoller extends Controller
     }
 
 
-
     public function index()
     {
         //

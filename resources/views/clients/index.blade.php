@@ -53,19 +53,28 @@
                                     
                                     <td class=" flex item-center gap-6 px-3 py-3 text-left ">
 
-                                        <a href="{{ route('clients.show', $client->id) }}">  <x-secondary-button class="bg-blue-800"> Voire </x-secondary-button> </a>
+                                        <a href="{{ route('clients.show', $client->id) }}">   
+                                            <x-secondary-button
+                                                class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
+                                                Voire
+                                            </x-secondary-button> 
+                                        </a>
                                     
                                         <a href="{{ route('clients.edit', $client->id) }}"> 
-                                            <x-secondary-button>
-                                                Editer
-                                            </x-secondary-button>    
+                                           <x-secondary-button
+                                                class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
+                                                Modifier
+                                            </x-secondary-button>
                                         </a>
 
                                         <form action="{{ route('clients.destroy', $client->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
 
-                                            <x-danger-button> Supprimer </x-danger-button> 
+                                           <x-secondary-button type="submit"
+                                                class="bg-red-700 text-white border-red-700 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">
+                                                Supprimer
+                                            </x-secondary-button>
                                         </form>
 
                                     </td>

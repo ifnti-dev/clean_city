@@ -2,33 +2,25 @@
     <x-slot>
 
         <div class="w-full p-6 flex justify-center items-center">
-
             <div class="w-full">
-
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline gap-4 mb-6">
-
                     <div>
                         <h1 class="text-blue-700 font-medium text-2xl max-sm:text-xl">
                             Détails de l'abonnement
                         </h1>
                     </div>
-
                     <div class="flex items-center gap-2 w-60 max-sm:w-full">
-
                         <a href="{{ route('abonnements.index') }}" class="w-full">
                             <x-primary-button class="w-full justify-center">
                                 Liste
                             </x-primary-button>
                         </a>
-
                         <a href="{{ route('abonnements.edit', $abonnement->id) }}" class="w-full">
                             <x-primary-button class="w-full justify-center bg-yellow-700 hover:bg-yellow-600">
                                 Modifier
                             </x-primary-button>
                         </a>
-
                     </div>
-
                 </div>
 
                 <div class="bg-white rounded-md shadow p-6">
