@@ -11,5 +11,6 @@ class PaiementController extends Controller
     public function liste_paiement(){
         $paiement_abonnee = PaiementAbonnement::all();
         
+        
     }
 }

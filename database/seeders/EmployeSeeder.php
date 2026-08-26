@@ -31,7 +31,9 @@ class EmployeSeeder extends Seeder
                 "prenom" =>"ali",
                 "contacte" => "97896375" ,
                 "email" => "kodjo@gmail.com",
-                "password" => Hash::make("123456789"),
+
+                "password" => Hash::make("1234567890"),
+
               
 
             ],
@@ -40,7 +42,8 @@ class EmployeSeeder extends Seeder
                 "prenom" =>"alice",
                 "contacte" => "90003000" ,
                 "email" => "assia@gmail.com",
-                "password" => Hash::make("123456789"),
+
+                "password" => Hash::make("12345678"),
               
 
             ],
@@ -60,8 +63,7 @@ class EmployeSeeder extends Seeder
         ]);
 
 
-        $client = User::where('contacte', '97896545')->first();
-        $client->assignRole('client');
-
+        $employe = User::where('contacte', '90003000')->first();
+        $employe->assignRole('agent_collecte_fonds');
     }
 }

@@ -12,18 +12,16 @@ return Application::configure(basePath: dirname(__DIR__))
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
-    )
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
-         $middleware->alias([
+
+    )->withMiddleware(function (Middleware $middleware): void {
+        
+        $middleware->alias([
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
         ]);
-        //$middleware->redirectGuestsTo(fn (Request $request) => route('login'));
-        
-    
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
+
