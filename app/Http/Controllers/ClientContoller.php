@@ -45,7 +45,6 @@ class ClientContoller extends Controller implements HasMiddleware
                 'showConfirmButton' => true ,
                 'timer' => 20000,           
             ]);
-           
         }
 
         
