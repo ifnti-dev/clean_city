@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\User;
-use GuzzleHttp\Middleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use SweetAlert2\Laravel\Swal;
 
-class ClientContoller extends Controller
+class ClientContoller extends Controller implements HasMiddleware
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +21,7 @@ class ClientContoller extends Controller
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:client.voir', only:['index', 'show']),
+            new Middleware('permission:client.voire', only:['index', 'show']),
             new Middleware('permission:client.creer', only:['create', 'store']),
             new Middleware('permission:client.modifier', only:['edite', 'update']),
             new Middleware('permission:client.supprimer', only:['destroy']),
@@ -29,9 +30,20 @@ class ClientContoller extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         //
+        
+        $search = $request->input('search');
+        // $query = Client::with(['user', 'menages'])->get();
+        
+        // if($search){
+        //     $query->where('nom', 'like', "%$search%");
+
+        // }
+        
+        
+
         if (session(('supprimer'))) {
             // Toast with pause on hover
             Swal::error([
@@ -40,11 +52,13 @@ class ClientContoller extends Controller
                 'showConfirmButton' => true ,
                 'timer' => 20000,           
             ]);
-            session('supprimer');
+           
         }
 
+        
         $clients = Client::with(['user', 'menages'])->get();
-        return view('clients.index', compact('clients'));
+    
+        return view('clients.index', compact('clients', 'search'));
 
     }
 
@@ -93,6 +107,7 @@ class ClientContoller extends Controller
 
 
         return to_route('clients.index');
+        //envoyer un message apres creation
     }
 
     /**
@@ -144,6 +159,8 @@ class ClientContoller extends Controller
 
 
         return to_route('clients.index');
+
+        //envoyer un message apres modification
     
     }
 
@@ -167,7 +184,6 @@ class ClientContoller extends Controller
         
 
         
-       
 
     }
 }
