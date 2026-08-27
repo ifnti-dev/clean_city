@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('paiement_abonnements', function (Blueprint $table) {
+        Schema::create('factures', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('nb_mois');
             $table->date('date_debut');
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->json('mois');  //a demander a monsieur
             $table->unsignedInteger('abonnement_id');
             $table->unsignedInteger('tarif_id');
-            $table->timestamps();
+          
             $table->unsignedBigInteger('methode_paiement_id');
 
             $table->foreign('abonnement_id')
@@ -36,6 +36,8 @@ return new class extends Migration
                 ->references('id')
                 ->on('methode_paiements')
                 ->onDelete('cascade');
+
+              $table->timestamps();    
         });
     }
     

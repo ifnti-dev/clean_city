@@ -18,13 +18,11 @@ class AbonnementSeeder extends Seeder
             [
                 'date_debut' => now(),
                 'menage_id' => 1,
-                'tarif_id' => 1,
                 'etat' => 'ACTIF'
             ],
             [
                 'date_debut' => now(),
                 'menage_id' => 2,
-                'tarif_id' => 2,
                 'etat' => 'INACTIF'
             ]
         ]);

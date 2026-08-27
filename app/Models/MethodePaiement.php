@@ -15,7 +15,7 @@ class MethodePaiement extends Model
     
     //relation
     public function paiement_abonnements(): HasMany{
-        return $this->hasMany(PaiementAbonnement::class);
+        return $this->hasMany(Facture::class);
     }
 
     public function paiement_commandes(): HasMany{

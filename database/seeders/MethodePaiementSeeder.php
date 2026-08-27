@@ -17,13 +17,14 @@ class MethodePaiementSeeder extends Seeder
 
         DB::table('methode_paiements')->insert([
             [
-                'nom' => 'ESPECE',
+                'nom' => 'methode 1',
                 'sold' => 12000, 
-                
+                'type' => 'MOBILE_MONEY'
             ],
             [
-                'nom' => 'ESPECE',
+                'nom' => 'methode 2',
                 'sold' => 12000, 
+                'type' => 'ESPECE'
                 
             ],
         ]);

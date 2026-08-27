@@ -17,18 +17,13 @@ return new class extends Migration
             $table->date('date_fin')->nullable();
             $table->enum('etat', ['ACTIF', 'INACTIF'])->default('INACTIF');
             $table->unsignedBigInteger('menage_id');
-            $table->unsignedBigInteger('tarif_id');
 
             $table->foreign('menage_id')
                 ->references('id')
                 ->on('menages')
                 ->onDelete('cascade');
 
-            $table->foreign('tarif_id')
-                ->references('id')
-                ->on('tarifs')
-                ->onDelete('set null');
-            $table->timestamps();
+            
         });
     }
 

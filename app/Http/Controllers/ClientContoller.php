@@ -34,8 +34,16 @@ class ClientContoller extends Controller implements HasMiddleware
     public function index(Request $request)
     {
         //
-        
         $search = $request->input('search');
+        $query = Client::query()->join('users', 'user_id', 'users.id');
+
+        //dd($query->join('menages', 'menages.id', 'client_id')->get());
+
+        if($search){
+            $query->where('nom', 'like', "%$search%")
+                ->orwhere('prenom', 'like', "%$search%")
+                ->orwhere('contacte', 'like', "%$search%");
+        }
 
         if (session(('supprimer'))) {
             // Toast with pause on hover
@@ -48,7 +56,8 @@ class ClientContoller extends Controller implements HasMiddleware
         }
 
         
-        $clients = Client::with(['user', 'menages'])->get();
+       
+        $clients = $query->get();
     
         return view('clients.index', compact('clients', 'search'));
 

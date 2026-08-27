@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         //
-        Schema::table('paiement_abonnements', function (Blueprint $table) {
+        Schema::table('factures', function (Blueprint $table) {
             $table->date('date');
             $table->decimal('montant', 8, 3);
             $table->string('id_transaction');

@@ -34,7 +34,7 @@
 
 
                   <li class="nav-item">
-                     <a class="nav-link " href="./billing.html">Paiement</a>
+                     <a class="nav-link " href="{{route('factures.index') }}">Paiement</a>
                   </li>
 
                   <li class="nav-item">
