@@ -10,13 +10,16 @@ class Facture extends Model
     //
      protected $table = 'factures';
     protected $fillable = [
-        'nbMois',
+        'nb_mois',
         'mois',
         'date_debut',
         'date_fin',
         'date',
         'montant',
-        'transaction_id'
+        'abonnement_id',
+        'tarif_id',
+        'methode_paiement_id',
+        'id_transaction',
     ];
 
     

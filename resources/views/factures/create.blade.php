@@ -88,7 +88,6 @@
                         type="date"
                         name="date_fin"
                         :value="old('date_fin')"
-                        required
                         placeholder="date_fin"
                         autocomplete="given-name"
                     />
@@ -133,11 +132,11 @@
             
             <div class="flex gap-5 justify-between">
                 <div class="mt-4 w-full">
-                    <x-input-label for="abonnement" :value="__('Abonnement')" />
+                    <x-input-label for="abonnement" :value="__('Abonnee')" />
 
                         <select name="abonnement_id" id="abonnement_id" placholder="" class="w-full rounded-lg">
                             @foreach ( $abonnements as $abonnement )
-                            <option @selected(old('abonnement_id')==$abonnement->id) value="{{ $abonnement->id }}">{{ $abonnement->designation. "  à ".$abonnement->montant  }}</option>
+                            <option @selected(old('abonnement_id')==$abonnement->id) value="{{ $abonnement->id }}">{{ $abonnement->menage->designation }}</option>
                             @endforeach
                         </select>
 

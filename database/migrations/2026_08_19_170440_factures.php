@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('nb_mois');
             $table->date('date_debut');
             $table->date('date_fin');
-            $table->json('mois');  //a demander a monsieur
+            $table->json('mois')->nullable();  //a demander a monsieur
             $table->unsignedInteger('abonnement_id');
             $table->unsignedInteger('tarif_id');
           
