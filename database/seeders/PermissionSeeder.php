@@ -51,9 +51,16 @@ class PermissionSeeder extends Seeder
             'ramassage.modifier',
             'ramassage.supprimer',
             
+            // 'abonnement.voire',
+            // 'abonnement.creer',
+            // 'abonnement.annuler',
+
             'abonnement.voire',
             'abonnement.creer',
-            'abonnement.annuler',
+            'abonnement.modifier',
+            'abonnement.supprimer',
+            'abonnement.suspendre',
+            'abonnement.desabonnee',
 
             'commande.confirmer',
             'commande.rejeter',

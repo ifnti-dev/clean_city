@@ -14,42 +14,45 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-
         // $roles_client =  Role::where('name', 'client')->first();
         // $roles_client->syncPermissions(
         //    
         // );
 
-        
+
 
         $roles_responssable = Role::where('name', 'responssable')->first();
         $roles_responssable->syncPermissions(
             Permission::all()
         );
 
+        $agent_collecte_ordures = Role::where('name', 'agent_collecte_ordures')->first();
+        $agent_collecte_ordures->syncPermissions(
+            Permission::where('name', 'ramassage.voire')
+                ->orWhere('name', 'ramassage.demarer')
+                ->orWhere('name', 'ramassage.terminer')->get()
+        );
+
 
         $roles_comptable = Role::where('name', 'comptable')->first();
         $roles_comptable->syncPermissions(
-            Permission::where('name', 'abonnement.voire')
-            ->orWhere('name', 'abonnement.annuler')
-            ->orWhere('name', 'abonnement.creer')
-                
+            Permission::where('name', 'like','%abonnement%')->get()
         );
+
 
         $roles_secretaire = Role::where('name', 'comptable')->first();
         $roles_secretaire->syncPermissions(
             Permission::where('name', 'commande.confirmer')
-            ->orWhere('name', 'commande.rejeter')
-            ->get()
-                
+                ->orWhere('name', 'commande.rejeter')
+                ->get()
+
         );
 
-        
+
 
         $roles_livreure = Role::where('name', 'livreure')->first();
         $roles_livreure->syncPermissions(
-            Permission::where('name', 'livraison.confirmer' )
+            Permission::where('name', 'livraison.confirmer')
                 ->orWhere('name', 'livraison.demarer')
                 ->get()
         );

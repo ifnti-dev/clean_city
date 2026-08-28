@@ -13,12 +13,9 @@ class Tarif extends Model
     protected $table = 'tarifs';
     protected $fillable = ['designation', 'montant'];
 
-    // public function paiement_abonnements():HasMany {
-    //     return $this->hasMany(PaiementAbonnement::class);
-    // }
-
-    public function abonnement(): HasMany
-    {
-        return $this->hasMany(Abonnement::class);
+    public function paiement_abonnements():HasMany {
+        return $this->hasMany(PaiementAbonnement::class);
     }
+
+   
 }
