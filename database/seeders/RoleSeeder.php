@@ -19,18 +19,16 @@ class RoleSeeder extends Seeder
             'responssable',
             'secretaire',
             'comptable',
-            'livreure',
-            'client',
             'agent_collecte_ordures',
             'agent_collecte_fonds',
-            
+            'livreure',
+            'client',
         ];
 
-        
- 
-        foreach($roles_name as $name){
-            Role::create(['name' => $name]);
 
+
+        foreach ($roles_name as $name) {
+            Role::create(['name' => $name]);
         }
     }
 }

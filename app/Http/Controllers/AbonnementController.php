@@ -40,6 +40,9 @@ class AbonnementController extends Controller implements HasMiddleware
             'menage.client.user'
         ]);
 
+
+        
+
         // dump($query->get());
 
         // Recherche
@@ -134,16 +137,16 @@ class AbonnementController extends Controller implements HasMiddleware
             "date_fin" => "date|nullable",
             "client_id" => "required|integer|exists:clients,id",
             "designation" => "required|string|min:3|unique:menages",
-            "tarif_id" => "required|integer|exists:tarifs,id",
-            "longitude" => "required|integer",
-            "latitude" => "required|integer",
+            // "tarif_id" => "required|integer|exists:tarifs,id",
+            "longitude" => "required|numeric",
+            "latitude" => "required|numeric",
             'type_habitat_id' =>  "required|integer|exists:type_habitats,id",
             'quartier_id' =>  "required|integer|exists:quartiers,id",
         ]);
 
         // dd($validated);
 
-        DB::transaction(function () use ($validated) {
+        $menage = DB::transaction(function () use ($validated) {
 
             $code = "0000" . Menage::latest('id')->first()->id;
             $code = substr($code, -5);
@@ -166,17 +169,20 @@ class AbonnementController extends Controller implements HasMiddleware
             Abonnement::create([
                 'date_debut' => $validated['date_debut'],
                 'date_fin' => $validated['date_fin'] ? $validated['date_debut'] : null,
-                'tarif_id' => $validated['tarif_id'],
+                // 'tarif_id' => $validated['tarif_id'],
                 'menage_id' => $menage->id,
             ]);
+
+            return $menage;
         });
 
-        return to_route('abonnements.index')->with([
-            // "success" => "L'Abonnement de  " . strtoupper($menage->designation) . " est Creer",
-            // "text" => "Voici le Code du Menage: " . strtoupper($menage->code)
+        if ($menage) {
+            return to_route('abonnements.index')->with([
+                "success" => "L'Abonnement de  " . strtoupper($menage->designation) . " est Creer",
+                "text" => "Voici le Code du Menage: " . strtoupper($menage->code)
 
-        ]);
-
+            ]);
+        }
 
         return to_route('abonnements.index')->with("erros", "Ressayer la creation de cette abonnement  ");
     }
@@ -200,9 +206,9 @@ class AbonnementController extends Controller implements HasMiddleware
         // dd($abonnement);
         $clients = Client::all();
         $quartiers = Quartier::all();
-        $tarifs = Tarif::all();
+        // $tarifs = Tarif::all();
         $type_habitats = TypeHabitat::all();
-        return view('abonnees.edit', compact('abonnement', 'tarifs', 'clients', 'type_habitats', 'quartiers'));
+        return view('abonnees.edit', compact('abonnement', 'clients', 'type_habitats', 'quartiers'));
     }
 
 
@@ -218,7 +224,7 @@ class AbonnementController extends Controller implements HasMiddleware
             "date_fin" => "date|nullable",
             "client_id" => "required|integer|exists:clients,id",
             "designation" => "required|string|min:3|unique:menages,designation," . $abonnement->menage->id,
-            "tarif_id" => "required|integer|exists:tarifs,id",
+            // "tarif_id" => "required|integer|exists:tarifs,id",
             "longitude" => "required|integer",
             "latitude" => "required|integer",
             'type_habitat_id' =>  "required|integer|exists:type_habitats,id",
@@ -242,7 +248,7 @@ class AbonnementController extends Controller implements HasMiddleware
             $abonnement->update([
                 'date_debut' => $validated['date_debut'],
                 'date_fin' => $validated['date_fin'] ? $validated['date_debut'] : null,
-                'tarif_id' => $validated['tarif_id'],
+                // 'tarif_id' => $validated['tarif_id'],
             ]);
         });
 

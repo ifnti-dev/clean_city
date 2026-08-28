@@ -1,41 +1,29 @@
 <x-app-layout>
     <x-slot>
 
-        <div class="w-full flex justify-center items-center ">
-
-            <div class="w-full ">
-                <div class="h-40 bg-indigo-600 py-2 px-8 pt-10 lg:pt-14 pb-16 flex justify-between items-baseline">
-                    <div class="flex justify-between  items-baseline ">
-                        <h1 class="text-white font-medium text-2xl max-sm:pl-2 max-sm:text-xl">
-                            Détails de l'abonnement : <span
-                                class="capitalize">{{$abonnement->menage->designation}}</span>
+        <div class="w-full p-6 flex justify-center items-center">
+            <div class="w-full">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline gap-4 mb-6">
+                    <div>
+                        <h1 class="text-blue-700 font-medium text-2xl max-sm:text-xl">
+                            Détails de l'abonnement
                         </h1>
                     </div>
-
-                    <div class="flex items-center gap-2 max-sm:w-full">
-                        @can('abonnement.voire')
-                        <a href="{{ route('abonnements.index') }}" class="w-full w-60">
-                            <x-secondary-button
-                                class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
-                                {{ __('Listes') }}
-                            </x-secondary-button>
+                    <div class="flex items-center gap-2 w-60 max-sm:w-full">
+                        <a href="{{ route('abonnements.index') }}" class="w-full">
+                            <x-primary-button class="w-full justify-center">
+                                Liste
+                            </x-primary-button>
                         </a>
-                        @endcan
-
-                        @can('abonnement.modifier')
-                        <a href="{{ route('abonnements.edit', $abonnement->id) }}" class="w-full w-60">
-                            <x-secondary-button
-                                class="bg-yellow-500 text-black py-3  hover:bg-yellow-400 w-full justify-center max-sm:py-2 max-sm:text-md ">
-                                {{ __('Modifier') }}
-                            </x-secondary-button>
+                        <a href="{{ route('abonnements.edit', $abonnement->id) }}" class="w-full">
+                            <x-primary-button class="w-full justify-center bg-yellow-700 hover:bg-yellow-600">
+                                Modifier
+                            </x-primary-button>
                         </a>
-                        @endcan
-
                     </div>
-        
                 </div>
 
-                <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
+                <div class="bg-white rounded-md shadow p-6">
 
                     <div class="border-b border-gray-200 pb-4 mb-6">
                         <h2 class="text-xl font-semibold text-gray-800">
@@ -80,7 +68,7 @@
                             </p>
                         </div>
 
-
+                    
 
                         <div>
                             <p class="text-lg text-gray-500">Date de début</p>
@@ -100,13 +88,13 @@
                             <p class="text-lg text-gray-500">État</p>
                             <div class="mt-1">
                                 @if ($abonnement->etat == "ACTIF")
-                                <span class="bg-green-200 px-2 py-1 text-green-900 text-lg font-medium rounded-md">
-                                    {{ $abonnement->etat }}
-                                </span>
+                                    <span class="bg-green-200 px-2 py-1 text-green-900 text-lg font-medium rounded-md">
+                                        {{ $abonnement->etat }}
+                                    </span>
                                 @else
-                                <span class="bg-red-200 px-2 py-1 text-red-600 text-lg font-medium rounded-md">
-                                    {{ $abonnement->etat }}
-                                </span>
+                                    <span class="bg-red-200 px-2 py-1 text-red-600 text-lg font-medium rounded-md">
+                                        {{ $abonnement->etat }}
+                                    </span>
                                 @endif
                             </div>
                         </div>
@@ -115,13 +103,13 @@
                             <p class="text-lg text-gray-500">En règle</p>
                             <div class="mt-1">
                                 @if ($abonnement->menage->est_en_regle == 1)
-                                <span class="bg-green-200 px-2 py-1 text-green-900 text-lg font-medium rounded-md">
-                                    Oui
-                                </span>
+                                    <span class="bg-green-200 px-2 py-1 text-green-900 text-lg font-medium rounded-md">
+                                        Oui
+                                    </span>
                                 @else
-                                <span class="bg-red-200 px-2 py-1 text-red-600 text-lg font-medium rounded-md">
-                                    Non
-                                </span>
+                                    <span class="bg-red-200 px-2 py-1 text-red-600 text-lg font-medium rounded-md">
+                                        Non
+                                    </span>
                                 @endif
                             </div>
                         </div>
