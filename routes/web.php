@@ -2,8 +2,12 @@
 
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\ClientContoller;
+use App\Http\Controllers\FactureController;
+use App\Http\Controllers\PaiementAbonnementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RamassageController;
+use App\Models\Facture;
+use App\PaiementAbonnement;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/abonnements/{abonnement}/annuler', [AbonnementController::class, 'annulerUnAbonnement'])->name('abonnements.annuler');
     Route::post('/abonnements/{abonnement}/valider', [AbonnementController::class, 'validerUnAbonnement'])->name('abonnements.valider');
     Route::post('/abonnements/{abonnement}/desabonnee', [AbonnementController::class, 'desabonneeUnAbonnement'])->name('abonnements.desabonnee');
+    
     Route::resource('clients', ClientContoller::class);
 
 
@@ -44,4 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/ramassages/{tournee}/demarer', [RamassageController::class, 'demarerRamassage'])->name('ramassages.demarer');
     Route::post('/ramassages/{tournee}/terminer', [RamassageController::class, 'terminerRamassage'])->name('ramassages.terminer');
     Route::post('/ramassages/{tournee}/annuler', [RamassageController::class, 'annulerRamassage'])->name('ramassages.annuler');
+
+    Route::resource('factures', FactureController::class);
+
 });

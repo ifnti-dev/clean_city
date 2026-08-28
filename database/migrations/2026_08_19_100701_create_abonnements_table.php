@@ -22,6 +22,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('menages')
                 ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

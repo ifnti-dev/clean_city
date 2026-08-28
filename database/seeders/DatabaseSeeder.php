@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             CommandeSeeder::class,
             LigneCommandeSeeder::class,
             MethodePaiementSeeder::class,
-            PaiementAbonnementSeeder::class,
+            FactureSeeder::class,
             PaiementCommandeSeeder::class,
         ]);
     }
