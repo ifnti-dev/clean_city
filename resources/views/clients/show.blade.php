@@ -1,17 +1,16 @@
-<x-app-layout> 
-
+<x-app-layout>
     <x-slot>
 
+        <div class="w-full flex justify-center items-center ">
 
-        <div class="w-full p-6 flex justify-center items-center">
-            <div class="w-full">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline gap-4 mb-6">
-                    <div>
-                        <h1 class="text-blue-700 font-medium text-2xl max-sm:text-xl">
-                            Détails du client
+            <div class="w-full ">
+                <div class="h-40 bg-indigo-600 py-2 px-8 pt-10 lg:pt-14 pb-16 flex justify-between items-baseline">
+                    <div class="flex justify-between  items-baseline ">
+                        <h1 class="text-white font-medium text-2xl max-sm:pl-2 max-sm:text-xl">Details d'un client
                         </h1>
                     </div>
-                    <div class="flex items-center gap-2 w-60 max-sm:w-full">
+
+                  <div class="flex items-center gap-2 w-60 max-sm:w-full">
                         <a href="{{ route('clients.index') }}" class="w-full">
                             <x-primary-button class="w-full justify-center">
                                 Liste
@@ -24,8 +23,11 @@
                         </a>
                     </div>
                 </div>
+                    
+                    
+                
 
-                <div class="bg-white rounded-md shadow p-6">
+                <div class="card  mt-[-50px] p-5 mx-4 mb-6 ">
 
                     <div class="border-b border-gray-200 pb-4 mb-6">
                         <h2 class="text-xl font-semibold text-gray-800">

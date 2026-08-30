@@ -32,7 +32,6 @@ class FactureController extends Controller
         $methode_paiements = MethodePaiement::all();
         $tarifs = Tarif::all();
         $abonnements = Abonnement::with('menage')->get();
-        //dd($abonnements);
 
         return view('factures.create', compact('methode_paiements', 'tarifs', 'abonnements'));
     }
@@ -40,43 +39,39 @@ class FactureController extends Controller
     
     public function store(Request $request)
     {
-        //
         $validated = $request->validate([
-
-            'nb_mois' => 'required|integer',
-            'montant' => 'required|integer',
-            'date_debut' => 'required|date|after_or_equal:today ',
-            'date_fin' => 'nullable',
-            'mois' => 'nullable',
-            'tarif_id' => 'required',
+            'lesmois' => 'required|array',
+            'tarif_id' => 'required|integer|exists:tarifs,id',
             'methode_paiement_id' => 'required',
             'abonnement_id' => 'required',
             
-
         ]);
 
          
         DB::transaction(function() use($validated){
-            $date = $validated['date_debut'];
-            $date_ = Carbon::parse($date);
-            //dd(Carbon::parse($date));
 
-            $date_fin = $date_->add( (int) $validated['nb_mois'], 'month');
-            
+            $date_debut = Carbon::parse($validated['date_debut']);
+
+            $nb_mois = count($validated['lesmois']);
+            $date_fin = $date_debut->add( $nb_mois, 'month');
+
+             
+            $tarifs = Tarif::find($validated['tarif_id']);
+            $montant_tarif = $tarifs->montant;
+
+            $montant = $nb_mois * $montant_tarif;
+
+            $validated['montant'] = $montant ;
 
             $factures = Facture::create([
-                
-                'nb_mois' => $validated['nb_mois'],
-                'date_debut' => $validated['date_debut'],
+                'nb_mois' => $nb_mois,
                 'date_fin' => $date_fin,
+                'les_mois' => $validated['lesmois'],
                 'abonnement_id' => $validated['abonnement_id'],
                 'tarif_id' => $validated['tarif_id'],
                 'methode_paiement_id' => $validated['methode_paiement_id'],
-                'date' => $date,
                 'montant' => $validated['montant'],
                 'id_transaction' => rand(1,20),
-
-                
             ]);
 
         });

@@ -1,13 +1,26 @@
 <x-app-layout>
 
     <x-slot class="">
-    <div class="flex justify-center items-center mb-6">
-        <h3 class="text-blue-700 font-bold pt-7 text-2xl">
-           Editer un client
-        </h3>
-    </div>
 
-    <div class="bg-white  rounded-md shadow m-6 p-6">
+    <div class="w-full ">
+        <div class="h-40 bg-indigo-600 py-2 px-8 pt-10 lg:pt-14 pb-16 flex justify-between items-baseline">
+            <div class="flex justify-between  items-baseline ">
+                <h1 class="text-white font-medium text-2xl max-sm:pl-2 max-sm:text-xl">Editer un client
+                </h1>
+            </div>
+
+            <div class=" flex items-center justify-end  max-sm:pr-8 mb-14  w-60 max-sm:w-full max-sm:w-30">
+                <a href="{{ route('abonnements.create') }}">
+                    <x-secondary-button
+                        class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
+                        {{ __('Ajouter') }}
+                    </x-secondary-button>
+                </a>
+            </div>
+        </div>    
+   
+
+    <div class="card  mt-[-50px] p-5 mx-4 mb-6 ">
         <form action="{{ route('clients.update', $client->id) }}" method="POST" >
             @csrf
             @method('PUT')

@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('nb_mois');
+            $table->integer('nb_mois');
             $table->date('date_debut');
             $table->date('date_fin');
-            $table->json('mois')->nullable();  //a demander a monsieur
-            $table->unsignedInteger('abonnement_id');
-            $table->unsignedInteger('tarif_id');
+            $table->json('les_mois')->nullable();  //a demander a monsieur
+            $table->integer('abonnement_id');
+            $table->integer('tarif_id');
           
-            $table->unsignedBigInteger('methode_paiement_id');
+            $table->integer('methode_paiement_id');
 
             $table->foreign('abonnement_id')
                 ->references('id')

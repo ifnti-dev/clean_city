@@ -1,27 +1,26 @@
 <x-app-layout>
+
     <x-slot>
+        <div class="w-full p-2 flex justify-center items-center ">
+            <div class="w-full">
 
-        <div class="w-full flex justify-center items-center ">
-
-            <div class="w-full ">
-                <div class="h-40 bg-indigo-600 py-2 px-8 pt-10 lg:pt-14 pb-16 flex justify-between items-baseline">
+                <div class="h-40   bg-indigo-600 py-2 px-8 pt-10 lg:pt-14 pb-16 flex justify-between items-baseline">
                     <div class="flex justify-between  items-baseline ">
                         <h1 class="text-white font-medium text-2xl max-sm:pl-2 max-sm:text-xl">Liste des clients
                         </h1>
                     </div>
 
                     <div class=" flex items-center justify-end  max-sm:pr-8 mb-14  w-60 max-sm:w-full max-sm:w-30">
-                        <a href="{{ route('clients.create') }}">
-                            <x-secondary-button
-                                class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
-                                {{ __('Ajouter') }}
-                            </x-secondary-button>
-                        </a>
+                        @can('clients.creer')
+                            <a href="{{ route('clients.create') }}">
+                                <x-primary-button class="w-full justify-center">
+                                    {{ __('Ajouter') }}
+                                </x-primary-button>
+                            </a>
+                        @endcan
                     </div>
                 </div>
 
-                {{-- filtre --}}
-                <!-- <div class="card shadow mb-6 p-5"> -->
                 <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
                     <form method="get" action="{{ route('clients.index') }}">
                         @csrf
@@ -35,9 +34,9 @@
                                 <input type="text" name="search" id="search" value="{{ $search }}"
                                     placeholder="Nom, prenom, contacte, ..."
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                            </div>
+                            </div>   
 
-
+                            
 
                         </div>
 
@@ -58,7 +57,7 @@
                         </div>
 
                     </form>
-                </div>
+                </div> 
 
 
 
@@ -106,14 +105,12 @@
 
 
                                         @can('client.modifier')
-                                            <div>
-                                                 <a href="{{ route('clients.edit', $client->id) }}">
+                                            <a href="{{ route('clients.edit', $client->id) }}">
                                                 <x-secondary-button
                                                     class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
                                                     Modifier
                                                 </x-secondary-button>
                                             </a>
-                                        </div> 
                                         @endcan
 
                                         @can('client.supprimer')
@@ -145,7 +142,7 @@
         <div class=" flex p-4 mb-12 ">
             {{ $clients->links() }}
         </div>
-
+        
 
     </x-slot>
 

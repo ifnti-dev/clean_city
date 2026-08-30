@@ -14,11 +14,11 @@ return new class extends Migration
        Schema::create('ligne_commandes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('produit_id');
-            $table->unsignedBigInteger('commande_id');
-            $table->unsignedBigInteger('quantite');
-            $table->unsignedBigInteger('prix_courant');
-            $table->unsignedBigInteger('montant');
+            $table->integer('produit_id');
+            $table->integer('commande_id');
+            $table->unsignedInteger('quantite');
+            $table->unsignedInteger('prix_courant');
+            $table->unsignedInteger('montant');
 
             $table->foreign('produit_id')
                 ->references('id')
