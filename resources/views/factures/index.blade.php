@@ -32,8 +32,8 @@
                                     Recherche
                                 </label>
 
-                                <input type="text" name="search" id="search" value=""
-                                    placeholder="....."
+                                <input type="text" name="search" id="search" value="{{ $search }}"
+                                    placeholder="Date debut, Date fin "
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>   
 
@@ -79,15 +79,18 @@
                         <tbody class="divide-y ">
                             @forelse ($factures as $facture)
                                 <tr class="border-gray-300 border-b hover:bg-gray-100 ">
-                                    <td class="py-3 px-6 text-left">{{ $facture->nb_mois }}</td>
+
+                                    <td class="py-3 px-6 text-left">{{ $facture->nb_mois }}
+                                       
+                                    </td>
                                     <td class="py-3 px-6 text-left">{{ $facture->date_debut }}</td>
                                     <td class="py-3 px-6 text-left">{{ $facture->date_fin }}</td>
                                     <td class="py-3 px-6 text-left">
-                                        {{-- @forelse ( $facture->les_mois  as $mois) --}}
-                                            {{ $facture->les_mois}}
-                                        {{-- @empty --}}
-                                            <p>Acu mois</p>
-                                        {{-- @endforelse --}}
+                                        @forelse ( ($facture->les_mois)  as $mois)
+                                            {{ $mois}}-
+                                        @empty
+                                            <p>Acun mois</p>
+                                        @endforelse
                                         
 
                                     </td>
@@ -98,7 +101,7 @@
 
                                     <td class=" flex item-center gap-6 px-3 py-3 text-left ">
                                      
-                                            <a href="">
+                                            <a href="{{ route('factures.show', $facture->id) }}">
                                                 <x-secondary-button
                                                     class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
                                                     Voire
@@ -107,7 +110,7 @@
                                     
 
                                        
-                                            <a href="">
+                                            <a href="{{ route('factures.edit', $facture->id) }}">
                                                 <x-secondary-button
                                                     class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
                                                     Modifier

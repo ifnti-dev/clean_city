@@ -11,7 +11,7 @@ class Facture extends Model
      protected $table = 'factures';
     protected $fillable = [
         'nb_mois',
-        'mois',
+        'les_mois',
         'date_debut',
         'date_fin',
         'date',
@@ -21,10 +21,13 @@ class Facture extends Model
         'methode_paiement_id',
         'id_transaction',
     ];
+    protected $casts = [
+    'les_mois' => 'array', // Convertit automatiquement le JSON en tableau PHP
+];
 
     
     public function methodePaiement(): BelongsTo {
-        return $this->belongsTo(MethodePaiement::class, 'methodePaiement_id'); //a demander 
+        return $this->belongsTo(MethodePaiement::class, 'methode_paiement_id'); //a demander 
     }
 
     public function abonnement(): BelongsTo {

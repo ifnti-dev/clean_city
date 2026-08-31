@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
             $table->integer('nb_mois');
-            $table->date('date_debut');
+            $table->date('date_debut')->default('now()');
             $table->date('date_fin');
             $table->json('les_mois')->nullable();  //a demander a monsieur
             $table->integer('abonnement_id');

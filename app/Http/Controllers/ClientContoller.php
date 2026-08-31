@@ -46,13 +46,31 @@ class ClientContoller extends Controller implements HasMiddleware
                 ->orwhere('contacte', 'like', "%$search%");
         }
 
-        if (session(('supprimer'))) {
+
+         if (session(('success'))) {
             // Toast with pause on hover
+            if (session('text')) {
+                Swal::success([
+                    'title' => session('success'),
+                    'text' => session('text'),
+                    'showConfirmButton' => true,
+                ]);
+            } else {
+                Swal::success([
+                    'title' => session('success'),
+                    'text' => session('text'),
+                    'timer' => 2000,
+                    'showConfirmButton' => false,
+                ]);
+            }
+        }
+
+        if (session(('errors'))) {
             Swal::error([
-                'title' => session('supprimer'),
-                'icon' => 'error',
-                'showConfirmButton' => true ,
-                'timer' => 20000,           
+                'title' => session('errors'),
+                'text' => session('text'),
+                'timer' => 2000,
+                'showConfirmButton' => false,
             ]);
         }
 
@@ -113,7 +131,7 @@ class ClientContoller extends Controller implements HasMiddleware
 
 
 
-        return to_route('clients.index');
+        return to_route('clients.index')->with("success", "vous avez enregistrer le client ".strtoupper($validated['nom']) );
         //envoyer un message apres creation
         //envoyer un mail a l'utilisateur contenant son mot de pass et son mail
     }
@@ -169,7 +187,7 @@ class ClientContoller extends Controller implements HasMiddleware
             ]);
 
 
-        return to_route('clients.index');
+        return to_route('clients.index')->with("success", "vous avez modifiez le client ".strtoupper($client->user->nom) );
 
         //envoyer un message apres modification
     
@@ -187,10 +205,10 @@ class ClientContoller extends Controller implements HasMiddleware
         $menage = DB::table('menages as m')->join('clients as c', 'm.id', '=', 'm.client_id')->select('est_abonnee')->get();
         if(!$menage){
             $client->delete();
-            return to_route('clients.index');
+            return to_route('clients.index')->with("succes", "vous avez  supprimer le client". strtoupper($client->user->nom));
         }else{
            
-            return to_route('clients.index')->with("supprimer", "vous avez des menages actifs" );
+            return to_route('clients.index')->with("errors", "vous avez des menages actifs" );
         }
         
 

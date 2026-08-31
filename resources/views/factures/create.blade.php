@@ -1,7 +1,6 @@
 <x-app-layout>
 
 
-
     <x-slot>
 
         {{ $errors }}
@@ -67,7 +66,7 @@
 
                             <select name="tarif_id" id="tarif_id" placholder="" class="w-full rounded-lg">
                                 @foreach ($tarifs as $tarif)
-                                    <option  @selected(old('tarif_id') == $tarif->id) value="{{ $tarif->montant }}">
+                                    <option  @selected(old('tarif_id') == $tarif->id) value="{{ $tarif->id }}"  data-montant="{{ $tarif->montant }}">
                                         {{ $tarif->designation . '  à ' . $tarif->montant }}</option>
 
                                         <div id="{{ $tarif->id }}"></div>

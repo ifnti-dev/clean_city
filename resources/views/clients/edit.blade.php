@@ -10,10 +10,10 @@
             </div>
 
             <div class=" flex items-center justify-end  max-sm:pr-8 mb-14  w-60 max-sm:w-full max-sm:w-30">
-                <a href="{{ route('abonnements.create') }}">
+                <a href="{{ route('clients.index') }}">
                     <x-secondary-button
                         class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
-                        {{ __('Ajouter') }}
+                        {{ __('liste') }}
                     </x-secondary-button>
                 </a>
             </div>

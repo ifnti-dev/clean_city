@@ -81,7 +81,12 @@
                             <p class="text-lg text-gray-500">Est abonnee</p>
                             <p class="mt-1 font-medium text-gray-800">
                                 @forelse ($client->menages as $menage)
-                                    <div>{{ $menage->est_abonnee }}</div>
+                                    @if ($menage->est_abonnee )
+                                        <p>OUI</p>
+                                    @else
+                                        <p>NON</p>
+                                    @endif
+                                    
                                 @empty
                         
                                 @endforelse
@@ -92,7 +97,12 @@
                             <p class="text-lg text-gray-500">Est en regle</p>
                             <p class="mt-1 font-medium text-gray-800">
                                  @forelse ($client->menages as $menage)
-                                    <div>{{ $menage->est_en_regle }}</div>
+                                     @if ($menage->est_en_regle )
+                                        <p>OUI</p>
+                                    @else
+                                        <p>NON</p>
+                                    @endif
+                                    
                                 @empty
                         
                                 @endforelse
@@ -103,7 +113,7 @@
                             <p class="text-lg text-gray-500">Type Habitat</p>
                             <p class="mt-1 font-medium text-gray-800">
                                 @forelse ($client->menages as $menage)
-                                    <div>{{ $menage->type_habitat_id }}</div>
+                                    <div>{{ $menage->typeHabitat->designation }}</div>
                                 @empty
 
                                 @endforelse
