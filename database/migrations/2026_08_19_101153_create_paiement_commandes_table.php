@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('paiement_commandes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('methode_paiement_id');
+            $table->integer('methode_paiement_id');
             $table->foreign('methode_paiement_id')
                 ->references('id')
                 ->on('methode_paiements')

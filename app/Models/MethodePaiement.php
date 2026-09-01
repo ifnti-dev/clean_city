@@ -14,7 +14,7 @@ class MethodePaiement extends Model
     protected $fillable = ['nom', 'sold', 'type'];
     
     //relation
-    public function paiement_abonnements(): HasMany{
+    public function factures(): HasMany{
         return $this->hasMany(Facture::class);
     }
 

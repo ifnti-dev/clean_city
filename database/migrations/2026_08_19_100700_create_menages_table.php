@@ -23,9 +23,9 @@ return new class extends Migration
             $table->boolean('est_en_regle')->default(true);
             $table->timestamps();
 
-            $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('quartier_id');
-            $table->unsignedBigInteger('type_habitat_id');
+            $table->integer('client_id');
+            $table->integer('quartier_id');
+            $table->integer('type_habitat_id');
 
 
             $table->foreign('client_id')

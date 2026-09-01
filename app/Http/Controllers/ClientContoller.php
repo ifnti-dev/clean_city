@@ -9,6 +9,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use SweetAlert2\Laravel\Swal;
 
@@ -45,20 +46,38 @@ class ClientContoller extends Controller implements HasMiddleware
                 ->orwhere('contacte', 'like', "%$search%");
         }
 
-        if (session(('supprimer'))) {
+
+         if (session(('success'))) {
             // Toast with pause on hover
+            if (session('text')) {
+                Swal::success([
+                    'title' => session('success'),
+                    'text' => session('text'),
+                    'showConfirmButton' => true,
+                ]);
+            } else {
+                Swal::success([
+                    'title' => session('success'),
+                    'text' => session('text'),
+                    'timer' => 2000,
+                    'showConfirmButton' => false,
+                ]);
+            }
+        }
+
+        if (session(('errors'))) {
             Swal::error([
-                'title' => session('supprimer'),
-                'icon' => 'error',
-                'showConfirmButton' => true ,
-                'timer' => 20000,           
+                'title' => session('errors'),
+                'text' => session('text'),
+                'timer' => 2000,
+                'showConfirmButton' => false,
             ]);
         }
 
         
        
-        $clients = $query->get();
-    
+        $clients = $query->paginate(2);
+        //$clients = $query->paginate(8);
         return view('clients.index', compact('clients', 'search'));
 
     }
@@ -78,6 +97,7 @@ class ClientContoller extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         //
+
         
         $validated = $request->validate([
 
@@ -85,30 +105,35 @@ class ClientContoller extends Controller implements HasMiddleware
             'prenom' => 'required|min:3',
             'email' => 'required|email',
             'contacte' => 'required|unique:users',
-            'password' => 'required|min:8',
-            'password_confirmation' => 'required|same:password|min:8'
+            
 
         ]);
 
         
         DB::transaction(function() use($validated){
+            $password = Str::random(10);
             $user = User::create([
                 'nom' => $validated['nom'],
                 'prenom' => $validated['prenom'],
                 'email' => $validated['email'],
                 'contacte' => $validated['contacte'],
-                'password' => $validated['password'],
+                'password' => $password,
             ]);
 
             Client::create([
                 'user_id' => $user->id
-            ]);    
+            ]);   
+            
+           
+            $user->assignRole('client');
 
         });
 
 
-        return to_route('clients.index');
+
+        return to_route('clients.index')->with("success", "vous avez enregistrer le client ".strtoupper($validated['nom']) );
         //envoyer un message apres creation
+        //envoyer un mail a l'utilisateur contenant son mot de pass et son mail
     }
 
     /**
@@ -121,6 +146,8 @@ class ClientContoller extends Controller implements HasMiddleware
         $client->load(['user', 'menages']);
         return view('clients.show', compact('client'));
     }
+
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -144,22 +171,23 @@ class ClientContoller extends Controller implements HasMiddleware
             'prenom' => 'required|min:3',
             'email' => ['required', Rule::unique('users', 'email')-> ignore($client->user_id)],
             'contacte' => ['required', Rule::unique('users', 'contacte')-> ignore($client->user_id)],
-            'password' => 'required|min:8',
-            'password_confirmation' => 'required|same:password|min:8'
+            
 
         ]);
 
-        
+            $password = Str::random(10);
             $client->user->update([
+                
                 'nom' => $validated['nom'],
                 'prenom' => $validated['prenom'],
                 'email' => $validated['email'],
                 'contacte' => $validated['contacte'],
-                'password' => $validated['password'],
+                'password' => $password,
+
             ]);
 
 
-        return to_route('clients.index');
+        return to_route('clients.index')->with("success", "vous avez modifiez le client ".strtoupper($client->user->nom) );
 
         //envoyer un message apres modification
     
@@ -177,10 +205,10 @@ class ClientContoller extends Controller implements HasMiddleware
         $menage = DB::table('menages as m')->join('clients as c', 'm.id', '=', 'm.client_id')->select('est_abonnee')->get();
         if(!$menage){
             $client->delete();
-            return to_route('clients.index');
+            return to_route('clients.index')->with("succes", "vous avez  supprimer le client". strtoupper($client->user->nom));
         }else{
            
-            return to_route('clients.index')->with("supprimer", "vous avez des menages actifs" );
+            return to_route('clients.index')->with("errors", "vous avez des menages actifs" );
         }
         
 

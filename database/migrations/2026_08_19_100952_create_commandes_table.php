@@ -17,7 +17,7 @@ return new class extends Migration
             $table->boolean('est_acceptee');
             $table->text('raison')->nullable();
             $table->timestamps();
-            $table->unsignedBigInteger('client_id');
+            $table->integer('client_id');
             $table->foreign('client_id')
                 ->references('id')
                 ->on('clients')

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('quartiers', function (Blueprint $table) {
             $table->id();
             $table->string('designation')->nullable();
-            $table->unsignedBigInteger('zone_id');
+            $table->integer('zone_id');
 
             $table->foreign('zone_id')
                 ->references('id')

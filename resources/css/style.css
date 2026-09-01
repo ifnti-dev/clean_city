@@ -1047,3 +1047,12 @@ div.code-toolbar:hover > .toolbar {
 .apexcharts-rangebar-goals-markers{
   pointer-events: none
 }
+
+
+.etape {
+    display: none;
+}
+
+.etape.active {
+    display: block;
+}
