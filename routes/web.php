@@ -75,8 +75,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/zones', ZoneController::class);
     Route::resource('/quartiers', QuartierController::class)->except(['show']);
 
-    Route::get('/commandes', CommandeController::class)->name('commandes.index');
-    
+    Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
+
 });
 
 
