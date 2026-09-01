@@ -168,9 +168,12 @@
                                           font-medium rounded-md inline-block whitespace-nowrap text-center">Non</span>
                             </td>
                             @endif
-
-
+                            @if ($abonnement->date_debut)
                             <td class="py-3 px-6 text-left">{{ $abonnement->date_debut }}</td>
+                            @else
+                            <td class="py-3 px-6 text-left">---</td>
+                            @endif
+
 
                             @if ($abonnement->date_fin)
                             <td class="py-3 px-6 text-left">{{ $abonnement->date_fin }}</td>
@@ -180,51 +183,26 @@
 
                             <td class="py-3 px-6 text-left flex  items-center gap-2">
 
-
+                                @can('abonnement.voire')
                                 <a href="{{ route('abonnements.show', $abonnement->id) }}">
                                     <x-secondary-button
                                         class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
                                         Voir
                                     </x-secondary-button>
                                 </a>
+                                @endcan
 
-
+                                @can('abonnement.modifier')
                                 <a href="{{ route('abonnements.edit', $abonnement->id) }}">
                                     <x-secondary-button
                                         class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
                                         Modifier
                                     </x-secondary-button>
                                 </a>
+                                @endcan
 
-
-                                <!-- <form action="{{ route('abonnements.annuler', $abonnement->id) }}" method="post">
-                                    @csrf
-
-                                    <x-secondary-button type="submit"
-                                        class="bg-fuchsia-700 text-white border-fuchsia-700 hover:bg-fuchsia-600 hover:border-fuchsia-600 focus:ring-fuchsia-700">
-                                        Annuler
-                                    </x-secondary-button>
-                                </form> -->
-
-                                @if ($abonnement->menage->est_en_regle==0 || $abonnement->etat=="ACTIF" )
-
-
-
-                                @else
-
-                                @endif
-
-
-                                @if ($abonnement->etat=="INACTIF" )
-                                <form action="{{ route('abonnements.valider', $abonnement->id) }}" method="post">
-                                    @csrf
-
-                                    <x-secondary-button type="submit"
-                                        class="bg-green-700 text-white border-green-700 hover:bg-green-600 hover:border-green-600 focus:ring-green-300">
-                                        Valider
-                                    </x-secondary-button>
-                                </form>
-
+                                @if ($abonnement->menage->est_abonnee==0 && $abonnement->menage->est_radier==0 )
+                                @can('menage.radier')
                                 <form action="{{ route('abonnements.radier', $abonnement->id) }}" method="post">
                                     @csrf
 
@@ -233,10 +211,24 @@
                                         Radier
                                     </x-secondary-button>
                                 </form>
+                                @endcan
+                                @endif
 
-                                @elseif($abonnement->menage->est_en_regle==0 && $abonnement->etat=="ACTIF" )
+                                @if ($abonnement->menage->est_radier==1 )
+                                @can('abonnement.supprimer')
+                                <form action="{{ route('abonnements.destroy', $abonnement->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-secondary-button type="submit"
+                                        class="bg-red-700 text-white border-red-700 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">
+                                        Supprimer
+                                    </x-secondary-button>
+                                </form>
+                                @endcan
+                                @endif
 
-                                <form action="{{ route('abonnements.desabonnee', $abonnement->id) }}" method="post">
+                                @if ($abonnement->etat=="ACTIF" && $abonnement->menage->est_en_regle==0 )
+                                <form action="{{ route('menages.desabonnee', $abonnement->id) }}" method="post">
                                     @csrf
 
                                     <x-secondary-button type="submit"
@@ -245,7 +237,6 @@
                                     </x-secondary-button>
                                 </form>
                                 @endif
-
                             </td>
 
                             </tr>

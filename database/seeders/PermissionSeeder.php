@@ -20,8 +20,16 @@ class PermissionSeeder extends Seeder
             'menage.creer',
             'menage.modifier',
             'menage.supprimer',
-            'menage.suspendre',
+            'menage.radier',
             'menage.desabonnee',
+
+            'abonnement.voire',
+            'abonnement.creer',
+            'abonnement.modifier',
+            'abonnement.approuver',
+            'abonnement.traitement',
+            'abonnement.rejeter',
+            
 
             'employe.voire',
             'employe.creer',
@@ -50,17 +58,11 @@ class PermissionSeeder extends Seeder
             'ramassage.creer',
             'ramassage.modifier',
             'ramassage.supprimer',
-            
-            // 'abonnement.voire',
-            // 'abonnement.creer',
-            // 'abonnement.annuler',
+            'ramassage.demarer',
+            'ramassage.annuler',
+            'ramassage.terminer',
 
-            'abonnement.voire',
-            'abonnement.creer',
-            'abonnement.modifier',
-            'abonnement.supprimer',
-            'abonnement.suspendre',
-            'abonnement.desabonnee',
+            
 
             'commande.confirmer',
             'commande.rejeter',

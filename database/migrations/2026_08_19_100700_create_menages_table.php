@@ -14,13 +14,13 @@ return new class extends Migration
     {
         Schema::create('menages', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
+            $table->string('code')->unique();
             $table->string('designation')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->boolean('est_abonnee');
             $table->boolean('est_radier');
-            $table->boolean('est_en_regle');
+            $table->boolean('est_en_regle')->default(true);
             $table->timestamps();
 
             $table->integer('client_id');
