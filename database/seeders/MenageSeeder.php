@@ -13,48 +13,48 @@ class MenageSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-
-        //   $table->string('code');
-        //     $table->string('designation')->nullable();
-        //     $table->string('latitude')->nullable();
-        //     $table->string('longtitude')->nullable();
-        //     $table->boolean('est_abonnee');
-        //     $table->boolean('est_radier');
-        //     $table->boolean('est_en_regle');
-        //     $table->timestamps();
-        //     $table->unsignedInteger('user_id');
-        //     $table->unsignedInteger('quartier_id')->nullable();
-        //     $table->unsignedInteger('type_habitat_id')->nullable();
 
         DB::table('menages')->insert([
             [
-                'code' => '10001',
+                'code' => '00001',
                 'designation' => 'ifnti',
+                'est_abonnee' => true,
+                'est_radier' => false,
+                'est_en_regle' => false,
+                'client_id' => 1,
+                'quartier_id' => 1,
+                'type_habitat_id' => 1,
                 'latitude' => 100,
                 'longitude' => 100,
+
+            ],
+            [
+                'code' => '00002',
+                'designation' => 'Hotel nassam',
+                'est_abonnee' => true,
+                'est_radier' => false,
+                'est_en_regle' => false,
+                'client_id' => 2,
+                'quartier_id' => 1,
+                'type_habitat_id' => 1,
+                'latitude' => 100,
+                'longitude' => 100,
+
+            ],
+            [
+                'code' => '00003',
+                'designation' => 'Hotel 5 etoile',
                 'est_abonnee' => true,
                 'est_radier' => false,
                 'est_en_regle' => true,
-                'client_id' => 1,
-                'quartier_id' => 1,
-                'type_habitat_id' => 1
-               
-            ],  
-            [
-                'code' => '10001',
-                'designation' => 'hotele',
-                'latitude' => 100,
-                'longitude' => 100,
-                'est_abonnee' => true,
-                'est_radier' => false,
-                'est_en_regle' => 0,
                 'client_id' => 2,
                 'quartier_id' => 1,
-                'type_habitat_id' => 1
-               
-            ],  
-              
+                'type_habitat_id' => 1,
+                'latitude' => 100,
+                'longitude' => 100,
+
+            ]
+
         ]);
     }
 }

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Employe;
 use App\Models\Tournee;
+use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 use SweetAlert2\Laravel\Swal;
 
 class RamassageController extends Controller implements HasMiddleware
@@ -17,8 +19,12 @@ class RamassageController extends Controller implements HasMiddleware
         return [
             new Middleware('permission:ramassage.voire', only: ['index', 'show']),
             new Middleware('permission:ramassage.creer', only: ['create', 'store']),
-            new Middleware('permission:ramassage.modifier', only: ['edite', 'update']),
+            new Middleware('permission:ramassage.modifier', only: ['edit', 'update']),
+            new Middleware('permission:ramassage.annuler', only: ['demarerRamassage']),
+            new Middleware('permission:ramassage.terminer', only: ['terminerRamassage']),
+            new Middleware('permission:ramassage.demarer', only: ['demarerRamassage']),
             new Middleware('permission:ramassage.supprimer', only: ['destroy']),
+
         ];
     }
     /**
@@ -82,9 +88,27 @@ class RamassageController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        $employes = Employe::all();
+        //recuperer les user qui on le roles : agent collecte 
+
+        // $users = DB::table('users')
+        //     ->join('employes', 'employes.user_id  as employe_id', "users.id")
+        //     ->join('model_has_roles', 'model_has_roles.model_id', 'users.id')
+        //     ->where('role_id', 4)->get();
+
+        $users = User::with('employe')
+            ->role(4)
+            ->get();
+
+
+        // $users = Employe::all();                                                         
+
+
+        // foreach ($users as $user) {
+        //     dump($user->contacte);
+        // }
+        // dd($users);
         $zones = Zone::all();
-        return view('ramassages.create', compact('zones', 'employes'));
+        return view('ramassages.create', compact('zones', 'users'));
     }
 
     /**

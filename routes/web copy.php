@@ -2,17 +2,16 @@
 
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\ClientContoller;
-use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\FactureController;
+use App\Http\Controllers\PaiementAbonnementController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\QuartierController;
 use App\Http\Controllers\RamassageController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\TarifController;
-use App\Http\Controllers\ZoneController;
+use App\Models\Facture;
+use App\PaiementAbonnement;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-
+    
     return to_route('login');
 });
 
@@ -37,24 +36,20 @@ require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
     Route::resource('abonnements', AbonnementController::class);
-    // Route::post('/abonnements/{abonnement}/annuler', [AbonnementController::class, 'annulerUnAbonnement'])->name('abonnements.annuler');
-    Route::post('/abonnements/{abonnement}/traitement', [AbonnementController::class, 'traiterUnAbonnement'])->name('abonnements.traitement');
-    Route::post('/abonnements/{abonnement}/approuver', [AbonnementController::class, 'approuverUnAbonnement'])->name('abonnements.approuver');
-    Route::post('/abonnements/{abonnement}/rejeter', [AbonnementController::class, 'rejeterUnAbonnement'])->name('abonnements.rejeter');
-    Route::post('/abonnements/{abonnement}/desabonnee', [AbonnementController::class, 'desabonneeUnMenage'])->name('menages.desabonnee');
     Route::post('/abonnements/{abonnement}/radier', [AbonnementController::class, 'radierUnMenage'])->name('abonnements.radier');
+    Route::post('/abonnements/{abonnement}/annuler', [AbonnementController::class, 'annulerUnAbonnement'])->name('abonnements.annuler');
+    Route::post('/abonnements/{abonnement}/valider', [AbonnementController::class, 'validerUnAbonnement'])->name('abonnements.valider');
+    Route::post('/abonnements/{abonnement}/desabonnee', [AbonnementController::class, 'desabonneeUnAbonnement'])->name('abonnements.desabonnee');
+    
     Route::resource('clients', ClientContoller::class);
+
+
 
     Route::resource('ramassages', RamassageController::class);
     Route::post('/ramassages/{tournee}/demarer', [RamassageController::class, 'demarerRamassage'])->name('ramassages.demarer');
     Route::post('/ramassages/{tournee}/terminer', [RamassageController::class, 'terminerRamassage'])->name('ramassages.terminer');
     Route::post('/ramassages/{tournee}/annuler', [RamassageController::class, 'annulerRamassage'])->name('ramassages.annuler');
 
+    Route::resource('factures', FactureController::class);
 
-
-    Route::resource('/employes', EmployeController::class);
-    Route::resource('/roles', RoleController::class)->except(['show']);
-    Route::resource('/tarifs', TarifController::class)->except(['show']);
-    Route::resource('/zones', ZoneController::class);
-    Route::resource('/quartiers', QuartierController::class)->except(['show']);
 });

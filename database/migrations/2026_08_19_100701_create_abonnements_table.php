@@ -13,15 +13,31 @@ return new class extends Migration
     {
         Schema::create('abonnements', function (Blueprint $table) {
             $table->id();
-            $table->date('date_debut');
+            $table->unsignedBigInteger('employe_approuve_id')->nullable();
+            $table->unsignedBigInteger('employe_save_id')->nullable();
+            $table->date('date_debut')->nullable();
             $table->date('date_fin')->nullable();
-            $table->enum('etat', ['ACTIF', 'INACTIF'])->default('INACTIF');
+            $table->enum('etat', ['ACTIF', 'INACTIF'])->default('ACTIF');
+            $table->enum('status', ['EN_ATTENTE', 'EN_COUR_DE_TRAITEMENT', 'APPROUVER', 'REJETER'])->default('EN_ATTENTE');
+            $table->string('motif_rejet')->nullable();
             $table->unsignedBigInteger('menage_id');
+
+            $table->foreign('employe_save_id')
+                ->references('id')
+                ->on('employes')
+                ->onDelete('set null');
+
+            $table->foreign('employe_approuve_id')
+                ->references('id')
+                ->on('employes')
+                ->onDelete('set null');
 
             $table->foreign('menage_id')
                 ->references('id')
                 ->on('menages')
                 ->onDelete('cascade');
+
+            $table->softDeletes();
 
             $table->timestamps();
         });

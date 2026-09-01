@@ -23,99 +23,129 @@
 
       <!-- navbar nav -->
       <ul class="navbar-nav flex-col" id="sideNavbar">
+
          <li class="nav-item">
-            <a class="nav-link  active " href="{{ route('dashboard') }}">
+            <a class="nav-link active" href="{{ route('dashboard') }}">
                <i data-feather="home" class="w-4 h-4 mr-2"></i>
                Dashboard
             </a>
          </li>
-         <!-- nav item -->
+
          <li class="nav-item">
             <div class="navbar-heading">Menages</div>
          </li>
-         <!-- nav item -->
+
          <li class="nav-item">
-            <a class="nav-link  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navPages"
+            <a class="nav-link collapsed" href="#!" data-bs-toggle="collapse" data-bs-target="#navPages"
                aria-expanded="false" aria-controls="navPages">
+
                <i data-feather="layers" class="w-4 h-4 mr-2"></i>
                Menages
             </a>
-            <div id="navPages" class="collapse " data-bs-parent="#sideNavbar">
+
+            <div id="navPages" class="collapse" data-bs-parent="#sideNavbar">
+
                <ul class="nav flex-col">
-                  <li class="nav-item">
-                     <a class="nav-link " href="{{ route('clients.index') }}"> Clients </a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link " href="{{route('abonnements.index')}}"> Abonnée </a>
-                  </li>
-
 
                   <li class="nav-item">
-
-                     <a class="nav-link " href="{{route('factures.index') }}">Paiement</a>
+                     <a class="nav-link" href="{{ route('clients.index') }}">
+                        Clients
+                     </a>
                   </li>
 
                   <li class="nav-item">
-                     <a class="nav-link " href="{{route('ramassages.index')}}">Ramassage</a>
+                     <a class="nav-link" href="{{ route('abonnements.index') }}">
+                        Abonnées
+                     </a>
+                  </li>
+
+                  <li class="nav-item">
+                     <a class="nav-link" href="./billing.html">
+                        Factures
+                     </a>
+                  </li>
+
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{ route('ramassages.index') }}">
+                        Ramassages
+                     </a>
                   </li>
 
                </ul>
             </div>
          </li>
 
-         <!-- nav heading -->
          <li class="nav-item">
             <div class="navbar-heading">MarketPlace</div>
          </li>
-         <!-- nav item -->
+
          <li class="nav-item">
-            <a class="nav-link  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navComponents"
+            <a class="nav-link collapsed" href="#!" data-bs-toggle="collapse" data-bs-target="#navComponents"
                aria-expanded="false" aria-controls="navComponents">
+
                <i data-feather="package" class="w-4 h-4 mr-2"></i>
                MarketPlace
             </a>
-            <div id="navComponents" class="collapse " data-bs-parent="#sideNavbar">
+
+            <div id="navComponents" class="collapse" data-bs-parent="#sideNavbar">
+
                <ul class="nav flex-col">
+
                   <li class="nav-item">
-                     <a class="nav-link " href="">Produits</a>
+                     <a class="nav-link" href="./components/accordions.html">
+                        Produits
+                     </a>
                   </li>
 
                   <li class="nav-item">
-                     <a class="nav-link " href="">Commandes</a>
+                     <a class="nav-link" href="./components/alerts.html">
+                        Commandes
+                     </a>
                   </li>
-
 
                </ul>
             </div>
          </li>
 
-         <!-- nav item -->
          <li class="nav-item">
             <div class="navbar-heading">Parametrage</div>
          </li>
 
-         <!-- nav item -->
          <li class="nav-item">
-            <a class="nav-link " href="">
+            <a class="nav-link" href="{{ route('employes.index') }}">
                <i data-feather="clipboard" class="w-4 h-4 mr-2"></i>
-               Employe
+               Employes
             </a>
          </li>
-         <!-- nav item -->
+
          <li class="nav-item">
-            <a class="nav-link " href="">
+            <a class="nav-link" href="{{ route('roles.index') }}">
                <i data-feather="git-pull-request" class="w-4 h-4 mr-2"></i>
                Roles
             </a>
          </li>
-         <!-- nav heading -->
+
          <li class="nav-item">
-            <a class="nav-link" href=""
-               target="_blank">
-               <i data-feather="download" class="w-4 h-4 mr-2"></i>
+            <a class="nav-link" href="{{ route('zones.index') }}">
+               <i data-feather="map" class="w-4 h-4 mr-2"></i>
+               Zones
+            </a>
+         </li>
+
+         <li class="nav-item">
+            <a class="nav-link" href="{{ route('quartiers.index') }}">
+               <i data-feather="map-pin" class="w-4 h-4 mr-2"></i>
+               Quartiers
+            </a>
+         </li>
+
+         <li class="nav-item">
+            <a class="nav-link" href="{{ route('tarifs.index') }}">
+               <i data-feather="credit-card" class="w-4 h-4 mr-2"></i>
                Tarifs
             </a>
          </li>
+
       </ul>
    </div>
 </nav>

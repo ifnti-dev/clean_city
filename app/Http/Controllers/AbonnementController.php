@@ -12,6 +12,7 @@ use App\Models\TypeHabitat;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use SweetAlert2\Laravel\Swal;
 
@@ -41,7 +42,7 @@ class AbonnementController extends Controller implements HasMiddleware
         ]);
 
 
-        
+
 
         // dump($query->get());
 
@@ -106,7 +107,7 @@ class AbonnementController extends Controller implements HasMiddleware
             ]);
         }
 
-        $abonnements = $query->latest()->paginate(8);
+        $abonnements = $query->where('deleted_at', null)->latest()->paginate(8);
         return view('abonnees.index', compact('abonnements'));
     }
 
@@ -120,9 +121,8 @@ class AbonnementController extends Controller implements HasMiddleware
         //
         $clients = Client::all();
         $quartiers = Quartier::all();
-        $tarifs = Tarif::all();
         $type_habitats = TypeHabitat::all();
-        return view('abonnees.create', compact('tarifs', 'clients', 'type_habitats', 'quartiers'));
+        return view('abonnees.create', compact('clients', 'type_habitats', 'quartiers'));
     }
 
     /**
@@ -131,13 +131,11 @@ class AbonnementController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         //
+        // dd($request->all());
 
         $validated = $request->validate([
-            "date_debut" => "required|date|after_or_equal:today ",
-            "date_fin" => "date|nullable",
             "client_id" => "required|integer|exists:clients,id",
             "designation" => "required|string|min:3|unique:menages",
-            // "tarif_id" => "required|integer|exists:tarifs,id",
             "longitude" => "required|numeric",
             "latitude" => "required|numeric",
             'type_habitat_id' =>  "required|integer|exists:type_habitats,id",
@@ -167,10 +165,8 @@ class AbonnementController extends Controller implements HasMiddleware
 
 
             Abonnement::create([
-                'date_debut' => $validated['date_debut'],
-                'date_fin' => $validated['date_fin'] ? $validated['date_debut'] : null,
-                // 'tarif_id' => $validated['tarif_id'],
                 'menage_id' => $menage->id,
+                'employe_save_id' => Auth::user()->employe->id
             ]);
 
             return $menage;
@@ -192,8 +188,15 @@ class AbonnementController extends Controller implements HasMiddleware
      */
     public function show(Abonnement $abonnement)
     {
-        //
-        // dd($abonnement->tarif->designation);
+
+        if (session('text')) {
+            Swal::success([
+                'title' => session('success'),
+                'text' => session('text'),
+                'timer' => 2000,
+                'showConfirmButton' => false,
+            ]);
+        }
         return view('abonnees.show', compact('abonnement'));
     }
 
@@ -274,26 +277,48 @@ class AbonnementController extends Controller implements HasMiddleware
     }
 
 
-    // public function annulerUnAbonnement(Abonnement $abonnement)
-    // {
-    //     //
-    //     dd("annulerUnAbonnement");
-    //     return to_route('abonnements.index')->with("success", "Vouse avez Desabonnée " . strtoupper($abonnement->menage->designation));
-    // }
-
-
-    public function validerUnAbonnement(Abonnement $abonnement)
+    public function traiterUnAbonnement(Abonnement $abonnement)
     {
-        // dd("valider");
+        // dump("traiterUnAbonnement");
+        // dump($abonnement);
+        // dd($abonnement->menage);
         $abonnement->update(
-            ['etat' => 'ACTIF']
+            ['status' => 'EN_COUR_DE_TRAITEMENT']
         );
-        return to_route('abonnements.index')->with("success", "Vouse avez Valider l'abonnement de " . strtoupper($abonnement->menage->designation));
+        return to_route('abonnements.show', $abonnement->id)->with("success", "L'abonnement de " . strtoupper($abonnement->menage->designation) . "est en cour de traitement");
     }
 
-    public function desabonneeUnAbonnement(Abonnement $abonnement)
+    public function rejeterUnAbonnement(Abonnement $abonnement)
+    {
+        //
+        // dd("rejeterUnAbonnement");
+        $abonnement->update(
+            ['status' => 'REJETER']
+        );
+        return to_route('abonnements.show', $abonnement->id)->with("success", "Vouse avez Rejeter l'abonnement de: " . strtoupper($abonnement->menage->designation));
+    }
+
+    public function approuverUnAbonnement(Abonnement $abonnement)
+    {
+        // dd("approuverUnAbonnement");
+        $abonnement->update(
+            [
+                'date_debut' => now(),
+                'status' => 'APPROUVER',
+                'employe_approuve_id' => Auth::user()->employe->id,
+                'etat' => 'ACTIF'
+            ]
+        );
+        return to_route('abonnements.show', $abonnement->id)->with("success", "Vous avez approuver l'abonnement de " . strtoupper($abonnement->menage->designation));
+    }
+
+
+    public function desabonneeUnMenage(Abonnement $abonnement)
     {
         // dd("desabonnee");
+        $abonnement->menage->update(
+            ['est_abonnee' => false]
+        );
         $abonnement->update(
             ['etat' => 'INACTIF']
         );
@@ -303,7 +328,6 @@ class AbonnementController extends Controller implements HasMiddleware
 
     public function radierUnMenage(Abonnement $abonnement)
     {
-        // dd("radier");
         $abonnement->menage->update(
             ['est_radier' => true]
         );
