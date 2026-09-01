@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\ClientContoller;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\EmployeController;
@@ -73,4 +74,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/tarifs', TarifController::class)->except(['show']);
     Route::resource('/zones', ZoneController::class);
     Route::resource('/quartiers', QuartierController::class)->except(['show']);
+
+    Route::get('/commandes', CommandeController::class)->name('commandes.index');
+    
 });
+
+

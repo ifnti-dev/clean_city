@@ -90,17 +90,7 @@
                                   
                                     <td class=" flex item-center gap-6 px-3 py-3 text-left ">
                                        
-                                        {{-- @can() --}}
-                                            <div>
-                                                 <a href="{{ route('commandes.edit', $commande->id) }}">
-                                                <x-secondary-button
-                                                    class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
-                                                    Modifier
-                                                </x-secondary-button>
-                                            </a>
-                                        </div> 
-                                        {{-- @endcan --}}
-
+                                    
                                     </td>
                                 </tr>
                             @empty
