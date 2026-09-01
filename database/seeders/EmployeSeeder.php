@@ -16,15 +16,7 @@ class EmployeSeeder extends Seeder
     public function run(): void
     {
         //
-        /**
-         * $roles_name = [
-            'responssable',
-            'secretaire',
-            'comptable',
-            'agent_collecte_ordures',
-            'agent_collecte_fonds',
-            'livreure',
-         */
+      
         DB::table('users')->insert([
             [
                 "nom" => "responsable",

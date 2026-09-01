@@ -36,7 +36,7 @@ class ClientContoller extends Controller implements HasMiddleware
     {
         //
         $search = $request->input('search');
-        $query = Client::query()->join('users', 'user_id', 'users.id');
+        $query = Client::query()->join('users', 'user_id', 'users.id')->where('deleted_at', null);
 
         //dd($query->join('menages', 'menages.id', 'client_id')->get());
 
@@ -207,12 +207,23 @@ class ClientContoller extends Controller implements HasMiddleware
             $client->delete();
             return to_route('clients.index')->with("succes", "vous avez  supprimer le client". strtoupper($client->user->nom));
         }else{
-           
-            return to_route('clients.index')->with("errors", "vous avez des menages actifs" );
+      
+            //a revoire cercher un sweetalerte pour la confirmation de la suppression
+            $client->delete();
+            return to_route('clients.index')->with("succes", "vous avez supprime le client");
         }
-        
 
-        
 
+    }
+
+
+
+
+
+    public function hystoriquePaiement(Client $client){
+
+        $hystorique = $client->load(['menages']);
+
+        dd($hystorique);
     }
 }

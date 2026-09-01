@@ -3,38 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\Abonnement;
+use App\Models\Employe;
 use App\Models\Facture;
 use App\Models\MethodePaiement;
 use App\Models\Tarif;
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
+use FedaPay\FedaPay;
+use FedaPay\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Nette\Utils\Random;
 use SweetAlert2\Laravel\Swal;
 
-class FactureController extends Controller
+class FactureController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:paiement.voire', only: ['index', 'show']),
+            new Middleware('permission:paiement.creer', only: ['create', 'store']),
+            new Middleware('permission:paiement.modifier', only: ['edite', 'update']),
 
-   
+        ];
+    }
+
+    public function __construct()
+    {
+        FedaPay::setApiKey(env('FEDAPAY_SECRET_KEY'));
+        FedaPay::setEnvironment(env('FEDAPAY_ENVIRONMENT'));
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
-
     {
         //
         $search = $request->input('search');
-        $request = Facture::query();
-        if($search){
+        $query = Facture::query();
+        if ($search) {
             $request->where('date_debut', 'like', "%$search%")
                 ->orWhere('date_fin', 'like', "%$search%");
         }
 
-      
-
-
-         if (session(('success'))) {
+        if (session(('success'))) {
             // Toast with pause on hover
             if (session('text')) {
                 Swal::success([
@@ -52,13 +66,12 @@ class FactureController extends Controller
             }
         }
 
-
-        $factures = $request->get();
-
+        $factures = $query->get();
         return view('factures.index', compact('factures', 'search'));
     }
 
-   
+
+
     public function create()
     {
         //
@@ -70,7 +83,7 @@ class FactureController extends Controller
         return view('factures.create', compact('methode_paiements', 'tarifs', 'abonnements'));
     }
 
-    
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -78,31 +91,56 @@ class FactureController extends Controller
             'tarif_id' => 'required|integer|exists:tarifs,id',
             'methode_paiement_id' => 'required|integer|exists:methode_paiements,id',
             'abonnement_id' => 'required',
-            
+
         ]);
 
-         
-        DB::transaction(function() use($validated){
+        $date_debut = Carbon::now();
+        $nb_mois = count($validated['lesmois']);
+        $date_fin = $date_debut->add($nb_mois, 'month');
 
-            $date_debut = Carbon::now();
+        $tarifs = Tarif::find($validated['tarif_id']);
+        $montant_tarif = $tarifs->montant;
+        $montant = $nb_mois * $montant_tarif;
+        $validated['montant'] = $montant;
 
-            $nb_mois = count($validated['lesmois']);
-            $date_fin = $date_debut->add( $nb_mois, 'month');
+        $facture = ([
+            'nb_mois' => $nb_mois,
+            'date_fin' => $date_fin,
+            'les_mois' => $validated['lesmois'],
+            'abonnement_id' => $validated['abonnement_id'],
+            'tarif_id' => $validated['tarif_id'],
+            'methode_paiement_id' => $validated['methode_paiement_id'],
+            'montant' => $validated['montant'],
+        ]);
+
+        session(['facture' => $facture]);
+        session()->save();
+
+        
+
+    
+        $methode_paiements = MethodePaiement::find($validated['methode_paiement_id']);
+        
+        if ($methode_paiements->type === 'MOBILE_MONEY') {
+            $transaction = Transaction::create([
+                'description' => 'Payment de la facture numero',
+                'amount' => $montant,
+                'currency' => ['iso' => 'XOF'],
+                'callback_url' => route('factures.callback'),
+                'mode' => 'mtn_open',
+                'customer' => [
+                    'firstname' => 'ganietou',
+                    'lastname' => 'kondi',
+                ],
+            ]);
 
 
-            $tarifs = Tarif::find($validated['tarif_id']);
-            $montant_tarif = $tarifs->montant;
+            return redirect($transaction->payment_url);
+        } 
 
-            $montant = $nb_mois * $montant_tarif;
-
-            $validated['montant'] = $montant ;
-
-            if($validated['methode_paiement_id'] == 1){
-               dd('redirection vers fedapaye');
-            }
-
-
-            $factures = Facture::create([
+        
+        DB::transaction(function () use ($validated, $nb_mois, $date_fin) {
+            $facture = Facture::create([
                 'nb_mois' => $nb_mois,
                 'date_fin' => $date_fin,
                 'les_mois' => $validated['lesmois'],
@@ -110,33 +148,32 @@ class FactureController extends Controller
                 'tarif_id' => $validated['tarif_id'],
                 'methode_paiement_id' => $validated['methode_paiement_id'],
                 'montant' => $validated['montant'],
-                'id_transaction' => rand(1,20),
+                
             ]);
 
         });
 
-        return to_route('factures.index')->with("success", "vous avez enregistrer un nouveau paiement ");
-        
-
+        return to_route('factures.index')->with('success', 'vous avez enregistrer un nouveau paiement ');
+       
     }
 
-   
+
+
     public function show(Facture $facture)
     {
         //
-        return view('factures.show', compact( 'facture'));
+        return view('factures.show', compact('facture'));
     }
 
-   
     public function edit(Facture $facture)
     {
         //
         $methode_paiements = MethodePaiement::all();
         $tarifs = Tarif::all();
         $abonnements = Abonnement::with('menage')->get();
-        
-        return view('factures.edit', compact('facture' ,'methode_paiements', 'tarifs', 'abonnements'));
-    
+
+        return view('factures.edit', compact('facture', 'methode_paiements', 'tarifs', 'abonnements'));
+
     }
 
     /**
@@ -151,24 +188,22 @@ class FactureController extends Controller
             'tarif_id' => 'required|integer|exists:tarifs,id',
             'methode_paiement_id' => 'required',
             'abonnement_id' => 'required',
-            
+
         ]);
 
-         
-        DB::transaction(function() use($validated, $facture){
+        DB::transaction(function () use ($validated, $facture) {
 
             $date_debut = Carbon::now();
 
             $nb_mois = count($validated['lesmois']);
-            $date_fin = $date_debut->add( $nb_mois, 'month');
+            $date_fin = $date_debut->add($nb_mois, 'month');
 
-             
             $tarifs = Tarif::find($validated['tarif_id']);
             $montant_tarif = $tarifs->montant;
 
             $montant = $nb_mois * $montant_tarif;
 
-            $validated['montant'] = $montant ;
+            $validated['montant'] = $montant;
 
             $facture->update([
                 'nb_mois' => $nb_mois,
@@ -178,17 +213,12 @@ class FactureController extends Controller
                 'tarif_id' => $validated['tarif_id'],
                 'methode_paiement_id' => $validated['methode_paiement_id'],
                 'montant' => $validated['montant'],
-                'id_transaction' => rand(1,20),
             ]);
 
         });
 
+        return to_route('factures.index')->with('success', 'Paiement modifie ');
 
-
-
-
-        return to_route('factures.index')->with("success", "Paiement modifie ");;
-        
     }
 
     /**
@@ -198,4 +228,69 @@ class FactureController extends Controller
     {
         //
     }
+
+    // public function checkout(){
+
+    //     $transaction = \FedaPay\Transaction::create([
+    //         'description' => 'Payment de la facture numero',
+    //         'amount' => 2000,
+    //         'currency' => ['iso' => 'XOF'],
+    //         'callback_url' => route('factures.callback'),
+    //         'mode' => 'mtn_open',
+    //         'customer' => [
+    //                 "firstname" => 'ganietou',
+    //                 "lastname" => 'kondi',
+    //         ]
+    //     ]);
+
+    //     return redirect($transaction-> payment_url);
+    // }
+
+    public function callback(Request $request)
+    {
+        // verifier si le paiement a ete effectue
+        // enregistrer le paiement si le payement est passe
+
+        $transactionId = $request->input('id');
+        $status = $request->input('status');
+
+        $facture = session('facture');
+        // $facture['nb_mois']
+
+
+        if ($transactionId) {
+            switch ($status) {
+                case 'approved':
+                    // confirmer le payement chez fedapay
+                    // enregistrer le paiement puis on retourn sur la page d'acceuille
+                  
+                    Facture::create([
+                        'nb_mois' => $facture['nb_mois'],
+                        'date_fin' => $facture['date_fin'],
+                        'les_mois' => $facture['lesmois'],
+                        'abonnement_id' => $facture['abonnement_id'],
+                        'tarif_id' => $facture['tarif_id'],
+                        'methode_paiement_id' => $facture['methode_paiement_id'],
+                        'montant' => $facture['montant'],
+                        'id_transaction' => $transactionId,
+                    ]);
+
+                      
+ 
+
+                    return to_route('factures.index')->with('success', 'vous avez enregistrer un nouveau paiement ');
+
+                default:
+                    dump('payement echoue');
+                    break;
+
+            }
+        }
+
+    }
+
+
+
+
+
 }

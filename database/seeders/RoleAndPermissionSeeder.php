@@ -63,7 +63,20 @@ class RoleAndPermissionSeeder extends Seeder
                 ->orWhere('name', 'client.creer')
                 ->orWhere('name', 'client.modifier')
                 ->orWhere('name', 'client.supprimer')
+                ->orWhere('name', 'paiement.voire')
+                ->orWhere('name', 'paiement.creer')
+                ->orWhere('name', 'paiement.modifier')
                 ->get()
         );
+
+
+        $roles_client = Role::where('name', 'client')->first();
+        $roles_client->syncPermissions(
+            Permission::where('name', 'paiement.voire')
+                ->orWhere('name', 'abonnement.voire')
+                ->get()
+        );
+
+
     }
 }

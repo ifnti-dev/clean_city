@@ -12,10 +12,13 @@
 
                     <div class=" flex items-center justify-end  max-sm:pr-8 mb-14  w-60 max-sm:w-full max-sm:w-30">
                         <a href="{{ route('clients.create') }}">
-                            <x-secondary-button
-                                class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
-                                {{ __('Ajouter') }}
-                            </x-secondary-button>
+                            @can('client.creer')
+                                <x-secondary-button
+                                    class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
+                                    {{ __('Ajouter') }}
+                                </x-secondary-button>
+                            @endcan
+                            
                         </a>
                     </div>
                 </div>
@@ -100,6 +103,15 @@
                                                 <x-secondary-button
                                                     class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
                                                     Voire
+                                                </x-secondary-button>
+                                            </a>
+                                        @endcan
+
+                                        @can('client.voire')
+                                            <a href="{{ route('clients.hystoriquePaiement', $client->id) }}">
+                                                <x-secondary-button
+                                                    class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
+                                                    Historique des paiements
                                                 </x-secondary-button>
                                             </a>
                                         @endcan

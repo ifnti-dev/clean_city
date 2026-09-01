@@ -67,6 +67,10 @@ class PermissionSeeder extends Seeder
 
             'livraison.confirmer',
             'livraison.demarer',
+
+            'paiement.voire',
+            'paiement.modifier',
+            'paiement.creer',
             
         ];
 

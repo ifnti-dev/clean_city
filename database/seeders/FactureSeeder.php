@@ -27,6 +27,19 @@ class FactureSeeder extends Seeder
                 'montant' => 1000,
                 'id_transaction' => 1,
 
+            ],
+            [
+                'nb_mois' => 1,
+                'date_debut' => now(),
+                'date_fin' => '5-6-2026',
+                'les_mois' => json_encode(['janvier']),
+                'abonnement_id' => 1,
+                'tarif_id' => 1,
+                'methode_paiement_id' =>1 ,
+                'date' => now(),
+                'montant' => 2000,
+                'id_transaction' => 1,
+
             ]
         ]);
     }

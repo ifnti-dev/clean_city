@@ -6,16 +6,19 @@
             <div class="w-full ">
                 <div class="h-40 bg-indigo-600 py-2 px-8 pt-10 lg:pt-14 pb-16 flex justify-between items-baseline">
                     <div class="flex justify-between  items-baseline ">
-                        <h1 class="text-white font-medium text-2xl max-sm:pl-2 max-sm:text-xl">Liste des paiements
+                        <h1 class="text-white font-medium text-2xl max-sm:pl-2 max-sm:text-xl">Liste des factures
                         </h1>
                     </div>
 
                     <div class=" flex items-center justify-end  max-sm:pr-8 mb-14  w-60 max-sm:w-full max-sm:w-30">
                         <a href="{{ route('factures.create') }}">
-                            <x-secondary-button
-                                class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
-                                {{ __('Ajouter') }}
-                            </x-secondary-button>
+                            @can('paiement.creer')
+                                <x-secondary-button
+                                    class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
+                                    {{ __('Ajouter') }}
+                                </x-secondary-button>
+                            @endcan
+                            
                         </a>
                     </div>
                 </div>
@@ -62,7 +65,7 @@
 
 
 
-                <div class="relative overflow-x-auto card shadow">
+                <div class="relative mx-4 overflow-x-auto card shadow mb-5">
                     <table class="text-left w-full whitespace-nowrap">
                         <thead class="">
                             <tr class="border-gray-300 border-b ">
@@ -102,19 +105,25 @@
                                     <td class=" flex item-center gap-6 px-3 py-3 text-left ">
                                      
                                             <a href="{{ route('factures.show', $facture->id) }}">
-                                                <x-secondary-button
-                                                    class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
-                                                    Voire
-                                                </x-secondary-button>
+                                                @can('paiement.voire')
+                                                    <x-secondary-button
+                                                        class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
+                                                        Voire
+                                                    </x-secondary-button>
+                                                @endcan
+                                                
                                             </a>
                                     
 
                                        
                                             <a href="{{ route('factures.edit', $facture->id) }}">
-                                                <x-secondary-button
-                                                    class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
-                                                    Modifier
-                                                </x-secondary-button>
+                                                @can('paiement.modifier')
+                                                    <x-secondary-button
+                                                        class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
+                                                        Modifier
+                                                    </x-secondary-button>
+                                                @endcan
+                                               
                                             </a>
                                     </td>
                                 </tr>

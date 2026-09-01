@@ -20,6 +20,12 @@ class ProduitSeeder extends Seeder
                 'est_en_stock' => false,
                 'prix_unitaire' => 12000,
                 'description' => 'un charbon',
+            ],
+            [
+                'label' => 'composte',
+                'est_en_stock' => true,
+                'prix_unitaire' => 1200,
+                'description' => 'Du composte',
             ]
         ]);
     }

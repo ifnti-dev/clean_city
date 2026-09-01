@@ -33,7 +33,7 @@ class ClientSeeder extends Seeder
                 "prenom" =>"alic",
                 "contacte" => "97896545" ,
                 "email" => "kodjovi@gmail.com",
-                "password" => Hash::make("1234567890"),
+                "password" => Hash::make("11111111"),
               
 
             ],
@@ -42,7 +42,7 @@ class ClientSeeder extends Seeder
                 "prenom" =>"reine",
                 "contacte" => "90000000" ,
                 "email" => "assih@gmail.com",
-                "password" => Hash::make("12345678901"),
+                "password" => Hash::make("1111111"),
               
 
             ],

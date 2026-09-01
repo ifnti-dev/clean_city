@@ -77,7 +77,7 @@
             <div id="navComponents" class="collapse " data-bs-parent="#sideNavbar">
                <ul class="nav flex-col">
                   <li class="nav-item">
-                     <a class="nav-link " href="">Produits</a>
+                     <a class="nav-link " href="{{ route('produits.index') }}">Produits</a>
                   </li>
 
                   <li class="nav-item">
