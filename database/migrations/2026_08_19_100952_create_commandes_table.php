@@ -16,6 +16,7 @@ return new class extends Migration
             $table->decimal('montant', 8, 3);
             $table->boolean('est_acceptee');
             $table->text('raison')->nullable();
+            $table->date('date')->default(now());
             $table->timestamps();
             $table->integer('client_id');
             $table->foreign('client_id')

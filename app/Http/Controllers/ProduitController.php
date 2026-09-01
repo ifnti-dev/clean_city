@@ -102,7 +102,6 @@ class ProduitController extends Controller
                 'est_en_stock' => 1,
             ]);
      
-        
             return to_route('produits.index');
     }
 

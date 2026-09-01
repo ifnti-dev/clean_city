@@ -4,11 +4,15 @@ use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\ClientContoller;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuartierController;
 use App\Http\Controllers\RamassageController;
-use App\Models\Client;
-use App\Models\Facture;
+
+
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TarifController;
+use App\Http\Controllers\ZoneController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +58,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/ramassages/{tournee}/annuler', [RamassageController::class, 'annulerRamassage'])->name('ramassages.annuler');
 
 
+
     //Route::post('/factures/checkout', [FactureController::class, 'checkout'])->name('factures.checkout');
     Route::get('/factures/callback', [FactureController::class, 'callback'])->name('factures.callback');
 
@@ -61,4 +66,11 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/produits', ProduitController::class);
 
+
+
+    Route::resource('/employes', EmployeController::class);
+    Route::resource('/roles', RoleController::class)->except(['show']);
+    Route::resource('/tarifs', TarifController::class)->except(['show']);
+    Route::resource('/zones', ZoneController::class);
+    Route::resource('/quartiers', QuartierController::class)->except(['show']);
 });

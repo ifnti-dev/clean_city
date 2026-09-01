@@ -97,7 +97,7 @@
                   </li>
 
                   <li class="nav-item">
-                     <a class="nav-link" href="./components/alerts.html">
+                     <a class="nav-link" href="{{ route('commandes.index') }}">
                         Commandes
                      </a>
                   </li>
@@ -110,7 +110,7 @@
             <div class="navbar-heading">Parametrage</div>
          </li>
 
-         <li class="nav-item">
+         {{-- <li class="nav-item">
             <a class="nav-link" href="{{ route('employes.index') }}">
                <i data-feather="clipboard" class="w-4 h-4 mr-2"></i>
                Employes
@@ -143,7 +143,7 @@
                <i data-feather="credit-card" class="w-4 h-4 mr-2"></i>
                Tarifs
             </a>
-         </li>
+         </li> --}}
 
       </ul>
    </div>
