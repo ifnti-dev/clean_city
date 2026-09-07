@@ -1,40 +1,29 @@
 <x-app-layout>
-
     <x-slot>
+        <div class="w-full flex justify-center items-center ">
 
-        <div class="w-full p-2 flex justify-center items-center">
-
-            <div class="w-full m-2">
-
-                {{-- En-tête --}}
-                <div class="flex justify-between items-baseline mt-6 mb-6">
-
-                    <div>
-                        <h1 class="text-blue-700 font-medium text-2xl max-sm:pl-2 max-sm:text-xl">
-                            Liste des tarifs
+            <div class="w-full ">
+                <div class="h-40 bg-indigo-600 py-2 px-8 pt-10 lg:pt-14 pb-16 flex justify-between items-baseline">
+                    <div class="flex justify-between  items-baseline ">
+                        <h1 class="text-white font-medium text-2xl max-sm:pl-2 max-sm:text-xl">Liste des tarifs
                         </h1>
                     </div>
 
-                    <div class="flex items-center justify-end max-sm:pr-8 mt-6 w-60 max-sm:w-full">
-
+                    @can('tarif.creer')
+                    <div class=" flex items-center justify-end  max-sm:pr-8 mb-14  w-60 max-sm:w-full max-sm:w-30">
                         <a href="{{ route('tarifs.create') }}">
-
-                            <x-primary-button
-                                class="w-full justify-center max-sm:py-2 max-sm:text-sm">
-
+                            <x-secondary-button
+                                class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
                                 {{ __('Ajouter') }}
-
-                            </x-primary-button>
-
+                            </x-secondary-button>
                         </a>
 
                     </div>
-
+                    @endcan
                 </div>
 
-
-                {{-- Filtres --}}
-                <div class="card shadow mb-6 p-5">
+                {{--filtre --}}
+                <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
 
                     <form method="GET" action="{{ route('tarifs.index') }}">
 
@@ -140,7 +129,7 @@
 
 
                 {{-- Tableau --}}
-                <div class="relative overflow-x-auto card shadow">
+                <div class="relative overflow-x-auto card shadow mx-4">
 
                     <table class="text-left w-full whitespace-nowrap">
 

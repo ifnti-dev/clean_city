@@ -131,7 +131,7 @@
 
 
                 {{-- Tableau --}}
-                <div class="relative overflow-x-auto card shadow">
+                <div class="relative overflow-x-auto card shadow mx-4">
 
                     <table class="text-left w-full whitespace-nowrap">
 

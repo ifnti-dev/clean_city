@@ -8,9 +8,7 @@ use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuartierController;
-use App\Http\Controllers\RamassageController;
-
-
+use App\Http\Controllers\TourneeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TarifController;
 use App\Http\Controllers\ZoneController;
@@ -21,10 +19,6 @@ Route::get('/', function () {
 
     return to_route('login');
 });
-
-
-
-
 
 
 Route::get('/dashboard', function () {
@@ -43,7 +37,7 @@ require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
     Route::resource('abonnements', AbonnementController::class);
-    // Route::post('/abonnements/{abonnement}/annuler', [AbonnementController::class, 'annulerUnAbonnement'])->name('abonnements.annuler');
+    Route::post('/abonnements/{abonnement}/piece_justificatif', [AbonnementController::class, 'piece_justificatif'])->name('abonnements.piece_justificatif');
     Route::post('/abonnements/{abonnement}/traitement', [AbonnementController::class, 'traiterUnAbonnement'])->name('abonnements.traitement');
     Route::post('/abonnements/{abonnement}/approuver', [AbonnementController::class, 'approuverUnAbonnement'])->name('abonnements.approuver');
     Route::post('/abonnements/{abonnement}/rejeter', [AbonnementController::class, 'rejeterUnAbonnement'])->name('abonnements.rejeter');
@@ -53,10 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/clients/{client}/hystoriquePaiement', [ClientContoller::class, 'hystoriquePaiement'])->name('clients.hystoriquePaiement');
 
 
-    Route::resource('ramassages', RamassageController::class);
-    Route::post('/ramassages/{tournee}/demarer', [RamassageController::class, 'demarerRamassage'])->name('ramassages.demarer');
-    Route::post('/ramassages/{tournee}/terminer', [RamassageController::class, 'terminerRamassage'])->name('ramassages.terminer');
-    Route::post('/ramassages/{tournee}/annuler', [RamassageController::class, 'annulerRamassage'])->name('ramassages.annuler');
+    Route::resource('tournees', TourneeController::class);
+    Route::post('/tournees/{tournee}/demarer', [TourneeController::class, 'demarerTournee'])->name('tournees.demarer');
+    Route::post('/tournees/{tournee}/terminer', [TourneeController::class, 'terminerTournee'])->name('tournees.terminer');
+    Route::post('/tournees/{tournee}/annuler', [TourneeController::class, 'annulerTournee'])->name('tournees.annuler');
+    Route::post('/ligne_tourner/{lignetournee}/terminer', [TourneeController::class, 'terminerLigneTournee'])->name('ligne_tournee.terminer');
+
 
 
 
@@ -76,7 +72,4 @@ Route::middleware('auth')->group(function () {
     Route::resource('/quartiers', QuartierController::class)->except(['show']);
 
     Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
-
 });
-
-

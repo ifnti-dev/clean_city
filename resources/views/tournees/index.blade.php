@@ -1,28 +1,31 @@
 <x-app-layout>
     <x-slot>
+        <div class="w-full flex justify-center items-center ">
 
-        <div class="w-full p-2 flex justify-center items-center ">
-
-            <div class="w-full m-2">
-                <div class="flex justify-between items-baseline  mt-6 mb-6">
+            <div class="w-full ">
+                <div class="h-40 bg-indigo-600 py-2 px-8 pt-10 lg:pt-14 pb-16 flex justify-between items-baseline">
                     <div class="flex justify-between  items-baseline ">
-                        <h1 class="text-blue-700 font-medium text-2xl max-sm:pl-2 max-sm:text-xl">Liste des ramassages
+                        <h1 class="text-white font-medium text-2xl max-sm:pl-2 max-sm:text-xl">Liste des tournees
                         </h1>
                     </div>
 
-                    <div class="flex items-center justify-end  max-sm:pr-8 mt-6 w-60 max-sm:w-full max-sm:w-30">
-                        <a href="{{ route('ramassages.create') }}">
-                            <x-primary-button class="w-full justify-center max-sm:py-2 max-sm:text-sm">
+                    @can('tournee.creer')
+                    <div class=" flex items-center justify-end  max-sm:pr-8 mb-14  w-60 max-sm:w-full max-sm:w-30">
+                        <a href="{{ route('tournees.create') }}">
+                            <x-secondary-button
+                                class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
                                 {{ __('Ajouter') }}
-                            </x-primary-button>
+                            </x-secondary-button>
                         </a>
+
                     </div>
+                    @endcan
                 </div>
 
-                {{-- Filtres --}}
-                <div class="card shadow mb-6 p-5">
+                {{--filtre --}}
+                <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
 
-                    <form method="GET" action="{{ route('ramassages.index') }}">
+                    <form method="GET" action="{{ route('tournees.index') }}">
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
 
@@ -37,25 +40,25 @@
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
 
-                            {{-- statut --}}
+                            {{-- status --}}
                             <div>
                                 <label for="etat" class="block text-sm font-medium text-gray-700 mb-1">
-                                    Statut
+                                    Status
                                 </label>
 
-                                <select name="statut" id="statut"
+                                <select name="status" id="status"
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                                     <option value="">Tous</option>
 
-                                    <option value="PREVU" {{ request('statut')==='PREVU' ? 'selected' : '' }}>
+                                    <option value="PREVU" {{ request('status')==='PREVU' ? 'selected' : '' }}>
                                         PREVU
                                     </option>
 
-                                    <option value="EN_COUR" {{ request('statut')==='EN_COUR' ? 'selected' : '' }}>
+                                    <option value="EN_COUR" {{ request('status')==='EN_COUR' ? 'selected' : '' }}>
                                         EN COUR
                                     </option>
 
-                                    <option value="TERMINEE" {{ request('statut')==='TERMINEE' ? 'selected' : '' }}>
+                                    <option value="TERMINEE" {{ request('status')==='TERMINEE' ? 'selected' : '' }}>
                                         TERMINER
                                     </option>
                                 </select>
@@ -72,7 +75,7 @@
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
 
-                             {{-- Date fin --}}
+                            {{-- Date fin --}}
                             <div>
                                 <label for="date" class="block text-sm font-medium text-gray-700 mb-1">
                                     Date Fin
@@ -88,7 +91,7 @@
                         {{-- Boutons --}}
                         <div class="flex justify-end gap-3 mt-5">
 
-                            <a href="{{ route('ramassages.index') }}">
+                            <a href="{{ route('tournees.index') }}">
                                 <x-secondary-button type="button"
                                     class="bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200">
                                     Réinitialiser
@@ -105,96 +108,92 @@
 
                 </div>
 
-                <div class="relative overflow-x-auto card shadow">
+
+                <div class="relative overflow-x-auto card shadow mx-4">
                     <table class="text-left w-full whitespace-nowrap">
                         <thead class="">
                             <tr class="border-gray-300 border-b ">
-                                <th scope="col" class="px-6 py-3">Code</th>
-                                <th scope="col" class="px-6 py-3">Employee</th>
                                 <th scope="col" class="px-6 py-3">Zone</th>
-                                <th scope="col" class="px-6 py-3">Statut</th>
+                                <th scope="col" class="px-6 py-3">Nombre d'employé</th>
+                                <th scope="col" class="px-6 py-3">Status</th>
                                 <th scope="col" class="px-6 py-3">Date </th>
                                 <th scope="col" class="px-6 py-3">Itineraire</th>
                                 <th scope="col" class="px-6 py-3 flex justify-center">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y ">
-                            @forelse($ramassages as $ramassage)
+                            @forelse($tournees as $tournee)
                             <tr class="border-gray-300 border-b hover:bg-gray-100 ">
 
-                                <td class="py-3 px-6 text-left">124</td>
-                                <td class="py-3 px-6 text-left">{{ $ramassage->employe->user->nom }}</td>
-                                <td class="py-3 px-6 text-left">{{ $ramassage->zone->designation }}</td>
+                                <td class="py-3 px-6 text-left">{{ $tournee->zone->designation }}</td>
+                                <td class="py-3 px-6 text-center">{{ $tournee->nbr_employe() }}</td>
 
-                                @if ( $ramassage->statut=="TERMINEE")
+
                                 <td class="py-3 px-6 text-left">
+                                    @if ( $tournee->status=="TERMINEE")
+
                                     <span
                                         class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block whitespace-nowrap text-center">{{
-                                        $ramassage->statut }}</span>
+                                        $tournee->status }}</span>
                                 </td>
-                                @elseif ( $ramassage->statut=="EN_COUR")
-                                <td class="py-3 px-6 text-left">
-                                    <span class="bg-yellow-200 px-2 py-1 text-yellow-600 text-sm
+                                @elseif ( $tournee->status=="EN_COUR")
+
+                                <span class="bg-yellow-200 px-2 py-1 text-yellow-600 text-sm
                                           font-medium rounded-md inline-block whitespace-nowrap text-center">{{
-                                        $ramassage->statut }}</span>
-                                </td>
-                                @elseif ( $ramassage->statut=="PREVU")
-                                <td class="py-3 px-6 text-left">
-                                    <span class="bg-blue-200 px-2 py-1 text-blue-600 text-sm
+                                    $tournee->status }}</span>
+
+                                @elseif ( $tournee->status=="PREVU")
+
+                                <span class="bg-blue-200 px-2 py-1 text-blue-600 text-sm
                                           font-medium rounded-md inline-block whitespace-nowrap text-center">{{
-                                        $ramassage->statut }}</span>
-                                </td>
+                                    $tournee->status }}</span>
+
                                 @endif
+                                </td>
 
-                                <td class="py-3 px-6 text-left">{{ $ramassage->date }}</td>
-                                <td class="py-3 px-6 text-left">{{ $ramassage->itineraire }}</td>
+                                <td class="py-3 px-6 text-left">{{ $tournee->date }}</td>
+                                <td class="py-3 px-6 text-left">{{ $tournee->itineraire }}</td>
 
 
-                                <td class="py-3 px-6 text-left flex  items-center gap-2">
+                                <td class="py-3 px-6 text-left flex justify-center items-center gap-2">
 
-                                    @if ($ramassage->statut=="PREVU" )
+                                    <a href="{{ route('tournees.show', $tournee->id) }}">
+                                        <x-secondary-button
+                                            class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-300">
+                                            Voire
+                                        </x-secondary-button>
+                                    </a>
 
-                                    <a href="{{ route('ramassages.edit', $ramassage->id) }}">
+                                    @if ($tournee->status=="PREVU" )
+                                    @can('tournee.modifier')
+                                    <a href="{{ route('tournees.edit', $tournee->id) }}">
                                         <x-secondary-button
                                             class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
                                             Modifier
                                         </x-secondary-button>
                                     </a>
+                                    @endcan
 
-                                    <form action="{{ route('ramassages.demarer', $ramassage->id) }}" method="post">
-                                        @csrf
-                                        <x-secondary-button type="submit"
-                                            class="bg-teal-700 text-white border-teal-700 hover:bg-teal-600 hover:border-teal-600 focus:ring-teal-300">
-                                            Demarer
-                                        </x-secondary-button>
-                                    </form>
-
-
-                                    <form action="{{ route('ramassages.annuler', $ramassage->id) }}" method="post">
+                                    @can('tournee.annuler')
+                                    <form action="{{ route('tournees.annuler', $tournee->id) }}" method="post">
                                         @csrf
                                         <x-secondary-button type="submit"
                                             class="bg-red-700 text-white border-red-700 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">
                                             Annuler
                                         </x-secondary-button>
                                     </form>
-
-                                    @elseif($ramassage->statut=="EN_COUR")
-
-                                    <form action="{{ route('ramassages.terminer', $ramassage->id) }}" method="post">
-                                        @csrf
-                                        <x-secondary-button type="submit"
-                                            class="bg-green-700 text-white border-green-700 hover:bg-green-600 hover:border-green-600 focus:ring-green-300">
-                                            Terminer
-                                        </x-secondary-button>
-                                    </form>
+                                    @endcan
                                     @endif
+
+
 
                                 </td>
 
                             </tr>
                             @empty
-                            <tr class=" flex justify-center items-center">
-                                <td class=" flex items-center justify-center py-3 px-6 text-center">Aucun ramassage</td>
+                            <tr>
+                                <td colspan="8" class=" w-full flex items-center justify-center py-3 px-6 text-center">
+                                    Aucune tournee</td>
                             </tr>
                             @endforelse
 
@@ -202,7 +201,7 @@
                     </table>
                 </div>
                 <div class="m-4">
-                    {{$ramassages->links()}}
+                    {{$tournees->links()}}
                 </div>
             </div>
 

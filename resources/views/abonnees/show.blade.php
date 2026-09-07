@@ -39,10 +39,53 @@
                     <!-- info abonnee -->
                     <div>
 
-                        <div class="border-b border-gray-200 pb-4 mb-6">
+                        <div class="border-b border-gray-200 pb-4 mb-6 flex justify-between ">
                             <h2 class="text-xl font-semibold text-gray-800">
                                 Informations de l'abonnement
                             </h2>
+
+
+                            <div class="flex justify-start items-center gap-2 mt-4 max-sm:flex-col max-sm:gap-2">
+
+                                @if ($abonnement->menage->est_abonnee==0 && $abonnement->menage->est_radier==0 )
+                                @can('menage.radier')
+                                <form action="{{ route('abonnements.radier', $abonnement->id) }}" method="post">
+                                    @csrf
+                                    <x-secondary-button type="submit"
+                                        class="bg-teal-700 text-white border-teal-700 hover:bg-teal-600 hover:border-teal-600 focus:ring-teal-300">
+                                        Radier
+                                    </x-secondary-button>
+                                </form>
+                                @endcan
+                                @endif
+
+                                @if ($abonnement->menage->est_radier==1 )
+                                @can('menage.supprimer')
+                                <form action="{{ route('abonnements.destroy', $abonnement->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-secondary-button type="submit"
+                                        class="bg-red-700 text-white border-red-700 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">
+                                        Supprimer
+                                    </x-secondary-button>
+                                </form>
+                                @endcan
+                                @endif
+
+                                @if ($abonnement->menage->est_abonnee==1 && $abonnement->etat=='ACTIF')
+                                <form action="{{ route('menages.desabonnee', $abonnement->id) }}" method="post">
+                                    @csrf
+
+                                    <x-secondary-button type="submit"
+                                        class="bg-red-700 text-white border-red-700 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">
+                                        Désabonner
+                                    </x-secondary-button>
+                                </form>
+                                @endif
+
+
+
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -146,9 +189,9 @@
                     </div>
 
                     <!-- status -->
-                    <div class="w-full border-t-2 pt-5 flex justify-baseline items-baseline mt-6">
+                    <div class="w-full border-t-2 pt-5 flex justify-baseline items-baseline mt-6 max-md:flex-col max-md:gap-">
                         <div class="w-full">
-                            <h2 class="text-xl font-semibold mb-4">Statut de l'abonnement</h2>
+                            <h2 class="text-xl font-semibold mb-4 ">Statut de l'abonnement</h2>
                             <p class="text-gray-700 mb-4">Le statut actuel de l'abonnement est :
                                 <span
                                     class="font-medium px-2 py-1 text-white text-lg rounded-md {{ $abonnement->status == 'EN_ATTENTE' ? 'bg-yellow-500' : ($abonnement->status == 'EN_COUR_DE_TRAITEMENT' ? 'bg-blue-500' : ($abonnement->status == 'APPROUVER' ? 'bg-green-500' : 'bg-red-500')) }}">
@@ -199,9 +242,9 @@
                             @if ($status=="REJETER" )
                             <!-- motif de rejet -->
                             <div>
-                                <p class="text-gray-700 mb-4">Motif de rejet :
+                                <p class="text-gray-700 mb-4">  <h2 class="text-xl font-semibold mb-2 border-b "> Motif de rejet </h2> 
                                     <span class="font-medium text-red-500">
-                                        {{ $abonnement->motif_rejet }} Lorem ipsum dolor, sit amet consectetur
+                                       {{ $abonnement->motif_rejet }} Lorem ipsum dolor, sit amet consectetur
                                         adipisicing elit. Cumque, eius minus! Quod, neque facilis? Illum eveniet in
                                         officiis quia laborum excepturi, minima praesentium repellendus ab dolore
                                         mollitia molestiae similique molestias?

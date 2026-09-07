@@ -103,36 +103,36 @@
                 <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="dropdownUser">
                     <div class="px-4 pb-0 pt-2">
                         <div class="leading-4">
-                            <h5 class="mb-1">John E. Grainger</h5>
-                            <a href="#">View my profile</a>
+                            <h5 class="mb-1">{{ Auth::user()->nom }}</h5>
+                            <a href="{{route('profile.edit')}}">Mon profile</a>
                         </div>
                         <div class="border-b mt-3 mb-2"></div>
                     </div>
 
                     <ul class="list-unstyled">
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{{route('profile.edit')}}">
                                 <i class="w-4 h-4" data-feather="user"></i>
-                                Edit Profile
+                                Modifier mon Profile
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{{route('dashboard')}}">
                                 <i class="w-4 h-4" data-feather="activity"></i>
-                                Activity Log
+                                Dashboard
                             </a>
                         </li>
 
-                        <li>
+                        <!-- <li>
                             <a class="dropdown-item" href="#">
                                 <i class="w-4 h-4" data-feather="star"></i>
                                 Go Pro
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a class="dropdown-item" href="#">
                                 <i class="w-4 h-4" data-feather="settings"></i>
-                                Account Settings
+                               Paramétre
                             </a>
                         </li>
                         <li>

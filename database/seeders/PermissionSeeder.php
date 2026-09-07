@@ -16,6 +16,17 @@ class PermissionSeeder extends Seeder
         //
 
         $permissions_name = [
+            'employe.voire',
+            'employe.creer',
+            'employe.modifier',
+            'employe.supprimer',
+            'employe.suspendre',
+
+            'client.voire',
+            'client.creer',
+            'client.modifier',
+            'client.supprimer',
+
             'menage.voire',
             'menage.creer',
             'menage.modifier',
@@ -29,18 +40,6 @@ class PermissionSeeder extends Seeder
             'abonnement.approuver',
             'abonnement.traitement',
             'abonnement.rejeter',
-            
-
-            'employe.voire',
-            'employe.creer',
-            'employe.modifier',
-            'employe.supprimer',
-            'employe.suspendre',
-
-            'client.voire',
-            'client.creer',
-            'client.modifier',
-            'client.supprimer',
 
             'tarif.voire',
             'tarif.creer',
@@ -49,20 +48,36 @@ class PermissionSeeder extends Seeder
             'tarif.activer',
             'tarif.desactiver',
 
+            'quartier.voire',
+            'quartier.creer',
+            'quartier.modifier',
+            'quartier.supprimer',
+
+            'zone.voire',
+            'zone.creer',
+            'zone.modifier',
+            'zone.supprimer',
+
+            'role.voire',
+            'role.creer',
+            'role.modifier',
+            'role.supprimer',
+
+
+            'tournee.voire',
+            'tournee.creer',
+            'tournee.modifier',
+            'tournee.supprimer',
+            'tournee.demarer',
+            'tournee.annuler',
+            'tournee.terminer',
+            'ligne_tournee.terminer',
+
+
             'produit.voire',
             'produit.creer',
             'produit.modifier',
             'produit.supprimer',
-
-            'ramassage.voire',
-            'ramassage.creer',
-            'ramassage.modifier',
-            'ramassage.supprimer',
-            'ramassage.demarer',
-            'ramassage.annuler',
-            'ramassage.terminer',
-
-            
 
             'commande.confirmer',
             'commande.rejeter',
@@ -70,15 +85,14 @@ class PermissionSeeder extends Seeder
             'livraison.confirmer',
             'livraison.demarer',
 
-            'paiement.voire',
+            'facture.voire',
             'paiement.modifier',
             'paiement.creer',
-            
+
         ];
 
-        foreach($permissions_name as $name){
+        foreach ($permissions_name as $name) {
             Permission::create(['name' => $name]);
-
         }
     }
 }
