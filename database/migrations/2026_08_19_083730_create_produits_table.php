@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('label');
             $table->boolean('est_en_stock');
             $table->integer('prix_unitaire');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

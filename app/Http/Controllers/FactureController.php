@@ -22,9 +22,8 @@ class FactureController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:paiement.voire', only: ['index', 'show']),
-            new Middleware('permission:paiement.creer', only: ['create', 'store']),
-            new Middleware('permission:paiement.modifier', only: ['edite', 'update']),
+            new Middleware('permission:facture.voire', only: ['index', 'show']),
+            new Middleware('permission:facture.creer', only: ['create', 'store']),
 
         ];
     }
@@ -41,11 +40,20 @@ class FactureController extends Controller implements HasMiddleware
     public function index(Request $request)
     {
         //
-        $search = $request->input('search');
+        
+        $montant = $request->input('montant');
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin');
+
         $query = Facture::query();
-        if ($search) {
-            $request->where('date_debut', 'like', "%$search%")
-                ->orWhere('date_fin', 'like', "%$search%");
+        if ($date_fin && $date_debut) {
+            $query->whereBetween('date', [$date_debut, $date_fin]);
+               
+        }
+
+
+        if($montant) {
+            $query->where('montant', 'like', "%$montant%");
         }
 
         if (session(('success'))) {
@@ -66,8 +74,8 @@ class FactureController extends Controller implements HasMiddleware
             }
         }
 
-        $factures = $query->get();
-        return view('factures.index', compact('factures', 'search'));
+        $factures = $query->paginate(4);
+        return view('factures.index', compact('factures', 'date_debut', 'date_fin','montant'));
     }
 
 
@@ -137,7 +145,6 @@ class FactureController extends Controller implements HasMiddleware
 
             return redirect($transaction->payment_url);
         } 
-
         
         DB::transaction(function () use ($validated, $nb_mois, $date_fin) {
             $facture = Facture::create([
@@ -213,6 +220,7 @@ class FactureController extends Controller implements HasMiddleware
                 'tarif_id' => $validated['tarif_id'],
                 'methode_paiement_id' => $validated['methode_paiement_id'],
                 'montant' => $validated['montant'],
+
             ]);
 
         });
@@ -229,23 +237,7 @@ class FactureController extends Controller implements HasMiddleware
         //
     }
 
-    // public function checkout(){
-
-    //     $transaction = \FedaPay\Transaction::create([
-    //         'description' => 'Payment de la facture numero',
-    //         'amount' => 2000,
-    //         'currency' => ['iso' => 'XOF'],
-    //         'callback_url' => route('factures.callback'),
-    //         'mode' => 'mtn_open',
-    //         'customer' => [
-    //                 "firstname" => 'ganietou',
-    //                 "lastname" => 'kondi',
-    //         ]
-    //     ]);
-
-    //     return redirect($transaction-> payment_url);
-    // }
-
+  
     public function callback(Request $request)
     {
         // verifier si le paiement a ete effectue
@@ -253,7 +245,6 @@ class FactureController extends Controller implements HasMiddleware
 
         $transactionId = $request->input('id');
         $status = $request->input('status');
-
         $facture = session('facture');
         // $facture['nb_mois']
 
@@ -275,18 +266,31 @@ class FactureController extends Controller implements HasMiddleware
                         'id_transaction' => $transactionId,
                     ]);
 
-                      
- 
 
                     return to_route('factures.index')->with('success', 'vous avez enregistrer un nouveau paiement ');
 
                 default:
-                    dump('payement echoue');
-                    break;
+                    return to_route('factures.create');
 
             }
         }
 
+    }
+
+    public function reglerFacture(Facture $facture){
+        $facture->update([
+            'etat_paiement' => 'PAIYEE',
+        ]);
+
+        return to_route('factures.index');
+    }
+
+     public function rejeterFacture(Facture $facture){
+        $facture->update([
+            'etat_paiement' => 'ECHOUEE',
+        ]);
+
+        return to_route('factures.index');
     }
 
 

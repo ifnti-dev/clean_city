@@ -10,18 +10,19 @@
                         </h1>
                     </div>
 
-                    <div class="flex items-center gap-2 w-60 max-sm:w-full">
+                    <div class="flex items-center gap-1  w-40 max-sm:w-full">
                         <a href="{{ route('factures.index') }}" class="w-full">
-                            <x-primary-button class="w-full justify-center">
+                            <x-secondary-button class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md" >
                                 Liste
-                            </x-primary-button>
+                            </x-secondary-button>
                         </a>
-                        <a href="{{ route('factures.edit', $facture->id) }}" class="w-full">
+                    </div>    
+                        {{-- <a href="{{ route('factures.edit', $facture->id) }}" class="w-full">
                             <x-primary-button class="w-full justify-center bg-yellow-700 hover:bg-yellow-600">
                                 Modifier
                             </x-primary-button>
-                        </a>
-                    </div>
+                        </a> --}}
+                    
                 </div>
 
 

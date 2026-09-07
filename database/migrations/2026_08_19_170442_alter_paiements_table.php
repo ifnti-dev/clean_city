@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('factures', function (Blueprint $table) {
             $table->date('date')->default('now()');
             $table->decimal('montant', 8, 3);
-            $table->string('id_transaction');
+            $table->string('id_transaction')->nullable();
         });
 
 

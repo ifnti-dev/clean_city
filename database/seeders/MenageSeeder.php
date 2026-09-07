@@ -18,7 +18,7 @@ class MenageSeeder extends Seeder
             [
                 'code' => '00001',
                 'designation' => 'ifnti',
-                'est_abonnee' => true,
+                'est_abonnee' => false,
                 'est_radier' => false,
                 'employe_id' => 1,
                 'client_id' => 1,
@@ -34,6 +34,7 @@ class MenageSeeder extends Seeder
                 'est_abonnee' => true,
                 'est_radier' => false,
                 'employe_id' => 1,
+            
                 'client_id' => 2,
                 'quartier_id' => 1,
                 'type_habitat_id' => 1,

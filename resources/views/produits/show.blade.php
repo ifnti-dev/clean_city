@@ -44,7 +44,12 @@
                         <div>
                             <p class="text-lg text-gray-500">Est en stock</p>
                             <p class="mt-1 font-medium text-gray-800">
-                                {{ $produit->est_en_stock }}
+                                @if($produit->est_en_stock) 
+                                    <p><span class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block">Oui</span></p>
+                                @else
+                                    <p><span class="bg-red-200 px-2 py-1 text-red-900 text-sm font-medium rounded-md inline-block">Non</span></p>
+                                @endif
+
                             </p>
                         </div>
 

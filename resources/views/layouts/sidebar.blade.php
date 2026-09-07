@@ -63,7 +63,7 @@
 
                   @can('facture.voire')
                   <li class="nav-item">
-                     <a class="nav-link" href="./billing.html">
+                     <a class="nav-link" href="{{ route('factures.index') }}">
                         Factures
                      </a>
                   </li>
@@ -169,7 +169,13 @@
                Tarifs
             </a>
          </li>
-         @endcan
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('typeHabitats.index') }}">
+               <i data-feather="home" class="w-4 h-4 mr-2"></i>
+               Type d'habitat
+            </a>
+         </li>
 
       </ul>
    </div>

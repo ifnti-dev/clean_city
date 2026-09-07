@@ -16,10 +16,12 @@ return new class extends Migration
             $table->integer('nb_mois');
             $table->date('date_debut')->default('now()');
             $table->date('date_fin');
-            $table->json('les_mois')->nullable();  //a demander a monsieur
+            $table->json('les_mois')->nullable(); 
+            $table->enum('etat_paiement', ['EN_ATTENTE', 'PAIYEE', 'ECHOUEE'])->default('EN_ATTENTE');
+
             $table->integer('abonnement_id');
             $table->integer('tarif_id');
-          
+
             $table->integer('methode_paiement_id');
 
             $table->foreign('abonnement_id')

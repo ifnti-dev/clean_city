@@ -20,12 +20,12 @@ class CommandeSeeder extends Seeder
             [
                 "montant" => 4000,
                 "est_acceptee" => true,
-                "client_id" => 1
+                "client_id" => 1,
             ],
             [
                 "montant" => 6000,
                 "est_acceptee" => true,
-                "client_id" => 1
+                "client_id" => 2,
             ]
         ]);
     }

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TypeHabitat;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Role;
 use SweetAlert2\Laravel\Swal;
 
-class RoleController extends Controller
+class TypeHabitatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,10 @@ class RoleController extends Controller
     {
         //
         $search = $request->input('search');
-        $query = Role::query();
+        $query = TypeHabitat::query();
+
         if($search){
-            $query->where('name', 'like', "%$search%");
+            $query->where('designation', 'like', "%$search%");
         }
 
         if (session(('success'))) {
@@ -48,9 +49,9 @@ class RoleController extends Controller
             ]);
         }
 
+        $typeHabitats = $query->paginate(4);
+        return view('typeHabitats.index', compact('typeHabitats', 'search')); 
 
-        $roles = $query->paginate(4);
-        return view('roles.index', compact('roles', 'search'));
     }
 
     /**
@@ -59,7 +60,7 @@ class RoleController extends Controller
     public function create()
     {
         //
-        return view('roles.create');
+        return view('typeHabitats.create');
     }
 
     /**
@@ -69,17 +70,16 @@ class RoleController extends Controller
     {
         //
         $validated = $request->validate([
-            'role' => 'required|min:5'
+            'designation' => 'required|min:5'
         ]);
 
-        $role = Role::create([
-            'name' => $validated['role'],
+        $role = TypeHabitat::create([
+            'designation' => $validated['designation'],
         ]);
 
+        return to_route('typeHabitats.index')->with("success", "Vous avez enregistrer le type d'Habitat ".strtoupper($validated['designation']) );
 
 
-
-        return to_route('roles.index')->with("success", "vous avez enregistrer un nouveau role ".strtoupper($validated['role']) );
     }
 
     /**
@@ -93,47 +93,35 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $role)
+    public function edit(TypeHabitat $typeHabitat)
     {
         //
-        return view('roles.edit', compact('role'));
+        return view('typeHabitats.edit');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, TypeHabitat $typeHabitat)
     {
         //
-
-        
-        $validated = $request->validate([
-            'role' => ['required', Rule::unique('roles')-> ignore($role->id, 'id'), 'min:5'],  
+         $validated = $request->validate([
+            'designation' => ['required', Rule::unique('designation')-> ignore($typeHabitat->id, 'id')],
         ]);
 
-       
-
-
-        $role->update([
-            'name' => $validated['role'],
+        $typeHabitat->update([
+            'designation' => $validated['designation'],
         ]);
 
-
-
-        return to_route('roles.index')->with("success", "vous avez enregistrer un nouveau role ".strtoupper($validated['role']) );
-
+        return to_route('typeHabitats.index')->with("success", "Vous avez enregistrer le type d'Habitat ".strtoupper($validated['designation']) );
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Role $role)
+    public function destroy(string $id)
     {
         //
-        $role->delete();
-
-        return to_route('roles.index');
-
     }
 }

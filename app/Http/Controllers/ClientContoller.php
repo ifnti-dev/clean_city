@@ -36,9 +36,13 @@ class ClientContoller extends Controller implements HasMiddleware
     {
         //
         $search = $request->input('search');
-        $query = Client::query()->join('users', 'user_id', 'users.id')->where('deleted_at', null);
+        $abonnee = $request->input('abonnee');
 
-        //dd($query->join('menages', 'menages.id', 'client_id')->get());
+        // $query = Client::query()->join('users', 'user_id', 'users.id')->where('deleted_at', null);
+        $query = Client::with(['user', 'menages']); 
+        // ->where('deleted_at', null);
+
+       
 
         if($search){
             $query->where('nom', 'like', "%$search%")
@@ -46,8 +50,17 @@ class ClientContoller extends Controller implements HasMiddleware
                 ->orwhere('contacte', 'like', "%$search%");
         }
 
+        //dd($query->join('menages', 'menages.client_id', 'clients.id')->where('menages.est_abonnee', 1)->get());
 
-         if (session(('success'))) {
+        if($abonnee){
+            $query->join('menages', 'menages.client_id', 'clients.id')
+                ->where('menages.est_abonnee', $abonnee)->get();
+        }
+
+        
+
+
+        if (session(('success'))) {
             // Toast with pause on hover
             if (session('text')) {
                 Swal::success([
@@ -76,9 +89,8 @@ class ClientContoller extends Controller implements HasMiddleware
 
         
        
-        $clients = $query->paginate(2);
-        //$clients = $query->paginate(8);
-        return view('clients.index', compact('clients', 'search'));
+        $clients = $query->paginate(3);
+        return view('clients.index', compact('clients', 'search', 'abonnee'));
 
     }
 
@@ -101,10 +113,10 @@ class ClientContoller extends Controller implements HasMiddleware
         
         $validated = $request->validate([
 
-            'nom' => 'required|min:3',
-            'prenom' => 'required|min:3',
+            'nom' => 'required|string|min:3',
+            'prenom' => 'required|string|min:3',
             'email' => 'required|email',
-            'contacte' => 'required|unique:users',
+            'contacte' => 'required|unique:users|integer',
             
 
         ]);
@@ -167,8 +179,8 @@ class ClientContoller extends Controller implements HasMiddleware
         
         $validated = $request->validate([
 
-            'nom' => 'required|min:3',
-            'prenom' => 'required|min:3',
+            'nom' => 'required|string|min:3',
+            'prenom' => 'required|string|min:3',
             'email' => ['required', Rule::unique('users', 'email')-> ignore($client->user_id)],
             'contacte' => ['required', Rule::unique('users', 'contacte')-> ignore($client->user_id)],
             
@@ -216,14 +228,5 @@ class ClientContoller extends Controller implements HasMiddleware
 
     }
 
-
-
-
-
-    public function hystoriquePaiement(Client $client){
-
-        $hystorique = $client->load(['menages']);
-
-        dd($hystorique);
-    }
+    
 }

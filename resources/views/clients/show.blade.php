@@ -82,13 +82,13 @@
                             <p class="mt-1 font-medium text-gray-800">
                                 @forelse ($client->menages as $menage)
                                     @if ($menage->est_abonnee )
-                                        <p>OUI</p>
+                                        <p class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block">OUI</p>
                                     @else
-                                        <p>NON</p>
+                                        <p class="bg-red-200 px-2 py-1 text-red-900 text-sm font-medium rounded-md inline-block"> NON</p>
                                     @endif
                                     
                                 @empty
-                        
+                                    Aucun abonnement
                                 @endforelse
                             </p>
                         </div>
@@ -98,13 +98,13 @@
                             <p class="mt-1 font-medium text-gray-800">
                                  @forelse ($client->menages as $menage)
                                      @if ($menage->est_en_regle )
-                                        <p>OUI</p>
+                                        <p class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block" >OUI</p>
                                     @else
-                                        <p>NON</p>
+                                        <p class="bg-red-200 px-2 py-1 text-red-900 text-sm font-medium rounded-md inline-block" >NON</p>
                                     @endif
                                     
                                 @empty
-                        
+                                    
                                 @endforelse
                             </p>
                         </div>

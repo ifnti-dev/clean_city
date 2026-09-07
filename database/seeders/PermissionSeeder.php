@@ -14,7 +14,6 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         //
-
         $permissions_name = [
             'employe.voire',
             'employe.creer',
@@ -63,7 +62,6 @@ class PermissionSeeder extends Seeder
             'role.modifier',
             'role.supprimer',
 
-
             'tournee.voire',
             'tournee.creer',
             'tournee.modifier',
@@ -73,22 +71,25 @@ class PermissionSeeder extends Seeder
             'tournee.terminer',
             'ligne_tournee.terminer',
 
-
             'produit.voire',
             'produit.creer',
             'produit.modifier',
             'produit.supprimer',
 
-            'commande.confirmer',
+           'commande.confirmer',
             'commande.rejeter',
 
             'livraison.confirmer',
             'livraison.demarer',
 
             'facture.voire',
-            'paiement.modifier',
-            'paiement.creer',
+            'facture.creer',
 
+
+            'typeHabitat.creer',
+            'typeHabitat.voire',
+            'typeHabitat.modifier',
+            'typeHabitat.supprimer',
         ];
 
         foreach ($permissions_name as $name) {
