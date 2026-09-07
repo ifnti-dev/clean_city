@@ -23,24 +23,6 @@
 
                 <form class="card  mt-[-50px] p-5 mx-4 mb-6" method="POST" action="{{ route('abonnements.store') }}">
                     @csrf
-
-                    <!-- <div class="grid grid-cols-2 gap-5 max-sm:grid-cols-1 max-sm:gap-2 ">
-
-                        <div class="mt-4 w-full">
-                            <x-input-label for="date_debut" :value="__('Date Debut')" />
-                            <x-text-input id="date_debut" class="block mt-1 w-full" type="date" name="date_debut"
-                                :value="now()->format('Y-m-d')"  required autofocus autocomplete="family-name" />
-                            <x-input-error :messages="$errors->get('date_debut')" class="mt-2" />
-                        </div>
-
-                        <div class="mt-4 w-full">
-                            <x-input-label for="date_fin" :value="__('Date Fin')" />
-                            <x-text-input id="date_fin" class="block mt-1 w-full" type="date" name="date_fin"
-                                :value="old('date_fin')" autocomplete="given-name" />
-                            <x-input-error :messages="$errors->get('date_fin')" class="mt-2" />
-                        </div>
-                    </div> -->
-
                     <div class="grid grid-cols-2 gap-5 max-sm:grid-cols-1 max-sm:gap-2 ">
 
                         <!-- le client -->
@@ -112,9 +94,9 @@
                     <div class="flex items-center justify-center mt-6 w-full ">
                         <x-secondary-button onclick="getlocalisation()" type="button"
                             class="bg-yellow-600 text-xl py-4 text-white border-yellow-600 hover:bg-yellow-500 hover:border-yellow-600 focus:ring-0">
-                            {{ __('  Utiliser ma position actuelle') }}
+                            {{ __(' Utiliser ma position actuelle') }}
                         </x-secondary-button>
-<!-- 📍 -->
+                        <!-- 📍 -->
                     </div>
 
                     <!-- Bouton -->

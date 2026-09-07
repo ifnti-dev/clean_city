@@ -16,7 +16,7 @@ class EmployeSeeder extends Seeder
     public function run(): void
     {
         //
-      
+
         DB::table('users')->insert([
             [
                 "nom" => "responsable",
@@ -68,6 +68,13 @@ class EmployeSeeder extends Seeder
                 "email" => "secretaire@gmail.com",
                 "password" => Hash::make("11111111"),
             ],
+            [
+                "nom" => "agent_co1",
+                "prenom" => "agent_co1",
+                "contacte" => "90000007",
+                "email" => "agent_co1@gmail.com",
+                "password" => Hash::make("11111111"),
+            ],
 
 
         ]);
@@ -88,13 +95,25 @@ class EmployeSeeder extends Seeder
             [
                 "user_id" => 8
             ],
-             [
+            [
                 "user_id" => 9
             ],
-            
-            
+            [
+                "user_id" => 10
+            ],
+
+
         ]);
 
+        /**
+         *  
+            'responssable',
+            'secretaire',
+            'comptable',
+            'agent_collecte_ordures',
+            'agent_collecte_fonds',
+            'livreure',
+         */
         //assigner les roles aux employes
         $respo = User::where('contacte', '90000001')->first();
         $respo->assignRole('responssable');
@@ -108,13 +127,14 @@ class EmployeSeeder extends Seeder
         $agent_co = User::where('contacte', '90000004')->first();
         $agent_co->assignRole('agent_collecte_ordures');
 
+        $agent_co1 = User::where('contacte', '90000007')->first();
+        $agent_co1->assignRole('agent_collecte_ordures');
+
 
         $comptable = User::where('contacte', '90000005')->first();
         $comptable->assignRole('comptable');
 
         $secretaire = User::where('contacte', '90000006')->first();
         $secretaire->assignRole('secretaire');
-
-
     }
 }

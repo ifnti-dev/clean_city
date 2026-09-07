@@ -16,17 +16,22 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('designation')->nullable();
+            $table->unsignedBigInteger('employe_id')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->boolean('est_abonnee');
             $table->boolean('est_radier');
-            $table->boolean('est_en_regle')->default(true);
+            $table->boolean('est_en_regle')->default(false);
             $table->timestamps();
 
             $table->integer('client_id');
             $table->integer('quartier_id');
             $table->integer('type_habitat_id');
 
+            $table->foreign('employe_id')
+                ->references('id')
+                ->on('employes')
+                ->onDelete('set null');
 
             $table->foreign('client_id')
                 ->references('id')

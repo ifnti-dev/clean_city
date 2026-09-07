@@ -15,28 +15,59 @@ class TourneeSeeder extends Seeder
     {
         // ['employee_id', 'zone_id', 'status', 'date', 'itineraire'];
 
+        // creation des tournee
         DB::table('tournees')->insert([
             [
-                'employe_id' => 1,
+                'employes_id' =>json_encode(['2', '1']),
                 'zone_id' => 1,
-                'statut' => "EN_COUR",
+                'status' => "EN_COUR",
                 'date' => "12-8-2024",
                 'itineraire' => 1000
             ],
             [
-                'employe_id' => 1,
+                'employes_id' =>json_encode(['1', '2']),
                 'zone_id' => 1,
-                'statut' => "PREVU",
+                'status' => "PREVU",
                 'date' => "14-8-2024",
                 'itineraire' => 1000
             ],
 
             [
-                'employe_id' => 2,
+                'employes_id' =>json_encode(['1']),
                 'zone_id' => 2,
-                'statut' => "TERMINEE",
+                'status' => "PREVU",
                 'date' => "16-8-2024",
                 'itineraire' => 1000
+            ],
+        ]);
+
+
+        // ligne tournee
+        DB::table('ligne_tournees')->insert([
+            [
+                'tournee_id' => 1,
+                'menage_id' => 1,
+                'status' => "NON_VIDER",
+            ],
+            [
+                'tournee_id' => 1,
+                'menage_id' => 2,
+                'status' => "NON_VIDER",
+            ],
+            [
+                'tournee_id' => 2,
+                'menage_id' => 2,
+                'status' => "NON_VIDER",
+            ],
+            [
+                'tournee_id' => 3,
+                'menage_id' => 1,
+                'status' => "NON_VIDER",
+            ],
+            [
+                'tournee_id' => 3,
+                'menage_id' => 3,
+                'status' => "NON_VIDER",
             ],
         ]);
     }

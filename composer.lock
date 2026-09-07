@@ -3598,16 +3598,16 @@
         },
         {
             "name": "spatie/laravel-pdf",
-            "version": "2.13.0",
+            "version": "2.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-pdf.git",
-                "reference": "33d8045461ebc95391d9f759352c69bfeccc9457"
+                "reference": "004e3d21cc1c3b2f435d9794841bacf1cf46ab8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-pdf/zipball/33d8045461ebc95391d9f759352c69bfeccc9457",
-                "reference": "33d8045461ebc95391d9f759352c69bfeccc9457",
+                "url": "https://api.github.com/repos/spatie/laravel-pdf/zipball/004e3d21cc1c3b2f435d9794841bacf1cf46ab8f",
+                "reference": "004e3d21cc1c3b2f435d9794841bacf1cf46ab8f",
                 "shasum": ""
             },
             "require": {
@@ -3687,9 +3687,9 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-pdf/issues",
-                "source": "https://github.com/spatie/laravel-pdf/tree/2.13.0"
+                "source": "https://github.com/spatie/laravel-pdf/tree/2.13.1"
             },
-            "time": "2026-08-17T07:29:49+00:00"
+            "time": "2026-09-01T08:23:12+00:00"
         },
         {
             "name": "spatie/laravel-permission",

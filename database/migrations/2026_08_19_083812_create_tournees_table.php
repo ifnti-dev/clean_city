@@ -13,21 +13,23 @@ return new class extends Migration
     {
         Schema::create('tournees', function (Blueprint $table) {
             $table->id();
-            $table->enum('statut', ['PREVU', 'EN_COUR', 'TERMINEE'])->default('PREVU');
+            $table->enum('status', ['PREVU', 'EN_COUR', 'TERMINEE'])->default('PREVU');
             $table->date('date');
             $table->string('itineraire')->nullable();
-            $table->unsignedBigInteger('employe_id');
+            $table->json('employes_id');
             $table->unsignedBigInteger('zone_id');
 
-            $table->foreign('employe_id')
-                ->references('id')
-                ->on('employes')
-                ->onDelete('set null');
+            // $table->foreign('employes_id')
+            //     ->references('id')
+            //     ->on('employes')
+            //     ->onDelete('set null');
 
             $table->foreign('zone_id')
                 ->references('id')
                 ->on('zones')
                 ->onDelete('cascade');
+
+               
     
             $table->timestamps();
         });

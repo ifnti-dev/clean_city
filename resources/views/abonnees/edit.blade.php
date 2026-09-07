@@ -148,9 +148,9 @@
                     <div class="flex items-center justify-center mt-6 w-full ">
                         <x-secondary-button onclick="getlocalisation()" type="button"
                             class="bg-yellow-600 text-xl py-4 text-white border-yellow-600 hover:bg-yellow-500 hover:border-yellow-600 focus:ring-0">
-                            {{ __(' 📍 Utiliser ma position actuelle') }}
+                            {{ __('  Utiliser ma position actuelle') }}
                         </x-secondary-button>
-
+<!-- 📍 -->
                     </div>
 
                     <!-- Bouton -->

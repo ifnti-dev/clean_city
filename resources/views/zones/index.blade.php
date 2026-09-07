@@ -10,7 +10,7 @@
                     </div>
 
                     <div class=" flex items-center justify-end  max-sm:pr-8 mb-14  w-60 max-sm:w-full max-sm:w-30">
-                        <a href="{{ route('quartiers.create') }}">
+                        <a href="{{ route('zones.create') }}">
                             <x-secondary-button
                                 class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
                                 {{ __('Ajouter') }}
@@ -73,7 +73,7 @@
 
 
                 
-                <div class="relative overflow-x-auto card shadow">
+                <div class="relative overflow-x-auto card shadow mx-4">
 
                     <table class="text-left w-full whitespace-nowrap">
 

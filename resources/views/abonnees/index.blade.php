@@ -128,10 +128,10 @@
                                 <th scope="col" class="px-6 py-3">Code</th>
                                 <th scope="col" class="px-6 py-3">Menage</th>
                                 <th scope="col" class="px-6 py-3">Responsable</th>
-                                <th scope="col" class="px-6 py-3">Etat</th>
-                                <th scope="col" class="px-6 py-3">En Regle</th>
                                 <th scope="col" class="px-6 py-3">Date Debut</th>
                                 <th scope="col" class="px-6 py-3">Date Fin</th>
+                                <th scope="col" class="px-6 py-3">Etat</th>
+                                <th scope="col" class="px-6 py-3">En Regle</th>
                                 <th scope="col" class="px-6 py-3 flex justify-center">Action</th>
                             </tr>
                         </thead>
@@ -142,6 +142,20 @@
                             <td class="py-3 px-6 text-left">{{ $abonnement->menage->code }}</td>
                             <td class="py-3 px-6 text-left">{{ $abonnement->menage->designation }}</td>
                             <td class="py-3 px-6 text-left">{{ $abonnement->menage->client->user->nom }}</td>
+
+
+                            @if ($abonnement->date_debut)
+                            <td class="py-3 px-6 text-left">{{ $abonnement->date_debut }}</td>
+                            @else
+                            <td class="py-3 px-6 text-left">---</td>
+                            @endif
+
+
+                            @if ($abonnement->date_fin)
+                            <td class="py-3 px-6 text-left">{{ $abonnement->date_fin }}</td>
+                            @else
+                            <td class="py-3 px-6 text-left">---</td>
+                            @endif
 
                             @if ($abonnement->etat=="ACTIF")
                             <td class="py-3 px-6 text-left">
@@ -168,20 +182,23 @@
                                           font-medium rounded-md inline-block whitespace-nowrap text-center">Non</span>
                             </td>
                             @endif
-                            @if ($abonnement->date_debut)
-                            <td class="py-3 px-6 text-left">{{ $abonnement->date_debut }}</td>
-                            @else
-                            <td class="py-3 px-6 text-left">---</td>
-                            @endif
 
+                            <td class="py-3 px-6 text-left flex justify-center items-center gap-2">
+                                @if ($abonnement->status=="APPROUVER")
+                                <form action="{{route('abonnements.piece_justificatif',$abonnement->id)}}"
+                                    method="post">
+                                    @csrf
+                                    <button type="submit"
+                                        class="text-gray-700 border-gray-300 hover:bg-gray-200 p-2 rounded-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                        </svg>
+                                    </button>
+                                </form>
+                                @endif
 
-                            @if ($abonnement->date_fin)
-                            <td class="py-3 px-6 text-left">{{ $abonnement->date_fin }}</td>
-                            @else
-                            <td class="py-3 px-6 text-left">---</td>
-                            @endif
-
-                            <td class="py-3 px-6 text-left flex  items-center gap-2">
 
                                 @can('abonnement.voire')
                                 <a href="{{ route('abonnements.show', $abonnement->id) }}">
@@ -201,42 +218,7 @@
                                 </a>
                                 @endcan
 
-                                @if ($abonnement->menage->est_abonnee==0 && $abonnement->menage->est_radier==0 )
-                                @can('menage.radier')
-                                <form action="{{ route('abonnements.radier', $abonnement->id) }}" method="post">
-                                    @csrf
-
-                                    <x-secondary-button type="submit"
-                                        class="bg-teal-700 text-white border-teal-700 hover:bg-teal-600 hover:border-teal-600 focus:ring-teal-300">
-                                        Radier
-                                    </x-secondary-button>
-                                </form>
-                                @endcan
-                                @endif
-
-                                @if ($abonnement->menage->est_radier==1 )
-                                @can('abonnement.supprimer')
-                                <form action="{{ route('abonnements.destroy', $abonnement->id) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-secondary-button type="submit"
-                                        class="bg-red-700 text-white border-red-700 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">
-                                        Supprimer
-                                    </x-secondary-button>
-                                </form>
-                                @endcan
-                                @endif
-
-                                @if ($abonnement->etat=="ACTIF" && $abonnement->menage->est_en_regle==0 )
-                                <form action="{{ route('menages.desabonnee', $abonnement->id) }}" method="post">
-                                    @csrf
-
-                                    <x-secondary-button type="submit"
-                                        class="bg-red-700 text-white border-red-700 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">
-                                        Désabonner
-                                    </x-secondary-button>
-                                </form>
-                                @endif
+                                
                             </td>
 
                             </tr>

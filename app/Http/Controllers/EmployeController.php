@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employe;
+use App\Models\SweetAlert;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +19,8 @@ class EmployeController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::all();
-        $query = Employe::with('user');
+        $roles = Role::where('name','!=','client')->get();
+        $query = Employe::with('user')->latest();
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -37,27 +38,11 @@ class EmployeController extends Controller
             });
         }
 
-        if (session(('success'))) {
-            // Toast with pause on hover
-            if (session('text')) {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'showConfirmButton' => true,
-                ]);
-            } else {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'timer' => 2000,
-                    'showConfirmButton' => false,
-                ]);
-            }
-        }
+        SweetAlert::sweetAlertMessage();
 
         // withQueryString : serve les paramètres de la requete dans la pagination
         // cet a dire que si on fait une recherche et qu'on change de page, la recherche sera conservee
-        $employes = $query->paginate(2)->withQueryString();
+        $employes = $query->latest('id')->paginate(8)->withQueryString();
         return view('employes.index', compact('employes', 'roles'));
     }
 
@@ -68,7 +53,6 @@ class EmployeController extends Controller
     {
         //role sans client
         $roles = Role::whereNotIn('name', ['client'])->get();
-
         return view('employes.create', compact('roles'));
     }
 

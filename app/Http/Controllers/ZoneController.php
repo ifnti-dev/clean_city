@@ -20,7 +20,7 @@ class ZoneController extends Controller
             $search = $request->search;
             $query->where('designation','like',"%$search%");
         }
-        $zones = $query->paginate(10);
+        $zones = $query->latest('id')->paginate(10);
         return view('zones.index', compact('zones'));
     }
 

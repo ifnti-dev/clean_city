@@ -7,7 +7,7 @@ use App\Models\Abonnement;
 use App\Models\Client;
 use App\Models\Menage;
 use App\Models\Quartier;
-use App\Models\Tarif;
+use App\Models\SweetAlert;
 use App\Models\TypeHabitat;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -15,7 +15,9 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use SweetAlert2\Laravel\Swal;
+use Spatie\LaravelPdf\Facades\Pdf;
 
+use function Spatie\LaravelPdf\Support\pdf;
 
 class AbonnementController extends Controller implements HasMiddleware
 {
@@ -26,7 +28,7 @@ class AbonnementController extends Controller implements HasMiddleware
             new Middleware('permission:abonnement.voire', only: ['index', 'show']),
             new Middleware('permission:abonnement.creer', only: ['create', 'store']),
             new Middleware('permission:abonnement.modifier', only: ['edite', 'update']),
-            new Middleware('permission:abonnement.supprimer', only: ['destroy']),
+            new Middleware('permission:menage.supprimer', only: ['destroy']),
         ];
     }
 
@@ -40,8 +42,6 @@ class AbonnementController extends Controller implements HasMiddleware
         $query = Abonnement::with([
             'menage.client.user'
         ]);
-
-
 
 
         // dump($query->get());
@@ -81,33 +81,11 @@ class AbonnementController extends Controller implements HasMiddleware
         }
 
 
-        if (session(('success'))) {
-            // Toast with pause on hover
-            if (session('text')) {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'showConfirmButton' => true,
-                ]);
-            } else {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'timer' => 2000,
-                    'showConfirmButton' => false,
-                ]);
-            }
-        }
+        SweetAlert::sweetAlertMessage();
+        $abonnements = $query->where('deleted_at', null)->latest('id')->paginate(8)->withQueryString();
 
-        if (session(('erros'))) {
-            Swal::error([
-                'title' => session('erros'),
-                'timer' => 2000,
-                'showConfirmButton' => false,
-            ]);
-        }
 
-        $abonnements = $query->where('deleted_at', null)->latest()->paginate(8);
+        // dd($abonnements);
         return view('abonnees.index', compact('abonnements'));
     }
 
@@ -146,7 +124,7 @@ class AbonnementController extends Controller implements HasMiddleware
 
         $menage = DB::transaction(function () use ($validated) {
 
-            $code = "0000" . Menage::latest('id')->first()->id;
+            $code = "0000" . Menage::latest('id')->first()->id + 1;
             $code = substr($code, -5);
             // dd($code);
 
@@ -157,16 +135,16 @@ class AbonnementController extends Controller implements HasMiddleware
                 'longitude' => $validated['longitude'],
                 'est_abonnee' => true,
                 'est_radier' => false,
-                'est_en_regle' => true,
                 'client_id' => $validated['client_id'],
                 'type_habitat_id' => $validated['type_habitat_id'],
                 'quartier_id' => $validated['quartier_id'],
+                'employe_id' => Auth::user()->employe->id
             ]);
 
 
             Abonnement::create([
                 'menage_id' => $menage->id,
-                'employe_save_id' => Auth::user()->employe->id
+                
             ]);
 
             return $menage;
@@ -180,7 +158,7 @@ class AbonnementController extends Controller implements HasMiddleware
             ]);
         }
 
-        return to_route('abonnements.index')->with("erros", "Ressayer la creation de cette abonnement  ");
+        return to_route('abonnements.index')->with("error", "Ressayer la creation de cette abonnement  ");
     }
 
     /**
@@ -188,15 +166,8 @@ class AbonnementController extends Controller implements HasMiddleware
      */
     public function show(Abonnement $abonnement)
     {
-
-        if (session('text')) {
-            Swal::success([
-                'title' => session('success'),
-                'text' => session('text'),
-                'timer' => 2000,
-                'showConfirmButton' => false,
-            ]);
-        }
+        //  dd($abonnement->menage);
+        SweetAlert::sweetAlertMessage();
         return view('abonnees.show', compact('abonnement'));
     }
 
@@ -209,7 +180,6 @@ class AbonnementController extends Controller implements HasMiddleware
         // dd($abonnement);
         $clients = Client::all();
         $quartiers = Quartier::all();
-        // $tarifs = Tarif::all();
         $type_habitats = TypeHabitat::all();
         return view('abonnees.edit', compact('abonnement', 'clients', 'type_habitats', 'quartiers'));
     }
@@ -242,7 +212,7 @@ class AbonnementController extends Controller implements HasMiddleware
                 'longitude' => $validated['longitude'],
                 'est_abonnee' => true,
                 'est_radier' => false,
-                'est_en_regle' => true,
+                // 'est_en_regle' => true,
                 'client_id' => $validated['client_id'],
                 'type_habitat_id' => $validated['type_habitat_id'],
                 'quartier_id' => $validated['quartier_id'],
@@ -251,7 +221,6 @@ class AbonnementController extends Controller implements HasMiddleware
             $abonnement->update([
                 'date_debut' => $validated['date_debut'],
                 'date_fin' => $validated['date_fin'] ? $validated['date_debut'] : null,
-                // 'tarif_id' => $validated['tarif_id'],
             ]);
         });
 
@@ -270,7 +239,6 @@ class AbonnementController extends Controller implements HasMiddleware
      */
     public function destroy(Abonnement $abonnement)
     {
-        //
         // dd("delete");
         $abonnement->delete();
         return to_route('abonnements.index')->with("success", "L'Abonnement de  " . strtoupper($abonnement->menage->designation) . " est Supprimer");
@@ -316,13 +284,14 @@ class AbonnementController extends Controller implements HasMiddleware
     public function desabonneeUnMenage(Abonnement $abonnement)
     {
         // dd("desabonnee");
+        // dd($abonnement->menage);
         $abonnement->menage->update(
             ['est_abonnee' => false]
         );
         $abonnement->update(
             ['etat' => 'INACTIF']
         );
-        return to_route('abonnements.index')->with("success", "Vouse avez Desabonnée " . strtoupper($abonnement->menage->designation));
+        return to_route('abonnements.show', $abonnement->id)->with("success", "Vouse avez Desabonnée " . strtoupper($abonnement->menage->designation));
     }
 
 
@@ -331,6 +300,15 @@ class AbonnementController extends Controller implements HasMiddleware
         $abonnement->menage->update(
             ['est_radier' => true]
         );
-        return to_route('abonnements.index')->with("success", "Vouse avez Radier " . strtoupper($abonnement->menage->designation));
+        return to_route('abonnements.show', $abonnement->id)->with("success", "Vouse avez Radier " . strtoupper($abonnement->menage->designation));
+    }
+
+
+
+    public function piece_justificatif(Abonnement $abonnement)
+    {
+        // doit generer un pdf avec laravel pdf de spatie
+       
+        return pdf()->view('pdfs.piece-justificatif', compact('abonnement'))->download('piece-justificatif.pdf');
     }
 }

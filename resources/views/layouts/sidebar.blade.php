@@ -53,36 +53,46 @@
                      </a>
                   </li>
 
+                  @can('abonnement.voire')
                   <li class="nav-item">
                      <a class="nav-link" href="{{ route('abonnements.index') }}">
                         Abonnées
                      </a>
                   </li>
+                  @endcan
 
+                  @can('facture.voire')
                   <li class="nav-item">
                      <a class="nav-link" href="{{ route('factures.index') }}">
                         Factures
                      </a>
                   </li>
+                  @endcan
 
+                  @can('tournee.voire')
                   <li class="nav-item">
-                     <a class="nav-link" href="{{ route('ramassages.index') }}">
-                        Ramassages
+                     <a class="nav-link" href="{{ route('tournees.index') }}">
+                        Tourneés
                      </a>
                   </li>
+                  @endcan
 
                </ul>
             </div>
          </li>
 
+
+        @can('produit.voire')
          <li class="nav-item">
             <div class="navbar-heading">MarketPlace</div>
          </li>
 
+        
          <li class="nav-item">
+
+
             <a class="nav-link collapsed" href="#!" data-bs-toggle="collapse" data-bs-target="#navComponents"
                aria-expanded="false" aria-controls="navComponents">
-
                <i data-feather="package" class="w-4 h-4 mr-2"></i>
                MarketPlace
             </a>
@@ -91,59 +101,75 @@
 
                <ul class="nav flex-col">
 
+
                   <li class="nav-item">
                      <a class="nav-link " href="{{ route('produits.index') }}">Produits</a>
-            
+
                   </li>
 
+
+                  @can('commande.voire')
                   <li class="nav-item">
                      <a class="nav-link" href="{{ route('commandes.index') }}">
                         Commandes
                      </a>
                   </li>
+                  @endcan
+
 
                </ul>
             </div>
          </li>
+         @endcan
 
          <li class="nav-item">
             <div class="navbar-heading">Parametrage</div>
          </li>
 
+         @can('employe.voire')
          <li class="nav-item">
             <a class="nav-link" href="{{ route('employes.index') }}">
                <i data-feather="clipboard" class="w-4 h-4 mr-2"></i>
                Employes
             </a>
          </li>
+         @endcan
 
+         @can('role.voire')
          <li class="nav-item">
             <a class="nav-link" href="{{ route('roles.index') }}">
                <i data-feather="git-pull-request" class="w-4 h-4 mr-2"></i>
                Roles
             </a>
          </li>
+         @endcan
 
+         @can('zone.voire')
          <li class="nav-item">
             <a class="nav-link" href="{{ route('zones.index') }}">
                <i data-feather="map" class="w-4 h-4 mr-2"></i>
                Zones
             </a>
          </li>
+         @endcan
 
+         @can('quartier.voire')
          <li class="nav-item">
             <a class="nav-link" href="{{ route('quartiers.index') }}">
                <i data-feather="map-pin" class="w-4 h-4 mr-2"></i>
                Quartiers
             </a>
          </li>
+         @endcan
 
+         @can('tarif.voire')
          <li class="nav-item">
             <a class="nav-link" href="{{ route('tarifs.index') }}">
                <i data-feather="credit-card" class="w-4 h-4 mr-2"></i>
                Tarifs
             </a>
          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="{{ route('typeHabitats.index') }}">
                <i data-feather="home" class="w-4 h-4 mr-2"></i>
