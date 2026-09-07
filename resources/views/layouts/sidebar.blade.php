@@ -169,13 +169,16 @@
                Tarifs
             </a>
          </li>
+         @endcan
 
-          <li class="nav-item">
+         @can('typHabitat.voire')
+         <li class="nav-item">
             <a class="nav-link" href="{{ route('typeHabitats.index') }}">
                <i data-feather="home" class="w-4 h-4 mr-2"></i>
                Type d'habitat
             </a>
          </li>
+         @endcan
 
       </ul>
    </div>
