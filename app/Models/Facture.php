@@ -12,6 +12,7 @@ class Facture extends Model
     protected $fillable = [
         'nb_mois',
         'les_mois',
+        'etat_paiement',
         'date_debut',
         'date_fin',
         'date',
@@ -20,9 +21,10 @@ class Facture extends Model
         'tarif_id',
         'methode_paiement_id',
         'id_transaction',
+        
     ];
     protected $casts = [
-    'les_mois' => 'array', // Convertit automatiquement le JSON en tableau PHP
+    'les_mois' => 'array', // convertir le tableau json qui est dans la bd  en tableau PHP
 ];
 
     

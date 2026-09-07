@@ -10,7 +10,7 @@ class Commande extends Model
 {
     //
     protected $table = 'commandes';
-    protected $fillable = ['montant', 'est_accepte', 'raison'];
+    protected $fillable = ['montant', 'est_accepte', 'raison', 'statut_livraison'];
     
     public function client():HasOne {
         return $this->hasOne(Client::class);

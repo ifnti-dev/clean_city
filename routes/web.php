@@ -13,6 +13,7 @@ use App\Http\Controllers\RamassageController;
 
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TarifController;
+use App\Http\Controllers\TypeHabitatController;
 use App\Http\Controllers\ZoneController;
 
 use Illuminate\Support\Facades\Route;
@@ -50,7 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/abonnements/{abonnement}/desabonnee', [AbonnementController::class, 'desabonneeUnMenage'])->name('menages.desabonnee');
     Route::post('/abonnements/{abonnement}/radier', [AbonnementController::class, 'radierUnMenage'])->name('abonnements.radier');
     Route::resource('clients', ClientContoller::class);
-    Route::get('/clients/{client}/hystoriquePaiement', [ClientContoller::class, 'hystoriquePaiement'])->name('clients.hystoriquePaiement');
 
 
     Route::resource('ramassages', RamassageController::class);
@@ -66,6 +66,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('factures', FactureController::class);
 
     Route::resource('/produits', ProduitController::class);
+    Route::post('/factures/reglerFacture/{commande}', [FactureController::class, 'reglerFacture'])->name('factures.reglerFacture');
+    Route::post('/factures/rejeterFacture/{commande}', [FactureController::class, 'rejeterFacture'])->name('factures.rejeterFacture');
 
 
 
@@ -76,7 +78,17 @@ Route::middleware('auth')->group(function () {
     Route::resource('/quartiers', QuartierController::class)->except(['show']);
 
     Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
+    Route::post('/commandes/debuterLivraison/{commande}', [CommandeController::class, 'debuterLivrason'])->name('commandes.debuterLivraison');
+    Route::post('/commandes/livrerlaCommande/{commande}', [CommandeController::class, 'livrerLaCommande'])->name('commandes.livrerLaCommande');
+
+    Route::resource('/roles', RoleController::class);
+    Route::resource('/typeHabitats', TypeHabitatController::class);
+
+    Route::get('/listeArticle', [CommandeController::class, 'listeArticle'])->name('listeArticle');
 
 });
+
+
+
 
 

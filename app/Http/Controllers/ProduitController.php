@@ -15,15 +15,19 @@ class ProduitController extends Controller
     {
         //
         $search = $request->input('search');
+        $est_en_stock = $request->input('est_en_stock');
         $query = Produit::query();
         //dd($query);
-        if($search){
-            $query->where('label', 'like', "%$search%");
+        if($search && $est_en_stock){
+            $query->where('label', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%")
+                ->orWhere('est_en_stock', $est_en_stock);
+
         }
         
 
-        $produits = $query->get();
-        return view('produits.index', compact('produits', 'search'));
+        $produits = $query->paginate(4);
+        return view('produits.index', compact('produits', 'search', 'est_en_stock'));
 
     }
 

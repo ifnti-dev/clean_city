@@ -60,7 +60,7 @@
                   </li>
 
                   <li class="nav-item">
-                     <a class="nav-link" href="./billing.html">
+                     <a class="nav-link" href="{{ route('factures.index') }}">
                         Factures
                      </a>
                   </li>
@@ -142,6 +142,12 @@
             <a class="nav-link" href="{{ route('tarifs.index') }}">
                <i data-feather="credit-card" class="w-4 h-4 mr-2"></i>
                Tarifs
+            </a>
+         </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('typeHabitats.index') }}">
+               <i data-feather="home" class="w-4 h-4 mr-2"></i>
+               Type d'habitat
             </a>
          </li>
 

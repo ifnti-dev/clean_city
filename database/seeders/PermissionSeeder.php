@@ -63,16 +63,27 @@ class PermissionSeeder extends Seeder
             'ramassage.terminer',
 
             
-
             'commande.confirmer',
             'commande.rejeter',
 
             'livraison.confirmer',
             'livraison.demarer',
 
-            'paiement.voire',
-            'paiement.modifier',
-            'paiement.creer',
+            'facture.voire',
+            'facture.creer',
+
+            'role.creer',
+            'role.voire',
+            'role.modifier',
+            'role.supprimer',
+
+            'typeHabitat.creer',
+            'typeHabitat.voire',
+            'typeHabitat.modifier',
+            'typeHabitat.supprimer',
+
+            
+
             
         ];
 

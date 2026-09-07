@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Menage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Abonnement extends Model
@@ -18,6 +19,10 @@ class Abonnement extends Model
     
     public function menage():BelongsTo {
         return $this->belongsTo(Menage::class);
+    }
+
+    public function facture():HasMany {
+        return $this->hasMany(Facture::class);
     }
     
 }

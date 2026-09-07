@@ -18,7 +18,7 @@
                                     {{ __('Ajouter') }}
                                 </x-secondary-button>
                             @endcan
-                            
+
                         </a>
                     </div>
                 </div>
@@ -36,9 +36,29 @@
                                 </label>
 
                                 <input type="text" name="search" id="search" value="{{ $search }}"
-                                    placeholder="label"
+                                    placeholder="label, description"
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
+
+                            <div>
+                                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Est en stock
+                                </label>
+                                <select name="est_en_stock" id="est_en_stock"
+                                    class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                                    <option value="">Tous</option>
+
+                                    <option value="1">
+                                        Oui
+                                    </option>
+
+                                    <option value="false">
+                                        Non
+                                    </option>
+                                </select>
+                            </div>
+
+
 
                         </div>
 
@@ -81,14 +101,14 @@
                                     <td class="py-3 px-6 text-left">{{ $produit->label }}</td>
                                     <td class="py-3 px-6 text-left">
                                         @if ($produit->est_en_stock)
-                                            <p>OUI</p>
+                                            <p><span class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block">OUI </span></p>
                                         @else
-                                            <p>NON</p>    
+                                            <p><span class="bg-red-200 px-2 py-1 text-red-900 text-sm font-medium rounded-md inline-block">Non</span></p>
                                         @endif
                                     </td>
                                     <td class="py-3 px-6 text-left">{{ $produit->prix_unitaire }}</td>
                                     <td class="py-3 px-6 text-left">{{ $produit->description }}</td>
-                                  
+
                                     <td class=" flex item-center gap-6 px-3 py-3 text-left ">
                                         @can('produit.voire')
                                             <a href="{{ route('produits.show', $produit->id) }}">
@@ -101,20 +121,20 @@
 
                                         @can('produit.modifier')
                                             <div>
-                                                 <a href="{{ route('produits.edit', $produit->id) }}">
-                                                <x-secondary-button
-                                                    class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
-                                                    Modifier
-                                                </x-secondary-button>
-                                            </a>
-                                        </div> 
+                                                <a href="{{ route('produits.edit', $produit->id) }}">
+                                                    <x-secondary-button
+                                                        class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
+                                                        Modifier
+                                                    </x-secondary-button>
+                                                </a>
+                                            </div>
                                         @endcan
 
                                         @can('produit.supprimer')
                                             <form action="{{ route('produits.destroy', $produit->id) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-secondary-button type="submit"
+                                                <x-secondary-button 
                                                     class="bg-red-700 text-white border-red-700 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">
                                                     Supprimer
                                                 </x-secondary-button>
@@ -136,9 +156,9 @@
             </div>
         </div>
 
-        {{-- <div class=" flex p-4 mb-12 ">
+        <div class="p-4 mb-12 ">
             {{ $produits->links() }}
-        </div> --}}
+        </div>
 
 
     </x-slot>

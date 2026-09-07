@@ -12,13 +12,13 @@
 
                     <div class=" flex items-center justify-end  max-sm:pr-8 mb-14  w-60 max-sm:w-full max-sm:w-30">
                         <a href="">
-                            {{-- @can() --}}
-                                <x-secondary-button
-                                    class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
-                                    {{ __('Ajouter') }}
-                                </x-secondary-button>
-                            {{-- @endcan --}}
-                            
+                            @can('commandes.creer')
+                            <x-secondary-button
+                                class="bg-white text-black py-3  hover:bg-slate-50 w-full justify-center max-sm:py-2 max-sm:text-md ">
+                                {{ __('Ajouter') }}
+                            </x-secondary-button>
+                            @endcan
+
                         </a>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                                 </label>
 
                                 <input type="text" name="search" id="search" value="{{ $search }}"
-                                    placeholder="Date"
+                                    placeholder="status Commande"
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
                         </div>
@@ -68,8 +68,8 @@
                             <tr class="border-gray-300 border-b ">
                                 <th scope="col" class="px-6 py-3">Montant</th>
                                 <th scope="col" class="px-6 py-3">Est accepte</th>
-                                <th scope="col" class="px-6 py-3">Raison</th>
                                 <th scope="col" class="px-6 py-3">Date</th>
+                                <th scope="col" class="px-6 py-3">Statut de la livraison</th>
                                 <th scope="col" class="px-6 py-3">Action</th>
                             </tr>
                         </thead>
@@ -80,17 +80,34 @@
                                     <td class="py-3 px-6 text-left">{{ $commande->montant }}</td>
                                     <td class="py-3 px-6 text-left">
                                         @if ($commande->est_accepte)
-                                            <p>OUI</p>
+                                            <p class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block" >OUI</p>
                                         @else
-                                            <p>NON</p>    
+                                            <p class="bg-red-200 px-2 py-1 text-red-900 text-sm font-medium rounded-md inline-block  ">NON</p>
                                         @endif
                                     </td>
-                                    <td class="py-3 px-6 text-left">{{ $commande->raison }}</td>
                                     <td class="py-3 px-6 text-left">{{ $commande->date }}</td>
-                                  
+                                    <td class="py-3 px-6 text-left"><span class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block "> {{ $commande->statut_livraison }} </span></td>
+
                                     <td class=" flex item-center gap-6 px-3 py-3 text-left ">
-                                       
-                                    
+
+                                    @if ($commande->statut_livraison == 'EN_ATTENTE')
+                                        <form action="{{ route('commandes.debuterLivraison', $commande->id) }}" method="post">
+                                            @csrf
+                                            <x-primary-button  class="bg-blue-700 text-white  hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-300">Demarer la livraison</x-primary-button>
+                                        </form>
+
+                                        <form action="">
+                                            @csrf
+                                            <x-primary-button class="bg-red-700 text-white  border-red-600 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">Rejeter la livrason</x-primary-button>
+                                        </form>
+
+                                    @elseif ($commande->statut_livraison == 'DEBUTER')
+                                        <form action="{{ route('commandes.livrerLaCommande', $commande->id) }}" method="post">
+                                            @csrf
+                                            <x-primary-button class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">Confirmer la livrason</x-primary-button>
+                                        </form>
+                                    @endif    
+
                                     </td>
                                 </tr>
                             @empty
@@ -98,7 +115,6 @@
                                     <td colspan="6"> Aucun produits disponible </td>
                                 </tr>
                             @endforelse
-
                         </tbody>
                     </table>
                 </div>
@@ -106,9 +122,9 @@
             </div>
         </div>
 
-        {{-- <div class=" flex p-4 mb-12 ">
-            {{ $produits->links() }}
-        </div> --}}
+        <div class="p-4 mb-12 ">
+            {{ $commandes->links() }}
+        </div>
 
 
     </x-slot>
