@@ -6,7 +6,7 @@
             <div class="w-full ">
                 <div class="h-40 bg-indigo-600 py-2 px-8 pt-10 lg:pt-14 pb-16 flex justify-between items-baseline">
                     <div class="flex justify-between  items-baseline ">
-                        <h1 class="text-white font-medium text-2xl max-sm:pl-2 max-sm:text-xl">Details d'un client
+                        <h1 class="text-white font-medium text-2xl max-sm:pl-2 max-sm:text-xl">Details d'une facture
                         </h1>
                     </div>
 

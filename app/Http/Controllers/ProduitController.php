@@ -102,7 +102,7 @@ class ProduitController extends Controller
             $produit->update([
                 'label' => $validated['label'],
                 'prix_unitaire' => $validated['prix_unitaire'],
-                'decsription' => $validated['description'],
+                'description' => $validated['description'],
                 'est_en_stock' => 1,
             ]);
      

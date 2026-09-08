@@ -217,35 +217,12 @@
                             <x-input-label for="montant" :value="__('Montant')" />
 
                             <x-text-input id="montant" class="block mt-1 w-full" type="text" name="montant"
-                                required placeholder="montant" autocomplete="given-name" />
+                                required placeholder="montant" readonly autocomplete="given-name" />
 
                             <x-input-error :messages="$errors->get('montant')" class="mt-2" />
                         </div>
                     </div>
-
-                    <label class="sr-only">Example</label>
-
-                    <div
-                        data-range-slider='{
-                            "start": 3,
-                            "connect": "lower",
-                            "range": {
-                                "min": 0,
-                                "max": 6
-                            },
-                            "step": 1,
-                            "cssClasses": {
-                                "target": "relative h-2 rounded-full bg-neutral/10 range-slider-disabled:pointer-events-none range-slider-disabled:opacity-50",
-                                "base": "size-full relative z-1",
-                                "origin": "absolute top-0 end-0 rtl:start-0 size-full origin-[0_0] rounded-full",
-                                "handle": "absolute top-1/2 end-0 rtl:start-0 size-4 bg-base-100 border-[3px] border-primary rounded-full translate-x-2/4 -translate-y-2/4 hover:cursor-grab active:cursor-grabbing hover:ring-2 ring-primary active:ring-[3px]",
-                                "connects": "relative z-0 w-full h-2 rtl:rounded-e-full rtl:rounded-s-none rounded-s-full overflow-hidden",
-                                "connect": "absolute top-0 end-0 rtl:start-0 z-1 size-full bg-primary origin-[0_0]",
-                                "touchArea": "absolute -top-1 -bottom-1 -start-1 -end-1"
-                            }
-                            }'>
-                    </div>
-
+                    
                     <div class="flex flex-row gap-5 justify-between">
                         <div class="flex items-center justify-end mr-auto mt-4 w-40 " id="btnPrecedent1">
                             <x-secondary1-button class="w-full justify-center">
