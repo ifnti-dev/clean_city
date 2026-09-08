@@ -96,7 +96,7 @@ class TypeHabitatController extends Controller
     public function edit(TypeHabitat $typeHabitat)
     {
         //
-        return view('typeHabitats.edit');
+        return view('typeHabitats.edit', compact('typeHabitat'));
     }
 
     /**
@@ -106,7 +106,7 @@ class TypeHabitatController extends Controller
     {
         //
          $validated = $request->validate([
-            'designation' => ['required', Rule::unique('designation')-> ignore($typeHabitat->id, 'id')],
+            'designation' => ['required', Rule::unique('type_habitats')->ignore($typeHabitat->id, 'id')],
         ]);
 
         $typeHabitat->update([
@@ -120,8 +120,12 @@ class TypeHabitatController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(TypeHabitat $typeHabitat)
     {
         //
+        dd("dddd");
+        $typeHabitat->delete();
+        return view('typeHabitats.index')->with("succes", "vous avez supprime l'habitat".strtoupper($typeHabitat->designation));
+
     }
 }

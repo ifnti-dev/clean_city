@@ -76,8 +76,10 @@ class PermissionSeeder extends Seeder
             'produit.modifier',
             'produit.supprimer',
 
-           'commande.confirmer',
+            'commande.voire',
+            'commande.confirmer',
             'commande.rejeter',
+            'commande.creer',
 
             'livraison.confirmer',
             'livraison.demarer',
@@ -90,6 +92,8 @@ class PermissionSeeder extends Seeder
             'typeHabitat.voire',
             'typeHabitat.modifier',
             'typeHabitat.supprimer',
+
+            'e_commerce.voire',
         ];
 
         foreach ($permissions_name as $name) {

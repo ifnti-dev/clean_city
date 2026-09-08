@@ -38,12 +38,18 @@ class CommandeController extends Controller
         return to_route('commandes.index');
     }
 
-    function listeArticle(){
+    function listeProduit(Request $request){
 
+        $search = $request->input('search');
         $query = Produit::query();
+        if($search){
+            $query->where('label', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%");
 
+        }
+        
         $produits = $query->paginate(8);
-        return view('produits.liste_articles', compact('produits'));
+        return view('produits.liste_produits', compact('produits', 'search'));
     }
     
 

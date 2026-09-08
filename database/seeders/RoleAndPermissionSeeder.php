@@ -70,6 +70,8 @@ class RoleAndPermissionSeeder extends Seeder
         $roles_client = Role::where('name', 'client')->first();
         $roles_client->syncPermissions(
             Permission::where('name', 'abonnement.voire')
+                ->orWhere('name', 'produit.voire')
+                ->orWhere('name', 'e_commerce.voire')
                 ->get()
         );
     }
