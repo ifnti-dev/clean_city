@@ -21,8 +21,9 @@
         </div>
         
         <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
-            <form method="POST" action="{{ route('typeHabitats.store') }}" >
+            <form  action="{{ route('typeHabitats.update', $typeHabitat->id) }}" method="POST">
                 @csrf
+                @method('PUT')
                 <div class="flex gap-5 justify-between">
                     <!-- Designation-->
                     <div class="mt-4 w-full">
@@ -33,7 +34,7 @@
                             class="block mt-1 w-full"
                             type="text"
                             name="designation"
-                            :value="{{ old('designation', $typeHabitat->designation) }}"
+                            value="{{ old('designation', $typeHabitat->designation) }}"
                             required
                             autofocus
                             placeholder="designation"

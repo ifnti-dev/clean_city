@@ -17,7 +17,7 @@ class RoleSeeder extends Seeder
 
         $roles_name = [
             'responssable',
-            'secretaire',
+            
             'comptable',
             'agent_collecte_ordures',
             'agent_collecte_fonds',

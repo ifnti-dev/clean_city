@@ -18,6 +18,7 @@ import './theme.min';
 
 import './apexcharts.min';
 
-import './formulairMultiEtapes'
+import './formulairMultiEtapes';
 
+import './cart';
 

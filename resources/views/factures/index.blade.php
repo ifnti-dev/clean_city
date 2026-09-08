@@ -28,13 +28,14 @@
                 <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
                     <form method="get" action="{{ route('factures.index') }}">
                         @csrf
-                        <div class="flex flex-col grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 ">
+                        <div class="flex flex-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 ">
                             {{-- Recherche --}}
 
                             <div class="flex flex-col gap-5 lg:col-span-2  justify-center">
 
-                                <p class="flex flex-col">Rechercher par perriode</p>
-                                <div class="flex flex-row gap-5">
+                                <p class="flex flex-col">Rechercher par perriode et par montant</p>
+                                
+                                <div class="flex flex-row gap-6">
                                     <div class="w-full ">
                                         <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
                                             Date Debut
@@ -53,25 +54,18 @@
                                             class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                                     </div>
 
+                                    <div class="w-full">
+                                        <label for="montant"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Montant</label>
+                                        <input type="text" name="montant" id="montant" value="{{ $montant }}"
+                                            placeholder="montant "
+                                            class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                                    </div>
+
 
                                 </div>
-
-                                <div class="w-full">
-                                    <label for="montant"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Montant</label>
-                                    <input type="text" name="montant" id="montant" value="{{ $montant }}"
-                                        placeholder="montant "
-                                        class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                                </div>
-
 
                             </div>
-
-
-
-
-
-
                         </div>
 
 

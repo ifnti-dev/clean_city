@@ -39,8 +39,7 @@ class ClientContoller extends Controller implements HasMiddleware
         $abonnee = $request->input('abonnee');
 
         // $query = Client::query()->join('users', 'user_id', 'users.id')->where('deleted_at', null);
-        $query = Client::with(['user', 'menages']); 
-        // ->where('deleted_at', null);
+        $query = Client::with(['user', 'menages'])->where('deleted_at', null);
 
        
 

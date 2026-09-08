@@ -89,9 +89,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/commandes/debuterLivraison/{commande}', [CommandeController::class, 'debuterLivrason'])->name('commandes.debuterLivraison');
     Route::post('/commandes/livrerlaCommande/{commande}', [CommandeController::class, 'livrerLaCommande'])->name('commandes.livrerLaCommande');
+    Route::get('/eCommerce', [CommandeController::class, 'listeProduit'])->name('listProduit');
 
     Route::resource('/roles', RoleController::class);
     Route::resource('/typeHabitats', TypeHabitatController::class);
-
-    Route::get('/listeArticle', [CommandeController::class, 'listeArticle'])->name('listeArticle');
 });
+
+
+Route::get('/listeArticle', [CommandeController::class, 'listeArticle'])->name('listeArticle');

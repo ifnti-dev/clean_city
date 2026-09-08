@@ -73,7 +73,7 @@
                                 </x-secondary-button>
                             </a>
 
-                            <x-primary-button type="submit">
+                            <x-primary-button>
                                 Filtrer
                             </x-primary-button>
 

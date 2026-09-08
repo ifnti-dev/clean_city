@@ -36,7 +36,7 @@
                                 </label>
 
                                 <input type="text" name="search" id="search" value="{{ $search }}"
-                                    placeholder="Habitat"
+                                    placeholder="Designation"
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
 
@@ -53,7 +53,7 @@
                                 </x-secondary-button>
                             </a>
 
-                            <x-primary-button type="submit">
+                            <x-primary-button>
                                 Filtrer
                             </x-primary-button>
 
@@ -68,7 +68,7 @@
                     <table class="text-left w-full whitespace-nowrap">
                         <thead class="">
                             <tr class="border-gray-300 border-b ">
-                                <th scope="col" class="px-6 py-3">Role</th>
+                                <th scope="col" class="px-6 py-3">Designation</th>
                                 <th scope="col" class="px-6 py-3">Action</th>
                             </tr>
                         </thead>
@@ -77,15 +77,7 @@
                             @forelse ($typeHabitats as $typeHabitat)
                                 <tr class="border-gray-300 border-b hover:bg-gray-100 ">
                                     <td class="py-3 px-6 text-left">{{ $typeHabitat->designation }}</td>
-                                    <td class=" flex item-center gap-6 px-3 py-3 text-left ">
-                                        {{-- @can('role.voire')
-                                            <a href="{{ route('clients.show', $role->id) }}">
-                                                <x-secondary-button
-                                                    class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
-                                                    Voire
-                                                </x-secondary-button>
-                                            </a>
-                                        @endcan --}}
+                                    <td class=" flex item-center gap-6 px-3 py-3 text-left ">                                    
 
                                         @can('typeHabitat.modifier')
                                             <div>
@@ -101,8 +93,7 @@
                                             <form action="{{ route('typeHabitats.destroy', $typeHabitat->id) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-secondary-button 
-                                                    class="bg-red-700 text-white border-red-700 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">
+                                                <x-secondary-button>
                                                     Supprimer
                                                 </x-secondary-button>
                                             </form>
