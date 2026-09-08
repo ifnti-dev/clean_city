@@ -57,9 +57,9 @@
                         class="block mt-1 w-full"
                         type="text"
                         name="prix_unitaire"
-                        :value="old('prenom')"
+                        :value="old('prix_unitaire')"
                         required
-                        placeholder="prix_unitaire"
+                        placeholder="prix"
                         autocomplete="given-name"
                     />
 
