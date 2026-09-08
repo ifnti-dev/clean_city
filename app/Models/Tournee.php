@@ -11,7 +11,7 @@ class Tournee extends Model
 {
     //
     protected $table = 'tournees';
-    protected $fillable = ['employes_id', 'zone_id', 'status', 'date', 'itineraire'];
+    protected $fillable = ['employes_id', 'zone_id', 'status', 'date', 'itineraire','code'];
 
     public function employes(): HasMany
     {
@@ -53,4 +53,12 @@ class Tournee extends Model
         
         return json_decode($this->employes_id);
     }
+
+
+    public static function total_tournee()
+    {
+        return self::count();
+    }
+
+    
 }

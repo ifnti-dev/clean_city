@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tournees', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
             $table->enum('status', ['PREVU', 'EN_COUR', 'TERMINEE'])->default('PREVU');
             $table->date('date');
             $table->string('itineraire')->nullable();

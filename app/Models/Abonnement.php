@@ -31,4 +31,9 @@ class Abonnement extends Model
     {
         return $this->hasMany(Facture::class);
     }
+
+    public static function total_abonnement()
+    {
+        return self::count();
+    }
 }

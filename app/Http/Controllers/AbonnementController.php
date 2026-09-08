@@ -124,12 +124,16 @@ class AbonnementController extends Controller implements HasMiddleware
 
         $menage = DB::transaction(function () use ($validated) {
 
-            $code = "0000" . Menage::latest('id')->first()->id + 1;
-            $code = substr($code, -5);
-            // dd($code);
+            // generaion du code
+            $code = Menage::latest('id')->first()->id + 1;
+            if ($code < 10000) {
+                $code = "0000" . $code;
+                $code = substr($code, -5);
+            }
+            // dd((string) $code);
 
             $menage = Menage::create([
-                'code' => $code,
+                'code' => (string) $code,
                 'designation' => $validated['designation'],
                 'latitude' => $validated['latitude'],
                 'longitude' => $validated['longitude'],
@@ -144,7 +148,7 @@ class AbonnementController extends Controller implements HasMiddleware
 
             Abonnement::create([
                 'menage_id' => $menage->id,
-                
+
             ]);
 
             return $menage;
@@ -308,7 +312,7 @@ class AbonnementController extends Controller implements HasMiddleware
     public function piece_justificatif(Abonnement $abonnement)
     {
         // doit generer un pdf avec laravel pdf de spatie
-       
+
         return pdf()->view('pdfs.piece-justificatif', compact('abonnement'))->download('piece-justificatif.pdf');
     }
 }

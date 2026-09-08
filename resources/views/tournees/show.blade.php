@@ -167,7 +167,7 @@
                             @forelse($ligne_tournees as $ligne)
                             <tr class="border-gray-300 border-b hover:bg-gray-100 ">
 
-                                <td class="py-3 px-6 text-left">{{ $ligne->menage->code }}</td>
+                                <td class="py-3 px-6 text-left">{{ $tournee->code }}</td>
                                 <td class="py-3 px-6 text-left">{{ $ligne->menage->designation }}</td>
                                 <td class="py-3 px-6 text-left">{{ $ligne->menage->quartier->designation }}</td>
 

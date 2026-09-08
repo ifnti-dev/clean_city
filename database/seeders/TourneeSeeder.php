@@ -18,14 +18,16 @@ class TourneeSeeder extends Seeder
         // creation des tournee
         DB::table('tournees')->insert([
             [
-                'employes_id' =>json_encode(['2', '1']),
+                'code' => '00001',
+                'employes_id' => json_encode(['2', '1']),
                 'zone_id' => 1,
                 'status' => "EN_COUR",
                 'date' => "12-8-2024",
                 'itineraire' => 1000
             ],
             [
-                'employes_id' =>json_encode(['1', '2']),
+                'code' => '00002',
+                'employes_id' => json_encode(['1', '2']),
                 'zone_id' => 1,
                 'status' => "PREVU",
                 'date' => "14-8-2024",
@@ -33,7 +35,8 @@ class TourneeSeeder extends Seeder
             ],
 
             [
-                'employes_id' =>json_encode(['1']),
+                'code' => '00003',
+                'employes_id' => json_encode(['1']),
                 'zone_id' => 2,
                 'status' => "PREVU",
                 'date' => "16-8-2024",

@@ -31,4 +31,9 @@ class Client extends Model
     {
         return $this->hasMany(Commande::class);
     }
+
+     public static function total_client()
+    {
+        return self::count();
+    }
 }

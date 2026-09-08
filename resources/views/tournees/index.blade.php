@@ -113,6 +113,7 @@
                     <table class="text-left w-full whitespace-nowrap">
                         <thead class="">
                             <tr class="border-gray-300 border-b ">
+                                <th scope="col" class="px-6 py-3">Code</th>
                                 <th scope="col" class="px-6 py-3">Zone</th>
                                 <th scope="col" class="px-6 py-3">Nombre d'employé</th>
                                 <th scope="col" class="px-6 py-3">Status</th>
@@ -124,7 +125,7 @@
                         <tbody class="divide-y ">
                             @forelse($tournees as $tournee)
                             <tr class="border-gray-300 border-b hover:bg-gray-100 ">
-
+                                <td class="py-3 px-6 text-left">{{ $tournee->code }}</td>
                                 <td class="py-3 px-6 text-left">{{ $tournee->zone->designation }}</td>
                                 <td class="py-3 px-6 text-center">{{ $tournee->nbr_employe() }}</td>
 

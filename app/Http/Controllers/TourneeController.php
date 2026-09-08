@@ -117,7 +117,13 @@ class TourneeController extends Controller implements HasMiddleware
 
         DB::transaction(function () use ($validated) {
 
+            $code = Tournee::latest('id')->first()->id + 1;
+            if ($code < 10000) {
+                $code = "0000" . $code;
+                $code = substr($code, -5);
+            }
             $tournee = Tournee::create([
+                'code' => $code,
                 'employes_id' => json_encode($validated['employes_id']),
                 'zone_id' => $validated['zone_id'],
                 'date' => $validated['date'],

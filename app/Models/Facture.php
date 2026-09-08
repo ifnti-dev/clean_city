@@ -39,4 +39,9 @@ class Facture extends Model
     public function tarif(): BelongsTo{
         return $this->belongsTo(Tarif::class);
     }
+
+     public static function total_facture()
+    {
+        return self::count();
+    }
 }

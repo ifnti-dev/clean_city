@@ -56,7 +56,7 @@
                             <select name="employes_id[]" multiple id="employe_id" class="w-full rounded-lg">
                                 <option value="">Choisissez Le employe </option>
                                 @foreach ( $users as $user )
-                                <option @selected(old('employes_id')==$user->employe->id) value="{{ $user->employe->id }}">{{
+                                <option @selected(in_array($user->employe->id, old('employes_id', []))) value="{{ $user->employe->id }}">{{
                                     $user->nom   }} ({{$user->contacte}}) </option>
                                 @endforeach
                             </select>

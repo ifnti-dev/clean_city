@@ -1,30 +1,13 @@
 <x-app-layout>
-
-    <!-- <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-
     <div>
+        
         <div class="h-40 bg-indigo-600 px-8 pt-10 lg:pt-14 pb-16 flex justify-between items-center mb-3">
             <!-- title -->
-            <h1 class="text-xl text-white">Project</h1>
+            <!-- <h1 class="text-xl text-white">Project</h1>
             <a href="#"
                 class="btn bg-white text-gray-800 border-gray-600 hover:bg-gray-100 hover:text-gray-800 hover:border-gray-200 active:bg-gray-100 active:text-gray-800 active:border-gray-200 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                 Create New Project
-            </a>
+            </a> -->
         </div>
         <div class="-mt-12 mx-6 mb-6 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 xl:grid-cols-4">
             <!-- card -->
@@ -33,7 +16,7 @@
                 <div class="card-body">
                     <!-- content -->
                     <div class="flex justify-between items-center">
-                        <h4>Projects</h4>
+                        <h4>Menages</h4>
                         <div
                             class="bg-indigo-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-center text-indigo-600">
                             <i data-feather="briefcase"></i>
@@ -43,7 +26,7 @@
                         <h2 class="text-xl font-bold">18</h2>
                         <div>
                             <span>2</span>
-                            <span class="text-gray-500">Completed</span>
+                            <span class="text-gray-500">Desabonnée</span>
                         </div>
                     </div>
                 </div>
@@ -54,17 +37,17 @@
                 <div class="card-body">
                     <!-- content -->
                     <div class="flex justify-between items-center">
-                        <h4>Active Task</h4>
+                        <h4>Abonnée</h4>
                         <div
                             class="bg-indigo-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-center text-indigo-600">
                             <i data-feather="list"></i>
                         </div>
                     </div>
                     <div class="mt-4 flex flex-col gap-0 text-base">
-                        <h2 class="text-xl font-bold">132</h2>
+                        <h2 class="text-xl font-bold">12</h2>
                         <div>
                             <span>28</span>
-                            <span class="text-gray-500">Completed</span>
+                            <span class="text-gray-500">Desabonnée</span>
                         </div>
                     </div>
                 </div>
@@ -75,7 +58,7 @@
                 <div class="card-body">
                     <!-- content -->
                     <div class="flex justify-between items-center">
-                        <h4>Teams</h4>
+                        <h4>Clients</h4>
                         <div
                             class="bg-indigo-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-center text-indigo-600">
                             <i data-feather="users"></i>
@@ -96,7 +79,7 @@
                 <div class="card-body">
                     <!-- content -->
                     <div class="flex justify-between items-center">
-                        <h4>Productivity</h4>
+                        <h4>Employées</h4>
                         <div
                             class="bg-indigo-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-center text-indigo-600">
                             <i data-feather="target"></i>
@@ -136,7 +119,8 @@
                                 <tr>
                                     <td class="border-b border-gray-300 font-medium py-3 px-6 text-left">
                                         <div class="flex items-center">
-                                            <img src="/public/assets/images/svg/brand-logo-1.svg" alt="" class="h-6 w-6" />
+                                            <img src="/public/assets/images/svg/brand-logo-1.svg" alt=""
+                                                class="h-6 w-6" />
 
                                             <h5 class="mb-1 ml-4"><a href="#!">Dropbox Design System</a></h5>
                                         </div>
@@ -171,7 +155,8 @@
                                 <tr>
                                     <td class="border-b border-gray-300 font-medium py-3 px-6 text-left">
                                         <div class="flex items-center">
-                                            <img src="/public/assets/images/svg/brand-logo-2.svg" alt="" class="h-6 w-6" />
+                                            <img src="/public/assets/images/svg/brand-logo-2.svg" alt=""
+                                                class="h-6 w-6" />
                                             <h5 class="ml-4"><a href="#!">Slack Team UI Design</a></h5>
                                         </div>
                                     </td>
@@ -205,7 +190,8 @@
                                 <tr>
                                     <td class="border-b border-gray-300 font-medium py-3 px-6 text-left">
                                         <div class="flex items-center">
-                                            <img src="/public/assets/images/svg/brand-logo-3.svg" alt="" class="h-6 w-6" />
+                                            <img src="/public/assets/images/svg/brand-logo-3.svg" alt=""
+                                                class="h-6 w-6" />
                                             <h5 class="ml-4"><a href="#!">GitHub Satellite</a></h5>
                                         </div>
                                     </td>
@@ -239,7 +225,8 @@
                                 <tr>
                                     <td class="border-b border-gray-300 font-medium py-3 px-6 text-left">
                                         <div class="flex items-center">
-                                            <img src="/public/assets/images/svg/brand-logo-4.svg" alt="" class="h-6 w-6" />
+                                            <img src="/public/assets/images/svg/brand-logo-4.svg" alt=""
+                                                class="h-6 w-6" />
                                             <h5 class="ml-4"><a href="#!">3D Character Modelling</a></h5>
                                         </div>
                                     </td>
@@ -273,7 +260,8 @@
                                 <tr>
                                     <td class="border-b border-gray-300 font-medium py-3 px-6 text-left">
                                         <div class="flex items-center">
-                                            <img src="/public/assets/images/svg/brand-logo-5.svg" alt="" class="h-6 w-6" />
+                                            <img src="/public/assets/images/svg/brand-logo-5.svg" alt=""
+                                                class="h-6 w-6" />
                                             <h5 class="ml-4"><a href="#!">Webapp Design System</a></h5>
                                         </div>
                                     </td>
@@ -307,7 +295,8 @@
                                 <tr>
                                     <td class="border-b border-gray-300 font-medium py-3 px-6 text-left">
                                         <div class="flex items-center">
-                                            <img src="/public/assets/images/svg/brand-logo-6.svg" alt="" class="h-6 w-6" />
+                                            <img src="/public/assets/images/svg/brand-logo-6.svg" alt=""
+                                                class="h-6 w-6" />
                                             <h5 class="ml-4"><a href="#!">Github Event Design</a></h5>
                                         </div>
                                     </td>

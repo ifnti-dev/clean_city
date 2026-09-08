@@ -58,4 +58,9 @@ class Menage extends Model
     {
         return $this->belongsToMany(Notification::class);
     }
+
+    public static function total_menage()
+    {
+        return self::count();
+    }
 }
