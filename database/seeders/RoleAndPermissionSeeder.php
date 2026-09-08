@@ -38,14 +38,6 @@ class RoleAndPermissionSeeder extends Seeder
         );
 
 
-        $roles_secretaire = Role::where('name', 'comptable')->first();
-        $roles_secretaire->syncPermissions(
-            Permission::where('name', 'commande.confirmer')
-                ->orWhere('name', 'commande.rejeter')
-                ->get()
-
-        );
-
 
 
         $roles_livreure = Role::where('name', 'livreure')->first();
