@@ -105,14 +105,7 @@ class EmployeSeeder extends Seeder
 
         ]);
 
-        /**
-         *  
-            'directeur',
-            'comptable',
-            'agent_collecte_ordures',
-            'agent_collecte_fonds',
-            'livreure',
-         */
+       
         //assigner les roles aux employes
         $respo = User::where('contacte', '90000001')->first();
         $respo->assignRole('directeur');

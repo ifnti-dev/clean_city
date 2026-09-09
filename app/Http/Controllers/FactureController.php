@@ -160,7 +160,9 @@ class FactureController extends Controller implements HasMiddleware
 
         });
 
-        return to_route('factures.index')->with('success', 'vous avez enregistrer un nouveau paiement ');
+        $abonnee = Abonnement::find($validated['abonnement_id']);
+
+        return to_route('factures.index')->with('success', 'vous avez enregistrer un nouveau paiement pour '.strtoupper($abonnee->menage->designation) );
        
     }
 
