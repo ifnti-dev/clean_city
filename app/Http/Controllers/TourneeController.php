@@ -93,7 +93,7 @@ class TourneeController extends Controller implements HasMiddleware
     public function create()
     {
         //recuperer les user qui on le roles : agent collecte 
-        $users = User::with('employe')->role(4)->get();
+        $users = User::with('employe')->role(3)->get();
         // dd($users);
         $zones = Zone::all();
         return view('tournees.create', compact('zones', 'users'));
