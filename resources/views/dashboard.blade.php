@@ -23,10 +23,10 @@
                         </div>
                     </div>
                     <div class="mt-4 flex flex-col gap-0 text-base">
-                        <h2 class="text-xl font-bold">18</h2>
+                        <h2 class="text-xl font-bold">{{$total_menage}}</h2>
                         <div>
-                            <span>2</span>
-                            <span class="text-gray-500">Desabonnée</span>
+                            <span>{{$total_menage_non_en_regle}}</span>
+                            <span class="text-gray-500">Non en regle</span>
                         </div>
                     </div>
                 </div>

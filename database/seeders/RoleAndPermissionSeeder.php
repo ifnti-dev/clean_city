@@ -15,26 +15,43 @@ class RoleAndPermissionSeeder extends Seeder
     public function run(): void
     {
 
-        $roles_responssable = Role::where('name', 'responssable')->first();
-        $roles_responssable->syncPermissions(
+        $roles_directeur = Role::where('name', 'directeur')->first();
+        $roles_directeur->syncPermissions(
             Permission::all()
         );
 
 
 
+        $roles_agent_collecte_fonds = Role::where('name', 'agent_collecte_fonds')->first();
+        $roles_agent_collecte_fonds->syncPermissions(
+            Permission::Where('name', 'client.creer')->first(),
+            Permission::Where('name', 'client.modifier')->first(),
+            Permission::Where('name', 'abonnement.voire')->first(),
+            Permission::Where('name', 'abonnement.modifier')->first(),
+
+            Permission::Where('name', 'menage.ajouter')->first(),
+            Permission::Where('name', 'menage.modifier')->first(),
+
+            Permission::Where('name', 'facture.voire')->first(),
+            Permission::Where('name', 'facture.creer')->first(),
+        );
+
+
         $agent_collecte_ordures = Role::where('name', 'agent_collecte_ordures')->first();
         $agent_collecte_ordures->syncPermissions(
-            Permission::where('name', 'tournee.demarer')
-                ->orWhere('name', 'tournee.voire')
-                ->orWhere('name', 'tournee.terminer')
-                ->orWhere('name', 'ligne_tournee.terminer',)
-                ->get()
+            Permission::Where('name', 'tournee.voire')->first(),
+            Permission::Where('name', 'tournee.demarer')->first(),
+            Permission::Where('name', 'tournee.terminer')->first(),
+            Permission::Where('name', 'ligne_tournee.terminer')->first()
         );
 
 
         $roles_comptable = Role::where('name', 'comptable')->first();
         $roles_comptable->syncPermissions(
-            Permission::where('name', 'like', '%abonnement%')->get()
+            Permission::where('name', 'like', '%abonnement%')
+                ->where('name', '!=', 'abonnement.approuver')
+                ->where('name', '!=', 'abonnement.rejeter')->get(),
+            Permission::where('name', 'like', '%facture%')->get()
         );
 
 
@@ -47,16 +64,6 @@ class RoleAndPermissionSeeder extends Seeder
                 ->get()
         );
 
-        $roles_agent_collecte_fonds = Role::where('name', 'agent_collecte_fonds')->first();
-        $roles_agent_collecte_fonds->syncPermissions(
-            Permission::where('name', 'client.voire')
-                ->orWhere('name', 'client.creer')
-                ->orWhere('name', 'client.modifier')
-                ->orWhere('name', 'client.supprimer')
-                ->orWhere('name', 'facture.voire')
-                ->orWhere('name', 'facture.creer')
-                ->get()
-        );
 
 
         $roles_client = Role::where('name', 'client')->first();

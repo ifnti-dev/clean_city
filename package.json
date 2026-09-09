@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "dayjs": "^1.11.23",
+        "feather-icons": "^4.29.2",
         "simplebar": "^6.3.3",
         "sweetalert2": "^11.26.25"
     }

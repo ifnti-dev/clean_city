@@ -63,4 +63,13 @@ class Menage extends Model
     {
         return self::count();
     }
+
+    public static function total_menage_non_en_regle()
+    {
+        return self::where('est_en_regle',false)->count();
+    }
+
+
+
+
 }

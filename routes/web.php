@@ -30,12 +30,14 @@ Route::get('/dashboard', function () {
     $total_client = Client::total_client();
     $total_employe = Employe::total_employe();
     $total_menage = Menage::total_menage();
+    $total_menage_non_en_regle = Menage::total_menage_non_en_regle();
     $total_tournee = Tournee::total_tournee();
 
     // dd($total_client);
 
 
-    return view('dashboard');
+    return view('dashboard',
+    compact('total_menage','total_menage_non_en_regle'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

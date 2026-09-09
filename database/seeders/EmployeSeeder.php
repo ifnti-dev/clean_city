@@ -19,10 +19,10 @@ class EmployeSeeder extends Seeder
 
         DB::table('users')->insert([
             [
-                "nom" => "responsable",
+                "nom" => "directeur",
                 "prenom" => "respo",
                 "contacte" => "90000001",
-                "email" => "responsable@gmail.com",
+                "email" => "directeur@gmail.com",
                 "password" => Hash::make("11111111"),
 
 
@@ -62,10 +62,10 @@ class EmployeSeeder extends Seeder
             ],
 
             [
-                "nom" => "secretaire",
-                "prenom" => "secretaire",
+                "nom" => "agent_co2",
+                "prenom" => "agent_co2",
                 "contacte" => "90000006",
-                "email" => "secretaire@gmail.com",
+                "email" => "agent_co2@gmail.com",
                 "password" => Hash::make("11111111"),
             ],
             [
@@ -107,8 +107,7 @@ class EmployeSeeder extends Seeder
 
         /**
          *  
-            'responssable',
-            'secretaire',
+            'directeur',
             'comptable',
             'agent_collecte_ordures',
             'agent_collecte_fonds',
@@ -116,7 +115,7 @@ class EmployeSeeder extends Seeder
          */
         //assigner les roles aux employes
         $respo = User::where('contacte', '90000001')->first();
-        $respo->assignRole('responssable');
+        $respo->assignRole('directeur');
 
         $livreure = User::where('contacte', '90000002')->first();
         $livreure->assignRole('livreure');
@@ -130,11 +129,11 @@ class EmployeSeeder extends Seeder
         $agent_co1 = User::where('contacte', '90000007')->first();
         $agent_co1->assignRole('agent_collecte_ordures');
 
+        $agent_co2 = User::where('contacte', '90000007')->first();
+        $agent_co2->assignRole('agent_collecte_ordures');
+
 
         $comptable = User::where('contacte', '90000005')->first();
         $comptable->assignRole('comptable');
-
-        $secretaire = User::where('contacte', '90000006')->first();
-        $secretaire->assignRole('secretaire');
     }
 }
