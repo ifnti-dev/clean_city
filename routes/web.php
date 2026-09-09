@@ -79,6 +79,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/commandes/livrerlaCommande/{commande}', [CommandeController::class, 'livrerLaCommande'])->name('commandes.livrerLaCommande');
     Route::get('/eCommerce', [CommandeController::class, 'listeProduit'])->name('listProduit');
 
+    Route::get('/panier', [CommandeController::class, 'afficherPanier'])->name('panier');
+
     Route::resource('/roles', RoleController::class);
     Route::resource('/typeHabitats', TypeHabitatController::class);
 

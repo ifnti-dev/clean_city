@@ -98,7 +98,7 @@
                                 <th scope="col" class="px-6 py-3">Nombre de mois</th>
                                 <th scope="col" class="px-6 py-3">Date Debut</th>
                                 <th scope="col" class="px-6 py-3">Date Fin</th>
-                                <th scope="col" class="px-6 py-3">Mois</th>
+                                {{-- <th scope="col" class="px-6 py-3">Mois</th> --}}
                                 <th scope="col" class="px-6 py-3">Montant</th>
                                 <th scope="col" class="px-6 py-3">Etat Paiement</th>
                                 {{-- <th scope="col" class="px-6 py-3">Transaction ID</th> --}}
@@ -113,13 +113,17 @@
                                     <td class="py-3 px-6 text-left">{{ $facture->nb_mois }}
 
                                     </td>
-                                    <td class="py-3 px-6 text-left"><span
-                                            class="bg-indigo-200 px-2 py-1 text-indigo-900 text-sm font-medium rounded-md inline-block">{{ $facture->date_debut }}</span>
-                                    </td>
-                                    <td class="py-3 px-6 text-left"><span
-                                            class="bg-blue-200 px-2 py-1 text-blue-900 text-sm font-medium rounded-md inline-block">{{ $facture->date_fin }}
-                                        </span></td>
                                     <td class="py-3 px-6 text-left">
+                                        <span
+                                            class="bg-indigo-200 px-2 py-1 text-indigo-900 text-sm font-medium rounded-md inline-block">{{ $facture->date_debut }}
+                                        </span>
+                                    </td>
+                                    <td class="py-3 px-6 text-left">
+                                        <span
+                                            class="bg-blue-200 px-2 py-1 text-blue-900 text-sm font-medium rounded-md inline-block">{{ $facture->date_fin }}
+                                        </span>
+                                    </td>
+                                    {{-- <td class="py-3 px-6 text-left">
                                         @forelse (($facture->les_mois)  as $mois)
                                             {{ $mois . ',' }}
                                         @empty
@@ -127,7 +131,7 @@
                                         @endforelse
 
 
-                                    </td>
+                                    </td> --}}
                                     <td class="py-3 px-6 text-left"><span
                                             class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block">{{ $facture->montant }}</span>
                                     </td>
