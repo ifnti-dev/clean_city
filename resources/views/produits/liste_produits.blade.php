@@ -6,107 +6,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> </title>
 
-    @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/js/cart.js', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/js/cart.js'])
 </head>
 
 <body>
     <div class="drawer drawer-end">
-        <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+
 
         <div class="drawer-content flex flex-col">
-            <nav class="navbar bg-base-100 shadow-sm sticky top-0 z-50">
+            <nav class="navbar flex bg-base-100 shadow-sm sticky top-0 z-50 mt-3">
 
                 <div class="flex-1">
                     <h3>Market place</h3>
                 </div>
 
-                <div class="flex gap-2">
-                    <label for="my-drawer-4" class="btn btn-ghost btn-circle text-neutral">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
+                <div class="flex flex-row gap-2">
+                    <a href="{{ route('panier') }}">
+                        <label for="my-drawer-4" class="btn btn-ghost btn-circle text-neutral">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-black" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" >
 
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </label>
-
-
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </label>
+                    </a>
 
                     <!-- list -->
-                    @auth
-                        <a href="{{ route('commandes.index') }}">
-                            <x-third-button>Vos commandes</x-third-button>
-                        </a>
-                        <a href="{{ route('produits.index') }}">
-                            <x-third-button>Administration</x-third-button>
-                        </a>
-                        <ul class="flex ml-auto items-center">
-                            <li class="dropdown ml-2">
-                                <a class="rounded-full" href="#" role="button" id="dropdownUser"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <div class="w-10 h-10 relative">
-                                        <img alt="avatar" src="http://localhost:8000/assets/images/avatar/avatar-1.jpg"
-                                            class="rounded-full" />
-                                        <div
-                                            class="absolute border-gray-200 border-2 rounded-full right-0 bottom-0 bg-green-600 h-3 w-3">
+
+                    <div class="flex mb-2 mr-2 gap-2">
+                        @auth
+
+                            <a href="{{ route('commandes.index') }}">
+                                <x-third-button>Vos commandes</x-third-button>
+                            </a>
+                            <a href="{{ route('produits.index') }}">
+                                <x-third-button>Administration</x-third-button>
+                            </a>
+
+                            <ul class="flex ml-auto items-center">
+                                <li class="dropdown ml-2">
+                                    <a class="rounded-full" href="#" role="button" id="dropdownUser"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="w-10 h-10 relative">
+                                            <img alt="avatar"
+                                                src="http://localhost:8000/assets/images/avatar/avatar-1.jpg"
+                                                class="rounded-full" />
+                                            <div
+                                                class="absolute border-gray-200 border-2 rounded-full right-0 bottom-0 bg-green-600 h-3 w-3">
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="dropdownUser">
-                                    <div class="px-4 pb-0 pt-2">
-                                        <div class="leading-4">
-                                            <h5 class="mb-1">{{ Auth::user()->nom }}</h5>
-                                            <a href="{{ route('profile.edit') }}">Mon profile</a>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="dropdownUser">
+                                        <div class="px-4 pb-0 pt-2">
+                                            <div class="leading-4">
+                                                <h5 class="mb-1">{{ Auth::user()->nom }}</h5>
+                                                <a href="{{ route('profile.edit') }}">Mon profile</a>
+                                            </div>
+                                            <div class="border-b mt-3 mb-2"></div>
                                         </div>
-                                        <div class="border-b mt-3 mb-2"></div>
+
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                                    <i class="w-4 h-4" data-feather="user"></i>
+                                                    Modifier mon Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('dashboard') }}">
+                                                    <i class="w-4 h-4" data-feather="activity"></i>
+                                                    Dashboard
+                                                </a>
+                                            </li>
+
+
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="w-4 h-4" data-feather="settings"></i>
+                                                    Paramétre
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <form action="{{ route('logout') }}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="dropdown-item"
+                                                        href="{{ route('logout') }}">
+                                                        <i class="w-4 h-4" data-feather="power"></i>
+                                                        Deconnexion
+                                                    </button>
+                                                </form>
+
+                                            </li>
+                                        </ul>
                                     </div>
+                                </li>
+                            </ul>
+                        @else
+                            <div class="flex space-x-1">
+                                <div>
+                                    <a href="{{ route('login') }}"><button> Se connecter </button></a>
+                                </div><br>
 
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                                <i class="w-4 h-4" data-feather="user"></i>
-                                                Modifier mon Profile
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('dashboard') }}">
-                                                <i class="w-4 h-4" data-feather="activity"></i>
-                                                Dashboard
-                                            </a>
-                                        </li>
-
-
-                                        <li>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="w-4 h-4" data-feather="settings"></i>
-                                                Paramétre
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <form action="{{ route('logout') }}" method="post">
-                                                @csrf
-                                                <button type="submit" class="dropdown-item" href="{{ route('logout') }}">
-                                                    <i class="w-4 h-4" data-feather="power"></i>
-                                                    Deconnexion
-                                                </button>
-                                            </form>
-
-                                        </li>
-                                    </ul>
+                                <div>
+                                    <a href="{{ route('register') }}"><button> S'inscrire </button></a>
                                 </div>
-                            </li>
-                        </ul>
-                    @else
-                        <div class="flex space-x-1">
-                            <div>
-                                <a href="{{ route('login') }}"><button> Se connecter </button></a>
-                            </div><br>
-
-                            <div>
-                                <a href="{{ route('register') }}"><button> S'inscrire </button></a>
                             </div>
-                        </div>
-                    @endauth
+                        @endauth
+
+                    </div>
 
                 </div>
             </nav>
@@ -198,23 +206,6 @@
                     </a>
                 </div>
             </footer>
-        </div>
-
-        <div class="drawer-side z-50">
-            <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
-            <div class="menu bg-base-100 text-base-content min-h-full w-80 p-4">
-                <h2 class="text-xl font-bold mb-4">Votre Panier</h2>
-
-                <div class="panier flex-2   space-y-3">
-
-                </div>
-
-                <form action="" method="post">
-                    @csrf
-                    <x-secondary-button class="w-full">Commander</x-secondary-button>
-                    <input type="hidden" name="ligneCommandes" id="ligneCommandes">
-                </form>
-            </div>
         </div>
 
     </div>

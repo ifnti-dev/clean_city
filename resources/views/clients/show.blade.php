@@ -10,7 +10,7 @@
                         </h1>
                     </div>
 
-                  <div class="flex items-center gap-2 w-60 max-sm:w-full">
+                    <div class="flex items-center gap-2 w-60 max-sm:w-full">
                         <a href="{{ route('clients.index') }}" class="w-full">
                             <x-primary-button class="w-full justify-center">
                                 Liste
@@ -23,109 +23,133 @@
                         </a>
                     </div>
                 </div>
-                    
-                    
-                
 
-                <div class="card  mt-[-50px] p-5 mx-4 mb-6 ">
+                <div class="flex flex-col">
+                    <div class="card  mt-[-50px] p-5 mx-4 mb-6 ">
+                        <div class="border-b border-gray-200 pb-4 mb-6">
+                            <h2 class="text-xl font-semibold text-gray-800">
+                                Informations du client
+                            </h2>
+                        </div>
 
-                    <div class="border-b border-gray-200 pb-4 mb-6">
-                        <h2 class="text-xl font-semibold text-gray-800">
-                            Informations du client
-                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <div>
+                                <p class="text-lg text-gray-500">Nom client</p>
+                                <p class="mt-1 font-medium text-gray-800">
+                                    {{ $client->user->nom }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p class="text-lg text-gray-500">Prenom</p>
+                                <p class="mt-1 font-medium text-gray-800">
+                                    {{ $client->user->prenom }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p class="text-lg text-gray-500">Contacte</p>
+                                <p class="mt-1 font-medium text-gray-800">
+                                    {{ $client->user->contacte }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p class="text-lg text-gray-500">Email</p>
+                                <p class="mt-1 font-medium text-gray-800">
+                                    {{ $client->user->email }}
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                        <div>
-                            <p class="text-lg text-gray-500">Nom client</p>
-                            <p class="mt-1 font-medium text-gray-800">
-                                {{ $client->user->nom }}
-                            </p>
-                        </div>
-
-                        <div>
-                            <p class="text-lg text-gray-500">Prenom</p>
-                            <p class="mt-1 font-medium text-gray-800">
-                                {{ $client->user->prenom }}
-                            </p>
-                        </div>
-
-                        <div>
-                            <p class="text-lg text-gray-500">Contacte</p>
-                            <p class="mt-1 font-medium text-gray-800">
-                                {{ $client->user->contacte }}
-                            </p>
-                        </div>
-
-                        <div>
-                            <p class="text-lg text-gray-500">Email</p>
-                            <p class="mt-1 font-medium text-gray-800">
-                                {{ $client->user->email }}
-                            </p>
-                        </div>
-
-
-                        <div>
+                    <div class="relative flex-row  p-4 mb-6 mx-4 grid  lg:grid-cols-4  card shadow">
+                        <div class="space-y-2 ml-4">
                             <p class="text-lg text-gray-500">Menage</p>
-                            <p class="mt-1 font-medium text-gray-800">
+                            <div class="mt-1 font-medium text-gray-800">
                                 @forelse ($client->menages as $menage)
                                     <div>{{ $menage->designation }}</div>
                                 @empty
                                     Aucun menage
                                 @endforelse
-                            </p>
+                            </div>
                         </div>
 
-                        <div>
+                        <div class="min-w-0">
                             <p class="text-lg text-gray-500">Est abonnee</p>
-                            <p class="mt-1 font-medium text-gray-800">
+                            <div class="mt-1 space-y-2">
                                 @forelse ($client->menages as $menage)
-                                    @if ($menage->est_abonnee )
-                                        <p class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block">OUI</p>
+                                    @if ($menage->est_abonnee)
+                                        <div>
+                                            <span
+                                                class="block w-16 bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md text-center">
+                                                OUI
+                                            </span>
+                                        </div>
                                     @else
-                                        <p class="bg-red-200 px-2 py-1 text-red-900 text-sm font-medium rounded-md inline-block"> NON</p>
+                                        <div>
+                                            <span
+                                                class="block w-16 bg-red-200 px-2 py-1 text-red-900 text-sm font-medium rounded-md text-center">
+                                                NON
+                                            </span>
+                                        </div>
                                     @endif
-                                    
                                 @empty
                                     Aucun abonnement
                                 @endforelse
-                            </p>
+                            </div>
                         </div>
 
-                        <div>
+
+
+                        <div class="min-w-0">
                             <p class="text-lg text-gray-500">Est en regle</p>
-                            <p class="mt-1 font-medium text-gray-800">
-                                 @forelse ($client->menages as $menage)
-                                     @if ($menage->est_en_regle )
-                                        <p class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block" >OUI</p>
+                            <div class="mt-1 space-y-2">
+                                @forelse ($client->menages as $menage)
+                                    @if ($menage->est_en_regle)
+                                        <div>
+                                            <span
+                                                class="block w-16 bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md text-center">
+                                                OUI
+                                            </span>
+                                        </div>
                                     @else
-                                        <p class="bg-red-200 px-2 py-1 text-red-900 text-sm font-medium rounded-md inline-block" >NON</p>
+                                         <div>
+                                            <span
+                                                class="block w-16 bg-red-200 px-2 py-1 text-red-900 text-sm font-medium rounded-md text-center">
+                                                NON
+                                            </span>
+                                        </div>
                                     @endif
-                                    
+
                                 @empty
-                                    
+                                        aucun menage
                                 @endforelse
-                            </p>
+                            </div>
                         </div>
 
-                        <div>
+                        <div class="flex flex-col space-y-1">
                             <p class="text-lg text-gray-500">Type Habitat</p>
-                            <p class="mt-1 font-medium text-gray-800">
+                            <div class="mt-1 font-medium text-gray-800">
                                 @forelse ($client->menages as $menage)
                                     <div>{{ $menage->typeHabitat->designation }}</div>
                                 @empty
-
+                                aucun menage
                                 @endforelse
-                            </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>   
 
-`  
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+        `
     </x-slot>
 
 </x-app-layout>
-

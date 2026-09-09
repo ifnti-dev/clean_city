@@ -63,11 +63,11 @@
                         <div>
                             <p class="text-lg text-gray-500">Les mois</p>
                             <p class="mt-1 font-medium text-gray-800">
-                                @forelse (($facture->les_mois)  as $mois)
-                                    {{ $mois }}-
-                                @empty
+                                {{-- @forelse (($facture->les_mois)  as $mois) --}}
+                                    {{ implode(', ', $facture->les_mois) }}
+                                {{-- @empty
                                     <p>Acun mois</p>
-                                @endforelse
+                                @endforelse --}}
                             </p>
                         </div>
 
