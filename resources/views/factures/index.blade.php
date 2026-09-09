@@ -59,7 +59,7 @@
                                             class="block text-sm font-medium text-gray-700 mb-1">Montant</label>
                                         <input type="text" name="montant" id="montant" value="{{ $montant }}"
                                             placeholder="montant "
-                                            class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                                            class="rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 w-50">
                                     </div>
 
 

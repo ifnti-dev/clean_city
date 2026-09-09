@@ -51,7 +51,14 @@ class RoleAndPermissionSeeder extends Seeder
             Permission::where('name', 'like', '%abonnement%')
                 ->where('name', '!=', 'abonnement.approuver')
                 ->where('name', '!=', 'abonnement.rejeter')->get(),
-            Permission::where('name', 'like', '%facture%')->get()
+            Permission::where('name', 'like', '%facture%')->get(),
+            Permission::where('name', 'like', '%tournee%')->get(),
+            Permission::where('name', 'like', '%tarif%')->get(),
+            Permission::where('name', 'like', '%zone%')->get(),
+            Permission::where('name', 'like', '%quartier%')->get(),
+            Permission::where('name', 'like', '%ramassage%')->get(),
+            Permission::where('name', 'like', '%client%')->get(),
+
         );
 
 
