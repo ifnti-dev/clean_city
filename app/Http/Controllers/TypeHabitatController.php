@@ -69,15 +69,15 @@ class TypeHabitatController extends Controller
     public function store(Request $request)
     {
         //
-        $validated = $request->validate([
+        $data = $request->validate([
             'designation' => 'required|min:5'
         ]);
 
         $role = TypeHabitat::create([
-            'designation' => $validated['designation'],
+            'designation' => $data['designation'],
         ]);
 
-        return to_route('typeHabitats.index')->with("success", "Vous avez enregistrer le type d'Habitat ".strtoupper($validated['designation']) );
+        return to_route('typeHabitats.index')->with("success", "Vous avez enregistrer le type d'Habitat ".strtoupper($data['designation']) );
 
 
     }
@@ -105,15 +105,15 @@ class TypeHabitatController extends Controller
     public function update(Request $request, TypeHabitat $typeHabitat)
     {
         //
-         $validated = $request->validate([
+         $data = $request->validate([
             'designation' => ['required', Rule::unique('type_habitats')->ignore($typeHabitat->id, 'id')],
         ]);
 
         $typeHabitat->update([
-            'designation' => $validated['designation'],
+            'designation' => $data['designation'],
         ]);
 
-        return to_route('typeHabitats.index')->with("success", "Vous avez enregistrer le type d'Habitat ".strtoupper($validated['designation']) );
+        return to_route('typeHabitats.index')->with("success", "Vous avez enregistrer le type d'Habitat ".strtoupper($data['designation']) );
 
     }
 

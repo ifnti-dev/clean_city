@@ -94,7 +94,7 @@ class FactureController extends Controller implements HasMiddleware
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $data = $request->validate([
             'lesmois' => 'required|array',
             'tarif_id' => 'required|integer|exists:tarifs,id',
             'methode_paiement_id' => 'required|integer|exists:methode_paiements,id',
@@ -103,22 +103,22 @@ class FactureController extends Controller implements HasMiddleware
         ]);
 
         $date_debut = Carbon::now();
-        $nb_mois = count($validated['lesmois']);
+        $nb_mois = count($data['lesmois']);
         $date_fin = $date_debut->add($nb_mois, 'month');
 
-        $tarifs = Tarif::find($validated['tarif_id']);
+        $tarifs = Tarif::find($data['tarif_id']);
         $montant_tarif = $tarifs->montant;
         $montant = $nb_mois * $montant_tarif;
-        $validated['montant'] = $montant;
+        $data['montant'] = $montant;
 
         $facture = ([
             'nb_mois' => $nb_mois,
             'date_fin' => $date_fin,
-            'les_mois' => $validated['lesmois'],
-            'abonnement_id' => $validated['abonnement_id'],
-            'tarif_id' => $validated['tarif_id'],
-            'methode_paiement_id' => $validated['methode_paiement_id'],
-            'montant' => $validated['montant'],
+            'les_mois' => $data['lesmois'],
+            'abonnement_id' => $data['abonnement_id'],
+            'tarif_id' => $data['tarif_id'],
+            'methode_paiement_id' => $data['methode_paiement_id'],
+            'montant' => $data['montant'],
         ]);
 
         session(['facture' => $facture]);
@@ -127,7 +127,7 @@ class FactureController extends Controller implements HasMiddleware
         
 
     
-        $methode_paiements = MethodePaiement::find($validated['methode_paiement_id']);
+        $methode_paiements = MethodePaiement::find($data['methode_paiement_id']);
         
         if ($methode_paiements->type === 'MOBILE_MONEY') {
             $transaction = Transaction::create([
@@ -146,21 +146,21 @@ class FactureController extends Controller implements HasMiddleware
             return redirect($transaction->payment_url);
         } 
         
-        DB::transaction(function () use ($validated, $nb_mois, $date_fin) {
+        DB::transaction(function () use ($data, $nb_mois, $date_fin) {
             $facture = Facture::create([
                 'nb_mois' => $nb_mois,
                 'date_fin' => $date_fin,
-                'les_mois' => $validated['lesmois'],
-                'abonnement_id' => $validated['abonnement_id'],
-                'tarif_id' => $validated['tarif_id'],
-                'methode_paiement_id' => $validated['methode_paiement_id'],
-                'montant' => $validated['montant'],
+                'les_mois' => $data['lesmois'],
+                'abonnement_id' => $data['abonnement_id'],
+                'tarif_id' => $data['tarif_id'],
+                'methode_paiement_id' => $data['methode_paiement_id'],
+                'montant' => $data['montant'],
                 
             ]);
 
         });
 
-        $abonnee = Abonnement::find($validated['abonnement_id']);
+        $abonnee = Abonnement::find($data['abonnement_id']);
 
         return to_route('factures.index')->with('success', 'vous avez enregistrer un nouveau paiement pour '.strtoupper($abonnee->menage->designation) );
        
@@ -192,7 +192,7 @@ class FactureController extends Controller implements HasMiddleware
     {
         //
 
-        $validated = $request->validate([
+        $data = $request->validate([
             'lesmois' => 'required|array',
             'tarif_id' => 'required|integer|exists:tarifs,id',
             'methode_paiement_id' => 'required',
@@ -200,28 +200,28 @@ class FactureController extends Controller implements HasMiddleware
 
         ]);
 
-        DB::transaction(function () use ($validated, $facture) {
+        DB::transaction(function () use ($data, $facture) {
 
             $date_debut = Carbon::now();
 
-            $nb_mois = count($validated['lesmois']);
+            $nb_mois = count($data['lesmois']);
             $date_fin = $date_debut->add($nb_mois, 'month');
 
-            $tarifs = Tarif::find($validated['tarif_id']);
+            $tarifs = Tarif::find($data['tarif_id']);
             $montant_tarif = $tarifs->montant;
 
             $montant = $nb_mois * $montant_tarif;
 
-            $validated['montant'] = $montant;
+            $data['montant'] = $montant;
 
             $facture->update([
                 'nb_mois' => $nb_mois,
                 'date_fin' => $date_fin,
-                'les_mois' => $validated['lesmois'],
-                'abonnement_id' => $validated['abonnement_id'],
-                'tarif_id' => $validated['tarif_id'],
-                'methode_paiement_id' => $validated['methode_paiement_id'],
-                'montant' => $validated['montant'],
+                'les_mois' => $data['lesmois'],
+                'abonnement_id' => $data['abonnement_id'],
+                'tarif_id' => $data['tarif_id'],
+                'methode_paiement_id' => $data['methode_paiement_id'],
+                'montant' => $data['montant'],
 
             ]);
 

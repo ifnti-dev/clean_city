@@ -110,7 +110,7 @@ class ClientContoller extends Controller implements HasMiddleware
         //
 
         
-        $validated = $request->validate([
+        $data = $request->validate([
 
             'nom' => 'required|string|min:3',
             'prenom' => 'required|string|min:3',
@@ -121,13 +121,13 @@ class ClientContoller extends Controller implements HasMiddleware
         ]);
 
         
-        DB::transaction(function() use($validated){
+        DB::transaction(function() use($data){
             $password = Str::random(10);
             $user = User::create([
-                'nom' => $validated['nom'],
-                'prenom' => $validated['prenom'],
-                'email' => $validated['email'],
-                'contacte' => $validated['contacte'],
+                'nom' => $data['nom'],
+                'prenom' => $data['prenom'],
+                'email' => $data['email'],
+                'contacte' => $data['contacte'],
                 'password' => $password,
             ]);
 
@@ -142,7 +142,7 @@ class ClientContoller extends Controller implements HasMiddleware
 
 
 
-        return to_route('clients.index')->with("success", "vous avez enregistrer le client ".strtoupper($validated['nom']) );
+        return to_route('clients.index')->with("success", "vous avez enregistrer le client ".strtoupper($data['nom']) );
         //envoyer un message apres creation
         //envoyer un mail a l'utilisateur contenant son mot de pass et son mail
     }
@@ -176,7 +176,7 @@ class ClientContoller extends Controller implements HasMiddleware
     {
         //
         
-        $validated = $request->validate([
+        $data = $request->validate([
 
             'nom' => 'required|string|min:3',
             'prenom' => 'required|string|min:3',
@@ -189,10 +189,10 @@ class ClientContoller extends Controller implements HasMiddleware
             $password = Str::random(10);
             $client->user->update([
                 
-                'nom' => $validated['nom'],
-                'prenom' => $validated['prenom'],
-                'email' => $validated['email'],
-                'contacte' => $validated['contacte'],
+                'nom' => $data['nom'],
+                'prenom' => $data['prenom'],
+                'email' => $data['email'],
+                'contacte' => $data['contacte'],
                 'password' => $password,
 
             ]);

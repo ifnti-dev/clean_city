@@ -68,18 +68,18 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //
-        $validated = $request->validate([
+        $data = $request->validate([
             'role' => 'required|min:5'
         ]);
 
         $role = Role::create([
-            'name' => $validated['role'],
+            'name' => $data['role'],
         ]);
 
 
 
 
-        return to_route('roles.index')->with("success", "vous avez enregistrer un nouveau role ".strtoupper($validated['role']) );
+        return to_route('roles.index')->with("success", "vous avez enregistrer un nouveau role ".strtoupper($data['role']) );
     }
 
     /**
@@ -107,7 +107,7 @@ class RoleController extends Controller
         //
 
         
-        $validated = $request->validate([
+        $data = $request->validate([
             'role' => ['required', Rule::unique('roles')-> ignore($role->id, 'id'), 'min:5'],  
         ]);
 
@@ -115,12 +115,12 @@ class RoleController extends Controller
 
 
         $role->update([
-            'name' => $validated['role'],
+            'name' => $data['role'],
         ]);
 
 
 
-        return to_route('roles.index')->with("success", "vous avez enregistrer un nouveau role ".strtoupper($validated['role']) );
+        return to_route('roles.index')->with("success", "vous avez enregistrer un nouveau role ".strtoupper($data['role']) );
 
 
     }

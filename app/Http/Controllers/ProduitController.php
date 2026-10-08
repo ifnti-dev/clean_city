@@ -46,7 +46,7 @@ class ProduitController extends Controller
     public function store(Request $request)
     {
         //
-        $validated = $request->validate([
+        $data = $request->validate([
             'label' => 'required|string|min:3',
             'prix_unitaire' => 'required|integer',
             'description' => 'nullable|string',
@@ -55,9 +55,9 @@ class ProduitController extends Controller
 
        
             $produit = Produit::create([
-                'label' => $validated['label'],
-                'prix_unitaire' => $validated['prix_unitaire'],
-                'decsription' => $validated['description'],
+                'label' => $data['label'],
+                'prix_unitaire' => $data['prix_unitaire'],
+                'decsription' => $data['description'],
                 'est_en_stock' => 1,
             ]);
     
@@ -91,7 +91,7 @@ class ProduitController extends Controller
     public function update(Request $request, Produit $produit)
     {
         //
-        $validated = $request->validate([
+        $data = $request->validate([
             'label' => 'required|string|min:3',
             'prix_unitaire' => 'required|integer',
             'description' => 'nullable|string',
@@ -100,9 +100,9 @@ class ProduitController extends Controller
 
         
             $produit->update([
-                'label' => $validated['label'],
-                'prix_unitaire' => $validated['prix_unitaire'],
-                'description' => $validated['description'],
+                'label' => $data['label'],
+                'prix_unitaire' => $data['prix_unitaire'],
+                'description' => $data['description'],
                 'est_en_stock' => 1,
             ]);
      
