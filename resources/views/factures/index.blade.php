@@ -114,14 +114,10 @@
 
                                     </td>
                                     <td class="py-3 px-6 text-left">
-                                        <span
-                                            class="bg-indigo-200 px-2 py-1 text-indigo-900 text-sm font-medium rounded-md inline-block">{{ $facture->date_debut }}
-                                        </span>
+                                        {{ $facture->date_debut }}
                                     </td>
                                     <td class="py-3 px-6 text-left">
-                                        <span
-                                            class="bg-blue-200 px-2 py-1 text-blue-900 text-sm font-medium rounded-md inline-block">{{ $facture->date_fin }}
-                                        </span>
+                                        {{ $facture->date_fin }}
                                     </td>
                                     {{-- <td class="py-3 px-6 text-left">
                                         @forelse (($facture->les_mois)  as $mois)

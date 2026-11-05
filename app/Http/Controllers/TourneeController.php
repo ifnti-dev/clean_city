@@ -80,7 +80,7 @@ class TourneeController extends Controller implements HasMiddleware
             $query->whereJsonContains('employes_id', (string) Auth::user()->employe->id);
         }
 
-        $tournees = $query->latest('id')->paginate(8);
+        $tournees = $query->latest('id')->paginate(10);
         // dd($tournees);
         return view('tournees.index', compact('tournees'));
     }

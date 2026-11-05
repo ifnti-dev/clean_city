@@ -32,7 +32,7 @@ class QuartierController extends Controller
         //     $query->where('id',$zone_id);
         // }
 
-        $zones= Zone::paginate(8)->withQueryString();
+        $zones= Zone::paginate(10)->withQueryString();
         return view('quartiers.create', compact('zones'))->with('zone_id',$zone_id);
     }
 

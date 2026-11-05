@@ -88,7 +88,7 @@ class ClientContoller extends Controller implements HasMiddleware
 
         
        
-        $clients = $query->paginate(3);
+        $clients = $query->paginate(10);
         return view('clients.index', compact('clients', 'search', 'abonnee'));
 
     }
