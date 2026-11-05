@@ -42,7 +42,7 @@ class EmployeController extends Controller
 
         // withQueryString : serve les paramètres de la requete dans la pagination
         // cet a dire que si on fait une recherche et qu'on change de page, la recherche sera conservee
-        $employes = $query->latest('id')->paginate(8)->withQueryString();
+        $employes = $query->latest('id')->paginate(10)->withQueryString();
         return view('employes.index', compact('employes', 'roles'));
     }
 

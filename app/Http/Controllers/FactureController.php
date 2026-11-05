@@ -74,7 +74,7 @@ class FactureController extends Controller implements HasMiddleware
             }
         }
 
-        $factures = $query->paginate(4);
+        $factures = $query->paginate(10);
         return view('factures.index', compact('factures', 'date_debut', 'date_fin','montant'));
     }
 

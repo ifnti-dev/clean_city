@@ -39,7 +39,7 @@ class FactureSeeder extends Seeder
                 'date' => now(),
                 'montant' => 2000,
 
-            ]
+            ],
         ]);
     }
 }

@@ -109,6 +109,59 @@ btnPrecedent1.addEventListener("click",click_precedent1);
 
 
 
+document.addEventListener('DOMContentLoaded', function () {
 
+    const mois = document.querySelectorAll('.lesmois');
 
+    mois.forEach(function (checkbox, index) {
 
+        checkbox.addEventListener('change', function () {
+
+            // Lorsque l'utilisateur coche un mois
+            if (this.checked) {
+
+                // Vérifier si un mois est déjà sélectionné
+                const selectionnes = Array.from(mois)
+                    .map((cb, i) => cb.checked ? i : -1)
+                    .filter(i => i !== -1);
+
+                // Si c'est le premier mois, accepter n'importe lequel
+                if (selectionnes.length === 1) {
+                    return;
+                }
+
+                // Trouver le dernier mois sélectionné avant celui-ci
+                const precedent = selectionnes
+                    .filter(i => i < index)
+                    .pop();
+
+                // Si le mois précédent n'est pas sélectionné
+                if (precedent === undefined || precedent !== index - 1) {
+
+                    this.checked = false;
+
+                    alert('Veuillez sélectionner les mois consécutivement.');
+
+                    return;
+                }
+            }
+
+            // Lorsque l'utilisateur décoche un mois
+            else {
+
+                // Décocher tous les mois suivants
+                mois.forEach(function (cb, i) {
+
+                    if (i > index) {
+                        cb.checked = false;
+                    }
+
+                });
+
+            }
+
+        });
+
+    });
+
+});

@@ -18,7 +18,7 @@ class CommandeController extends Controller
             $query->where('statut_livraison', 'like', "%$search%");
         }
 
-        $commandes = $query->paginate(4);
+        $commandes = $query->paginate(10);
         return view('commandes.index', compact('commandes', 'search'));
     }
 

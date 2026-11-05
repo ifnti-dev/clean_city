@@ -82,7 +82,7 @@ class AbonnementController extends Controller implements HasMiddleware
 
 
         SweetAlert::sweetAlertMessage();
-        $abonnements = $query->where('deleted_at', null)->latest('id')->paginate(8)->withQueryString();
+        $abonnements = $query->where('deleted_at', null)->latest('id')->paginate(10)->withQueryString();
 
 
         // dd($abonnements);

@@ -49,7 +49,7 @@ class TypeHabitatController extends Controller
             ]);
         }
 
-        $typeHabitats = $query->paginate(4);
+        $typeHabitats = $query->paginate(10);
         return view('typeHabitats.index', compact('typeHabitats', 'search')); 
 
     }

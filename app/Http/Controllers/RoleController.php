@@ -49,7 +49,7 @@ class RoleController extends Controller
         }
 
 
-        $roles = $query->paginate(4);
+        $roles = $query->paginate(10);
         return view('roles.index', compact('roles', 'search'));
     }
 

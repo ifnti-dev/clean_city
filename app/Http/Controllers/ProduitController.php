@@ -26,7 +26,7 @@ class ProduitController extends Controller
         }
         
 
-        $produits = $query->paginate(4);
+        $produits = $query->paginate(10);
         return view('produits.index', compact('produits', 'search', 'est_en_stock'));
 
     }
