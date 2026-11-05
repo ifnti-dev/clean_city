@@ -93,7 +93,7 @@
                                             <form action="{{ route('typeHabitats.destroy', $typeHabitat->id) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-secondary-button>
+                                                <x-secondary-button type="submit" class="bg-red-500 ">
                                                     Supprimer
                                                 </x-secondary-button>
                                             </form>
