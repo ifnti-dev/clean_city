@@ -190,7 +190,7 @@
 
                                 <td class="py-3 px-6 text-left flex  items-center gap-2">
 
-                                    @if ($tournee->status=="EN_COUR")
+                                    @if ($tournee->status=="EN_COUR" && $ligne->status!="VIDER")
                                     @can('ligne_tournee.terminer')
                                     <form action="{{ route('ligne_tournee.terminer', $ligne->id) }}" method="post">
                                         @csrf
