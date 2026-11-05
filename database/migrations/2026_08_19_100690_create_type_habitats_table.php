@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('type_habitats', function (Blueprint $table) {
             $table->id();
             $table->string('designation');
+            $table->string('effectif')->nullable();
             $table->timestamps();
         });
     }
