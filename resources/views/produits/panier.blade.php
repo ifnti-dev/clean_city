@@ -23,7 +23,7 @@
             <h2 class="text-lg font-bold text-gray-900">Order Summary</h2>
             <div class="flex justify-between items-baseline pt-2">
                 <span class="text-base font-bold text-gray-900">Total</span>
-                <span id="total-panier" class="text-2xl font-extrabold text-[#2F44DE]">0 FCFA</span>
+                <span id="total-panier" class="text-2xl font-extrabold text-[#2F44DE]"></span>
             </div>
             <form action="" method="post" class="pt-2">
                 @csrf

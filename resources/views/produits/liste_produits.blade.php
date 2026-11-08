@@ -174,8 +174,7 @@
                                 <h2 class="card-title">{{ $produit->label }}</h2>
                                 <p>{{ $produit->description }}</p>
                                 <div class="card-actions justify-end">
-                                    <x-primary-button class="add_" id="{{ $produit->id }}" data-label="{{ $produit->label }}" data-price="{{ $produit->prix }}" data-image="{{ $produit->image_url }}"
-                                        data-label="{{ $produit->label }}">Ajouter au panier</x-primary-button>
+                                    <x-primary-button class="add_" id="{{ $produit->id }}" data-label="{{ $produit->label }}" data-price="{{ $produit->prix_unitaire }}" data-image="{{ $produit->image_url }}">Ajouter au panier</x-primary-button>
                                 </div>
                             </div>
                         </div>
