@@ -36,6 +36,55 @@
 /* btn, card */
 
 @layer components {
+   .action-menu {
+      @apply relative;
+   }
+   .action-menu-trigger {
+      @apply flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-md text-gray-600 transition hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500;
+   }
+   .action-menu-trigger::-webkit-details-marker {
+      display: none;
+   }
+   .action-menu-panel {
+      @apply absolute right-0 z-50 mt-1 min-w-44 rounded-lg border border-gray-200 bg-white p-1 shadow-lg;
+   }
+   .action-menu-item {
+      @apply flex w-full items-center rounded-md px-3 py-2 text-left text-sm text-gray-700 transition hover:bg-gray-100 focus:bg-gray-100 focus:outline-none;
+   }
+   .action-menu-item-danger {
+      @apply text-red-700 hover:bg-red-50 focus:bg-red-50;
+   }
+   .action-menu-form {
+      @apply w-full;
+   }
+   .pagination-shell {
+      @apply flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-3 shadow-sm sm:flex-row sm:items-center sm:justify-between;
+   }
+   .pagination-links {
+      @apply flex flex-wrap items-center justify-center gap-1;
+   }
+   .pagination-link {
+      @apply inline-flex min-h-9 min-w-9 items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500;
+   }
+   .pagination-link-current {
+      @apply border-indigo-600 bg-indigo-600 text-white hover:border-indigo-700 hover:bg-indigo-700 hover:text-white;
+   }
+   .pagination-link-disabled {
+      @apply cursor-not-allowed bg-gray-50 text-gray-400 hover:border-gray-200 hover:bg-gray-50 hover:text-gray-400;
+   }
+   .search-filter-fields {
+      @apply grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4;
+   }
+   .search-filter-fields > div {
+      @apply min-w-0;
+   }
+   .search-filter-fields input:not([type="checkbox"]),
+   .search-filter-fields select {
+      @apply w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500;
+   }
+   .search-filter-actions {
+      @apply mt-5 flex flex-wrap items-center justify-end gap-3;
+   }
    .btn {
       @apply bg-transparent border border-transparent rounded-md text-white cursor-pointer inline-block text-base font-semibold py-2 px-4 text-center transition align-middle select-none;
    }
@@ -52,6 +101,4 @@
       @apply flex-auto p-5;
    }
 }
-
-
 

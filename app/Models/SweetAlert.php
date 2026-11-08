@@ -12,17 +12,23 @@ class SweetAlert extends Model
     public static function sweetAlertMessage()
     {
         // dd(session('success'));
-        if (session(('success'))) {
+        $success = session('success');
+        $error = session('error');
+        if ($error === null && is_string(session('errors'))) {
+            $error = session('errors');
+        }
+
+        if ($success) {
             // Toast with pause on hover
             if (session('text')) {
                 Swal::success([
-                    'title' => session('success'),
+                    'title' => $success,
                     'text' => session('text'),
                     'showConfirmButton' => true,
                 ]);
             } else {
                 Swal::success([
-                    'title' => session('success'),
+                    'title' => $success,
                     'text' => session('text'),
                     'timer' => 2000,
                     'showConfirmButton' => false,
@@ -30,16 +36,16 @@ class SweetAlert extends Model
             }
         }
 
-        if (session(('error'))) {
+        if ($error) {
             if (session('text')) {
                 Swal::error([
-                    'title' => session('error'),
+                    'title' => $error,
                     'text' => session('text'),
                     'showConfirmButton' => true,
                 ]);
             } else {
                 Swal::error([
-                    'title' => session('error'),
+                    'title' => $error,
                     'text' => session('text'),
                     'timer' => 2000,
                     'showConfirmButton' => false,

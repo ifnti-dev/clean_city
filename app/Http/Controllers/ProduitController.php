@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produit;
+use App\Models\SweetAlert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,19 +15,24 @@ class ProduitController extends Controller
     public function index(Request $request)
     {
         //
+        SweetAlert::sweetAlertMessage();
+
         $search = $request->input('search');
         $est_en_stock = $request->input('est_en_stock');
         $query = Produit::query();
         //dd($query);
-        if($search && $est_en_stock){
-            $query->where('label', 'like', "%$search%")
-                ->orWhere('description', 'like', "%$search%")
-                ->orWhere('est_en_stock', $est_en_stock);
-
+        if ($request->filled('search')) {
+            $query->where(function ($query) use ($search) {
+                $query->where('label', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%");
+            });
         }
-        
 
-        $produits = $query->paginate(10);
+        if ($request->filled('est_en_stock')) {
+            $query->where('est_en_stock', $est_en_stock);
+        }
+
+        $produits = $query->paginate(10)->withQueryString();
         return view('produits.index', compact('produits', 'search', 'est_en_stock'));
 
     }

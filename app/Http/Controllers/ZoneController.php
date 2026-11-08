@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Zone;
+use App\Models\SweetAlert;
 use Illuminate\Http\Request;
 
 class ZoneController extends Controller
@@ -13,6 +14,8 @@ class ZoneController extends Controller
     public function index(Request $request)
     {
         //
+        SweetAlert::sweetAlertMessage();
+
         $query = Zone::query();
 
         if ($request->filled('search')) {
@@ -20,7 +23,7 @@ class ZoneController extends Controller
             $search = $request->search;
             $query->where('designation','like',"%$search%");
         }
-        $zones = $query->latest('id')->paginate(10);
+        $zones = $query->latest('id')->paginate(10)->withQueryString();
         return view('zones.index', compact('zones'));
     }
 

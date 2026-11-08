@@ -14,7 +14,6 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use SweetAlert2\Laravel\Swal;
 use Spatie\LaravelPdf\Facades\Pdf;
 
 use function Spatie\LaravelPdf\Support\pdf;
@@ -43,18 +42,19 @@ class AbonnementController extends Controller implements HasMiddleware
             'menage.client.user'
         ]);
 
-
         // dump($query->get());
-
         // Recherche
         if ($request->filled('search')) {
             $search = $request->search;
 
-            $query->whereHas('menage', function ($q) use ($search) {
-                $q->where('code', 'like', "%$search%")
-                    ->orWhere('designation', 'like', "%$search%");
-            })->orWhereHas('menage.client.user', function ($q) use ($search) {
-                $q->where('nom', 'like', "%$search%");
+            $query->where(function ($query) use ($search) {
+                $query->whereHas('menage', function ($menageQuery) use ($search) {
+                    $menageQuery->where('code', 'like', "%$search%")
+                        ->orWhere('designation', 'like', "%$search%");
+                })->orWhereHas('menage.client.user', function ($userQuery) use ($search) {
+                    $userQuery->where('nom', 'like', "%$search%")
+                        ->orWhere('prenom', 'like', "%$search%");
+                });
             });
         }
 
@@ -84,6 +84,7 @@ class AbonnementController extends Controller implements HasMiddleware
         SweetAlert::sweetAlertMessage();
         $abonnements = $query->where('deleted_at', null)->latest('id')->paginate(10)->withQueryString();
 
+        // dd($abonnements);
 
         // dd($abonnements);
         return view('abonnees.index', compact('abonnements'));
@@ -97,7 +98,14 @@ class AbonnementController extends Controller implements HasMiddleware
     public function create()
     {
         //
-        $clients = Client::all();
+        // $clients = Client::all();
+        $clients = Client::join('users', 'clients.user_id', '=', 'users.id')
+            ->with('user')
+            ->select('clients.*')
+            ->orderBy('users.nom', 'asc')
+            ->orderBy('users.prenom', 'asc')
+            ->get();
+
         $quartiers = Quartier::all();
         $type_habitats = TypeHabitat::all();
         return view('abonnees.create', compact('clients', 'type_habitats', 'quartiers'));

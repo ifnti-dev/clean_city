@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quartier;
+use App\Models\SweetAlert;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 
@@ -11,11 +12,18 @@ class QuartierController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        SweetAlert::sweetAlertMessage();
 
-        $quartiers = Quartier::paginate(10);
+        $query = Quartier::query();
+
+        if ($request->filled('search')) {
+            $query->where('designation', 'like', '%' . $request->input('search') . '%');
+        }
+
+        $quartiers = $query->paginate(10)->withQueryString();
         return view('quartiers.index', compact('quartiers'));
     }
 

@@ -6,6 +6,7 @@ use App\Models\Abonnement;
 use App\Models\Employe;
 use App\Models\Facture;
 use App\Models\MethodePaiement;
+use App\Models\SweetAlert;
 use App\Models\Tarif;
 use Carbon\Carbon;
 use FedaPay\FedaPay;
@@ -15,7 +16,6 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use SweetAlert2\Laravel\Swal;
 
 class FactureController extends Controller implements HasMiddleware
 {
@@ -45,36 +45,24 @@ class FactureController extends Controller implements HasMiddleware
         $date_debut = $request->input('date_debut');
         $date_fin = $request->input('date_fin');
 
-        $query = Facture::query();
-        if ($date_fin && $date_debut) {
-            $query->whereBetween('date', [$date_debut, $date_fin]);
-               
+        $query = Facture::with('tarif');
+        if ($date_debut) {
+            $query->whereDate('date_fin', '>=', $date_debut);
         }
 
-
-        if($montant) {
-            $query->where('montant', 'like', "%$montant%");
+        if ($date_fin) {
+            $query->whereDate('date_debut', '<=', $date_fin);
         }
 
-        if (session(('success'))) {
-            // Toast with pause on hover
-            if (session('text')) {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'showConfirmButton' => true,
-                ]);
-            } else {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'timer' => 2000,
-                    'showConfirmButton' => false,
-                ]);
-            }
+        if ($montant) {
+            $query->whereHas('tarif', function ($tarifQuery) use ($montant) {
+                $tarifQuery->where('montant', 'like', "%$montant%");
+            });
         }
 
-        $factures = $query->paginate(10);
+        SweetAlert::sweetAlertMessage();
+
+        $factures = $query->paginate(10)->withQueryString();
         return view('factures.index', compact('factures', 'date_debut', 'date_fin','montant'));
     }
 

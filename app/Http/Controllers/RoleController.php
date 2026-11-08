@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use SweetAlert2\Laravel\Swal;
+use App\Models\SweetAlert;
 
 class RoleController extends Controller
 {
@@ -17,39 +18,13 @@ class RoleController extends Controller
         //
         $search = $request->input('search');
         $query = Role::query();
-        if($search){
+        if ($request->filled('search')) {
             $query->where('name', 'like', "%$search%");
         }
 
-        if (session(('success'))) {
-            // Toast with pause on hover
-            if (session('text')) {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'showConfirmButton' => true,
-                ]);
-            } else {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'timer' => 2000,
-                    'showConfirmButton' => false,
-                ]);
-            }
-        }
+        SweetAlert::sweetAlertMessage();
 
-        if (session(('errors'))) {
-            Swal::error([
-                'title' => session('errors'),
-                'text' => session('text'),
-                'timer' => 2000,
-                'showConfirmButton' => false,
-            ]);
-        }
-
-
-        $roles = $query->paginate(10);
+        $roles = $query->paginate(10)->withQueryString();
         return view('roles.index', compact('roles', 'search'));
     }
 
@@ -59,7 +34,12 @@ class RoleController extends Controller
     public function create()
     {
         //
-        return view('roles.create');
+        $permissions = Permission::query()
+            ->where('guard_name', (new Role())->guard_name)
+            ->orderBy('name')
+            ->get();
+
+        return view('roles.create', compact('permissions'));
     }
 
     /**
@@ -68,16 +48,24 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //
+        // Le guard précise le type d'authentification auquel le rôle et ses permissions appartiennent.
+        $guardName = (new Role())->guard_name;
+        // Ne conserver que les données valides et les permissions du même guard.
         $data = $request->validate([
-            'role' => 'required|min:5'
+            'role' => ['required', 'string', 'min:5', Rule::unique('roles', 'name')->where('guard_name', $guardName)],
+            'permissions' => ['nullable', 'array'],
+            'permissions.*' => ['required', 'integer', Rule::exists('permissions', 'id')->where('guard_name', $guardName)],
         ]);
 
         $role = Role::create([
             'name' => $data['role'],
         ]);
-
-
-
+        // Attribuer au rôle les permissions sélectionnées dans le formulaire.
+        $permissions = Permission::query()
+            ->where('guard_name', $guardName)
+            ->whereIn('id', $data['permissions'] ?? [])
+            ->get();
+        $role->syncPermissions($permissions);
 
         return to_route('roles.index')->with("success", "vous avez enregistrer un nouveau role ".strtoupper($data['role']) );
     }
@@ -96,7 +84,12 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         //
-        return view('roles.edit', compact('role'));
+        $permissions = Permission::query()
+            ->where('guard_name', $role->guard_name)
+            ->orderBy('name')
+            ->get();
+
+        return view('roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -106,19 +99,31 @@ class RoleController extends Controller
     {
         //
 
-        
+        // Valider le nom du rôle et les permissions choisies.
         $data = $request->validate([
-            'role' => ['required', Rule::unique('roles')-> ignore($role->id, 'id'), 'min:5'],  
+            'role' => [
+                'required',
+                'string',
+                'min:5',
+                Rule::unique('roles', 'name')->where('guard_name', $role->guard_name)->ignore($role->id),
+            ],
+            'permissions' => ['nullable', 'array'],
+            'permissions.*' => [
+                'required',
+                'integer',
+                Rule::exists('permissions', 'id')->where('guard_name', $role->guard_name),
+            ],
         ]);
-
-       
-
 
         $role->update([
             'name' => $data['role'],
         ]);
-
-
+        // Synchroniser remplace la liste actuelle par les permissions sélectionnées.
+        $permissions = Permission::query()
+            ->where('guard_name', $role->guard_name)
+            ->whereIn('id', $data['permissions'] ?? [])
+            ->get();
+        $role->syncPermissions($permissions);
 
         return to_route('roles.index')->with("success", "vous avez enregistrer un nouveau role ".strtoupper($data['role']) );
 

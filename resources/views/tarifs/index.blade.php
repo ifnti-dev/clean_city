@@ -25,9 +25,9 @@
                 {{--filtre --}}
                 <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
 
-                    <form method="GET" action="{{ route('tarifs.index') }}">
+                    <form method="GET" action="{{ route('tarifs.index') }}" class="search-filter">
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="search-filter-fields">
 
                             {{-- Recherche --}}
                             <div class="lg:col-span-2">
@@ -41,7 +41,7 @@
                                 </label>
 
                                 <input
-                                    type="text"
+                                    type="search"
                                     name="search"
                                     id="search"
                                     value="{{ request('search') }}"
@@ -100,7 +100,7 @@
 
 
                         {{-- Boutons --}}
-                        <div class="flex justify-end gap-3 mt-5">
+                        <div class="search-filter-actions">
 
                             <a href="{{ route('tarifs.index') }}">
 
@@ -174,23 +174,9 @@
                                 </td>
 
 
-                                <td class="py-3 px-6 flex items-center gap-2">
-
-
-                                    {{-- Modifier --}}
-                                    <a href="{{ route('tarifs.edit', $tarif->id) }}">
-
-                                        <x-secondary-button
-                                            class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600">
-
-                                            Modifier
-
-                                        </x-secondary-button>
-
-                                    </a>
-
-
-                                    {{-- Supprimer --}}
+                                <td class="px-6 py-3 text-right align-middle">
+                                    <x-action-menu :id="'tarif-actions-' . $tarif->id">
+                                        <a class="action-menu-item" href="{{ route('tarifs.edit', $tarif->id) }}">Modifier</a>
                                     <form
                                         method="POST"
                                         action="{{ route('tarifs.destroy', $tarif->id) }}"
@@ -200,16 +186,10 @@
 
                                         @method('DELETE')
 
-                                        <x-secondary-button
-                                            type="submit"
-                                            class="bg-red-700 text-white border-red-700 hover:bg-red-600">
-
-                                            Supprimer
-
-                                        </x-secondary-button>
+                                            <button type="submit" class="action-menu-item action-menu-item-danger">Supprimer</button>
 
                                     </form>
-
+                                    </x-action-menu>
                                 </td>
 
                             </tr>

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
-use SweetAlert2\Laravel\Swal;
 
 class EmployeController extends Controller
 {

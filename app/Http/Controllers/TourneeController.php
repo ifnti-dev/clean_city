@@ -13,7 +13,6 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use SweetAlert2\Laravel\Swal;
 
 class TourneeController extends Controller implements HasMiddleware
 {
@@ -46,12 +45,23 @@ class TourneeController extends Controller implements HasMiddleware
 
         // Recherche
         if ($request->filled('search')) {
-            $search = $request->search;
+            $search = $request->input('search');
+            $employeIds = Employe::query()
+                ->whereHas('user', function ($userQuery) use ($search) {
+                    $userQuery->where('nom', 'like', "%$search%")
+                        ->orWhere('prenom', 'like', "%$search%");
+                })
+                ->pluck('id')
+                ->map(fn ($id) => (string) $id);
 
-            $query->whereHas('zone', function ($q) use ($search) {
-                $q->where('designation', 'like', "%$search%");
-            })->orWhereHas('employe.user', function ($q) use ($search) {
-                $q->where('nom', 'like', "%$search%");
+            $query->where(function ($query) use ($search, $employeIds) {
+                $query->whereHas('zone', function ($zoneQuery) use ($search) {
+                    $zoneQuery->where('designation', 'like', "%$search%");
+                });
+
+                foreach ($employeIds as $employeId) {
+                    $query->orWhereJsonContains('employes_id', $employeId);
+                }
             });
         }
 
@@ -80,7 +90,7 @@ class TourneeController extends Controller implements HasMiddleware
             $query->whereJsonContains('employes_id', (string) Auth::user()->employe->id);
         }
 
-        $tournees = $query->latest('id')->paginate(10);
+        $tournees = $query->latest('id')->paginate(10)->withQueryString();
         // dd($tournees);
         return view('tournees.index', compact('tournees'));
     }

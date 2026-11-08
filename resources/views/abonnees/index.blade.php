@@ -24,9 +24,9 @@
                 <!-- <div class="card shadow mb-6 p-5"> -->
                 <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
 
-                    <form method="GET" action="{{ route('abonnements.index') }}">
+                    <form method="GET" action="{{ route('abonnements.index') }}" class="search-filter">
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div class="search-filter-fields">
 
                             {{-- recherche --}}
                             <div class="lg:col-span-2">
@@ -34,7 +34,7 @@
                                     Recherche
                                 </label>
 
-                                <input type="text" name="search" id="search" value="{{ request('search') }}"
+                                <input type="search" name="search" id="search" value="{{ request('search') }}"
                                     placeholder="Code, ménage ou responsable..."
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
@@ -102,7 +102,7 @@
                         </div>
 
                         {{-- Boutons --}}
-                        <div class="flex justify-end gap-3 mt-5">
+                        <div class="search-filter-actions">
 
                             <a href="{{ route('abonnements.index') }}">
                                 <x-secondary-button type="button"
@@ -137,11 +137,11 @@
                         </thead>
                         <tbody class="divide-y ">
                             @forelse($abonnements as $abonnement)
-                            <tr class="border-gray-300 border-b hover:bg-gray-100 "></tr>
+                            <tr class="border-gray-300 border-b hover:bg-gray-100 ">
 
-                            <td class="py-3 px-6 text-left">{{ $abonnement->menage->code }}</td>
-                            <td class="py-3 px-6 text-left">{{ $abonnement->menage->designation }}</td>
-                            <td class="py-3 px-6 text-left">{{ $abonnement->menage->client->user->nom }}</td>
+                            <td class="py-3 px-6 text-left">{{ $abonnement->menage->code ?? '-' }}</td>
+                            <td class="py-3 px-6 text-left">{{ $abonnement->menage->designation ?? '-' }}</td>
+                            <td class="py-3 px-6 text-left">{{ $abonnement->menage->client->user->nom ?? '-' }}</td>
 
 
                             @if ($abonnement->date_debut)
@@ -183,48 +183,38 @@
                             </td>
                             @endif
 
-                            <td class="py-3 px-6 text-left flex justify-center items-center gap-2">
+                            <td class="px-6 py-3 text-right align-middle">
+                            <td class="px-6 py-3 text-right align-middle">
+                                <x-action-menu :id="'abonnement-actions-' . $abonnement->id">
                                 @if ($abonnement->status=="APPROUVER")
                                 <form action="{{route('abonnements.piece_justificatif',$abonnement->id)}}"
                                     method="post">
                                     @csrf
-                                    <button type="submit"
-                                        class="text-gray-700 border-gray-300 hover:bg-gray-200 p-2 rounded-md">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                        </svg>
-                                    </button>
+                                    <button type="submit" class="action-menu-item">Télécharger la pièce</button>
                                 </form>
                                 @endif
 
 
                                 @can('abonnement.voire')
                                 <a href="{{ route('abonnements.show', $abonnement->id) }}">
-                                    <x-secondary-button
-                                        class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
-                                        Voir
-                                    </x-secondary-button>
+                                    <span class="action-menu-item">Voir</span>
                                 </a>
                                 @endcan
 
                                 @can('abonnement.modifier')
                                 <a href="{{ route('abonnements.edit', $abonnement->id) }}">
-                                    <x-secondary-button
-                                        class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
-                                        Modifier
-                                    </x-secondary-button>
+                                    <span class="action-menu-item">Modifier</span>
                                 </a>
                                 @endcan
 
-                                
+                                </x-action-menu>
+                               
                             </td>
 
                             </tr>
                             @empty
                             <tr class="flex justify-center items-center">
-                                <td colspan="5" class="py-3 px-6 text-left">Aucun Abonnement</td>
+                                <td colspan="8" class="py-3 px-6 text-left">Aucun Abonnement</td>
                             </tr>
                             @endforelse
 

@@ -32,7 +32,7 @@
                                 <option value="">Choisissez Le Client </option>
                                 @foreach ( $clients as $client )
                                 <option @selected(old('client_id')==$client->id) value="{{ $client->id }}">{{
-                                    $client->user->nom }}</option>
+                                    $client->user->nom }} ({{$client->user->contacte}})</option>
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('client_id')" class="mt-2" />

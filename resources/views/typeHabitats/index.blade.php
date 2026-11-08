@@ -26,16 +26,16 @@
                 {{-- filtre --}}
                 <!-- <div class="card shadow mb-6 p-5"> -->
                 <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
-                    <form method="get" action="{{ route('typeHabitats.index') }}">
+                    <form method="get" action="{{ route('typeHabitats.index') }}" class="search-filter">
                         @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 ">
+                        <div class="search-filter-fields">
                             {{-- Recherche --}}
                             <div class="lg:col-span-2">
                                 <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
                                     Recherche
                                 </label>
 
-                                <input type="text" name="search" id="search" value="{{ $search }}"
+                                <input type="search" name="search" id="search" value="{{ $search }}"
                                     placeholder="Designation"
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
@@ -44,7 +44,7 @@
                         </div>
 
                         {{-- Boutons --}}
-                        <div class="flex justify-end gap-3 mt-5">
+                        <div class="search-filter-actions">
 
                             <a href="{{ route('typeHabitats.index') }}">
                                 <x-secondary-button type="button"
@@ -77,28 +77,22 @@
                             @forelse ($typeHabitats as $typeHabitat)
                                 <tr class="border-gray-300 border-b hover:bg-gray-100 ">
                                     <td class="py-3 px-6 text-left">{{ $typeHabitat->designation }}</td>
-                                    <td class=" flex item-center gap-6 px-3 py-3 text-left ">                                    
-
+                                    <td class="px-6 py-3 text-right align-middle">
+                                        @canany(['typeHabitat.modifier', 'typeHabitat.supprimer'])
+                                            <x-action-menu :id="'habitat-actions-' . $typeHabitat->id">
                                         @can('typeHabitat.modifier')
-                                            <div>
-                                                <a href="{{ route('typeHabitats.edit', $typeHabitat->id) }}">
-                                                    <x-secondary-button class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
-                                                        Modifier
-                                                    </x-secondary-button>
-                                                </a>
-                                            </div> 
+                                                    <a class="action-menu-item" href="{{ route('typeHabitats.edit', $typeHabitat->id) }}">Modifier</a>
                                         @endcan
 
                                         @can('typeHabitat.supprimer')
                                             <form action="{{ route('typeHabitats.destroy', $typeHabitat->id) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-secondary-button type="submit" class="bg-red-500 ">
-                                                    Supprimer
-                                                </x-secondary-button>
+                                                        <button type="submit" class="action-menu-item action-menu-item-danger">Supprimer</button>
                                             </form>
                                         @endcan
-
+                                            </x-action-menu>
+                                        @endcanany
                                     </td>
                                 </tr>
                             @empty

@@ -26,9 +26,9 @@
                 {{--filtre --}}
                 <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
 
-                    <form method="GET" action="{{ route('quartiers.index') }}">
+                    <form method="GET" action="{{ route('quartiers.index') }}" class="search-filter">
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="search-filter-fields">
 
                             {{-- Recherche --}}
                             <div class="lg:col-span-2">
@@ -39,7 +39,7 @@
 
                                 </label>
 
-                                <input type="text" name="search" id="search" value="{{ request('search') }}"
+                                <input type="search" name="search" id="search" value="{{ request('search') }}"
                                     placeholder="Désignation du quartier..."
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
 
@@ -48,7 +48,7 @@
                         </div>
 
                         {{-- Boutons --}}
-                        <div class="flex justify-end gap-3 mt-5">
+                        <div class="search-filter-actions">
 
                             <a href="{{ route('quartiers.index') }}">
 
@@ -121,22 +121,9 @@
 
 
 
-                                <td class=" py-3 px-6 flex justify-center items-center gap-2 w-full text-center">
-
-                                    {{-- Modifier --}}
-                                    <a href="{{ route('quartiers.edit', $quartier->id) }}">
-
-                                        <x-secondary-button
-                                            class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600">
-
-                                            Modifier
-
-                                        </x-secondary-button>
-
-                                    </a>
-
-
-                                    {{-- Supprimer --}}
+                                <td class="px-6 py-3 text-right align-middle">
+                                    <x-action-menu :id="'quartier-actions-' . $quartier->id">
+                                        <a class="action-menu-item" href="{{ route('quartiers.edit', $quartier->id) }}">Modifier</a>
                                     <form method="POST" action="{{ route('quartiers.destroy', $quartier->id) }}"
                                         onsubmit="return confirm('Voulez-vous vraiment supprimer ce quartier ?')">
 
@@ -144,15 +131,10 @@
 
                                         @method('DELETE')
 
-                                        <x-secondary-button type="submit"
-                                            class="bg-red-700 text-white border-red-700 hover:bg-red-600">
-
-                                            Supprimer
-
-                                        </x-secondary-button>
-
+                                            <button type="submit" class="action-menu-item action-menu-item-danger">Supprimer</button>
                                     </form>
 
+                                    </x-action-menu>
                                 </td>
 
                             </tr>

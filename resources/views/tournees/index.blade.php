@@ -25,9 +25,9 @@
                 {{--filtre --}}
                 <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
 
-                    <form method="GET" action="{{ route('tournees.index') }}">
+                    <form method="GET" action="{{ route('tournees.index') }}" class="search-filter">
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div class="search-filter-fields">
 
                             {{-- Recherche --}}
                             <div class="lg:col-span-2">
@@ -35,7 +35,7 @@
                                     Recherche
                                 </label>
 
-                                <input type="text" name="search" id="search" value="{{ request('search') }}"
+                                <input type="search" name="search" id="search" value="{{ request('search') }}"
                                     placeholder="Nom employee ou Designation zone..."
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
@@ -89,7 +89,7 @@
                         </div>
 
                         {{-- Boutons --}}
-                        <div class="flex justify-end gap-3 mt-5">
+                        <div class="search-filter-actions">
 
                             <a href="{{ route('tournees.index') }}">
                                 <x-secondary-button type="button"
@@ -156,38 +156,21 @@
                                 <td class="py-3 px-6 text-left">{{ $tournee->itineraire }}</td>
 
 
-                                <td class="py-3 px-6 text-left flex justify-center items-center gap-2">
-
-                                    <a href="{{ route('tournees.show', $tournee->id) }}">
-                                        <x-secondary-button
-                                            class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-300">
-                                            Voire
-                                        </x-secondary-button>
-                                    </a>
-
-                                    @if ($tournee->status=="PREVU" )
-                                    @can('tournee.modifier')
-                                    <a href="{{ route('tournees.edit', $tournee->id) }}">
-                                        <x-secondary-button
-                                            class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">
-                                            Modifier
-                                        </x-secondary-button>
-                                    </a>
-                                    @endcan
-
-                                    @can('tournee.annuler')
-                                    <form action="{{ route('tournees.annuler', $tournee->id) }}" method="post">
-                                        @csrf
-                                        <x-secondary-button type="submit"
-                                            class="bg-red-700 text-white border-red-700 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">
-                                            Annuler
-                                        </x-secondary-button>
-                                    </form>
-                                    @endcan
-                                    @endif
-
-
-
+                                <td class="px-6 py-3 text-right align-middle">
+                                    <x-action-menu :id="'tournee-actions-' . $tournee->id">
+                                        <a class="action-menu-item" href="{{ route('tournees.show', $tournee->id) }}">Voir</a>
+                                        @if ($tournee->status == 'PREVU')
+                                            @can('tournee.modifier')
+                                                <a class="action-menu-item" href="{{ route('tournees.edit', $tournee->id) }}">Modifier</a>
+                                            @endcan
+                                            @can('tournee.annuler')
+                                                <form action="{{ route('tournees.annuler', $tournee->id) }}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="action-menu-item action-menu-item-danger">Annuler</button>
+                                                </form>
+                                            @endcan
+                                        @endif
+                                    </x-action-menu>
                                 </td>
 
                             </tr>

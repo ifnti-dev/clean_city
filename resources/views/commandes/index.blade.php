@@ -26,23 +26,23 @@
                 {{-- filtre --}}
                 <!-- <div class="card shadow mb-6 p-5"> -->
                 <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
-                    <form method="get" action="{{ route('commandes.index') }}">
+                    <form method="get" action="{{ route('commandes.index') }}" class="search-filter">
                         @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 ">
+                        <div class="search-filter-fields">
                             {{-- Recherche --}}
                             <div class="lg:col-span-2">
                                 <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
                                     Recherche
                                 </label>
 
-                                <input type="text" name="search" id="search" value="{{ $search }}"
+                                <input type="search" name="search" id="search" value="{{ $search }}"
                                     placeholder="status Commande"
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
                         </div>
 
                         {{-- Boutons --}}
-                        <div class="flex justify-end gap-3 mt-5">
+                        <div class="search-filter-actions">
 
                             <a href="{{ route('commandes.index') }}">
                                 <x-secondary-button type="button"
@@ -88,26 +88,22 @@
                                     <td class="py-3 px-6 text-left">{{ $commande->date }}</td>
                                     <td class="py-3 px-6 text-left"><span class="bg-green-200 px-2 py-1 text-green-900 text-sm font-medium rounded-md inline-block "> {{ $commande->statut_livraison }} </span></td>
 
-                                    <td class=" flex item-center gap-6 px-3 py-3 text-left ">
-
-                                    @if ($commande->statut_livraison == 'EN_ATTENTE')
-                                        <form action="{{ route('commandes.debuterLivraison', $commande->id) }}" method="post">
-                                            @csrf
-                                            <x-primary-button  class="bg-blue-700 text-white  hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-300">Demarer la livraison</x-primary-button>
-                                        </form>
-
-                                        <form action="">
-                                            @csrf
-                                            <x-primary-button class="bg-red-700 text-white  border-red-600 hover:bg-red-600 hover:border-red-600 focus:ring-red-300">Rejeter la livrason</x-primary-button>
-                                        </form>
-
-                                    @elseif ($commande->statut_livraison == 'DEBUTER')
-                                        <form action="{{ route('commandes.livrerLaCommande', $commande->id) }}" method="post">
-                                            @csrf
-                                            <x-primary-button class="bg-yellow-700 text-white border-yellow-700 hover:bg-yellow-600 hover:border-yellow-600 focus:ring-yellow-300">Confirmer la livrason</x-primary-button>
-                                        </form>
-                                    @endif    
-
+                                    <td class="px-6 py-3 text-right align-middle">
+                                        @if (in_array($commande->statut_livraison, ['EN_ATTENTE', 'DEBUTER'], true))
+                                            <x-action-menu :id="'commande-actions-' . $commande->id">
+                                                @if ($commande->statut_livraison == 'EN_ATTENTE')
+                                                    <form action="{{ route('commandes.debuterLivraison', $commande->id) }}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="action-menu-item">Démarrer la livraison</button>
+                                                    </form>
+                                                @elseif ($commande->statut_livraison == 'DEBUTER')
+                                                    <form action="{{ route('commandes.livrerLaCommande', $commande->id) }}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="action-menu-item">Confirmer la livraison</button>
+                                                    </form>
+                                                @endif
+                                            </x-action-menu>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeHabitat;
+use App\Models\SweetAlert;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use SweetAlert2\Laravel\Swal;
 
 class TypeHabitatController extends Controller
 {
@@ -18,38 +18,13 @@ class TypeHabitatController extends Controller
         $search = $request->input('search');
         $query = TypeHabitat::query();
 
-        if($search){
+        if ($request->filled('search')) {
             $query->where('designation', 'like', "%$search%");
         }
 
-        if (session(('success'))) {
-            // Toast with pause on hover
-            if (session('text')) {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'showConfirmButton' => true,
-                ]);
-            } else {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'timer' => 2000,
-                    'showConfirmButton' => false,
-                ]);
-            }
-        }
+        SweetAlert::sweetAlertMessage();
 
-        if (session(('errors'))) {
-            Swal::error([
-                'title' => session('errors'),
-                'text' => session('text'),
-                'timer' => 2000,
-                'showConfirmButton' => false,
-            ]);
-        }
-
-        $typeHabitats = $query->paginate(10);
+        $typeHabitats = $query->paginate(10)->withQueryString();
         return view('typeHabitats.index', compact('typeHabitats', 'search')); 
 
     }

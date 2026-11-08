@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Commande;
 use App\Models\Produit;
+use App\Models\SweetAlert;
 use Illuminate\Http\Request;
 
 class CommandeController extends Controller
 {
     //
     public function index(Request $request){
+
+        SweetAlert::sweetAlertMessage();
 
         $search = $request->input('search');
         $query = Commande::query();
@@ -18,7 +21,7 @@ class CommandeController extends Controller
             $query->where('statut_livraison', 'like', "%$search%");
         }
 
-        $commandes = $query->paginate(10);
+        $commandes = $query->paginate(10)->withQueryString();
         return view('commandes.index', compact('commandes', 'search'));
     }
 
@@ -42,13 +45,15 @@ class CommandeController extends Controller
 
         $search = $request->input('search');
         $query = Produit::query();
-        if($search){
-            $query->where('label', 'like', "%$search%")
-                ->orWhere('description', 'like', "%$search%");
+        if ($request->filled('search')) {
+            $query->where(function ($query) use ($search) {
+                $query->where('label', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%");
+            });
 
         }
         
-        $produits = $query->paginate(8);
+        $produits = $query->paginate(8)->withQueryString();
         return view('produits.liste_produits', compact('produits', 'search'));
     }
     
@@ -60,4 +65,3 @@ class CommandeController extends Controller
 
 
 }
-

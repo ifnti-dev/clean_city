@@ -1,3 +1,14 @@
+@php
+    $menagesSectionActive = request()->routeIs(
+        'clients.*',
+        'abonnements.*',
+        'factures.*',
+        'tournees.*',
+        'menages.*',
+    );
+    $marketplaceSectionActive = request()->routeIs('produits.*', 'commandes.*', 'listProduit');
+@endphp
+
 <nav class="navbar-vertical navbar">
     <div id="myScrollableElement" class="h-screen" data-simplebar>
         <!-- brand logo -->
@@ -25,7 +36,8 @@
         <ul class="navbar-nav flex-col" id="sideNavbar">
 
             <li class="nav-item">
-                <a class="nav-link active" href="{{ route('dashboard') }}">
+                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+                    href="{{ route('dashboard') }}">
                     <i data-feather="home" class="w-4 h-4 mr-2"></i>
                     Dashboard
                 </a>
@@ -36,19 +48,23 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#!" data-bs-toggle="collapse" data-bs-target="#navPages"
-                    aria-expanded="false" aria-controls="navPages">
+                <a class="nav-link {{ $menagesSectionActive ? '' : 'collapsed' }}" href="#!"
+                    data-bs-toggle="collapse" data-bs-target="#navPages"
+                    aria-expanded="{{ $menagesSectionActive ? 'true' : 'false' }}"
+                    aria-controls="navPages">
 
                     <i data-feather="layers" class="w-4 h-4 mr-2"></i>
                     Menages
                 </a>
 
-                <div id="navPages" class="collapse" data-bs-parent="#sideNavbar">
+                <div id="navPages" class="collapse {{ $menagesSectionActive ? 'show' : '' }}"
+                    data-bs-parent="#sideNavbar">
 
                     <ul class="nav flex-col">
                         @can('client.voire')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('clients.index') }}">
+                                <a class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}"
+                                    href="{{ route('clients.index') }}">
                                     Clients
                                 </a>
                             </li>
@@ -57,7 +73,8 @@
 
                         @can('abonnement.voire')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('abonnements.index') }}">
+                                <a class="nav-link {{ request()->routeIs('abonnements.*') ? 'active' : '' }}"
+                                    href="{{ route('abonnements.index') }}">
                                     Abonnées
                                 </a>
                             </li>
@@ -65,7 +82,8 @@
 
                         @can('facture.voire')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('factures.index') }}">
+                                <a class="nav-link {{ request()->routeIs('factures.*') ? 'active' : '' }}"
+                                    href="{{ route('factures.index') }}">
                                     Factures
                                 </a>
                             </li>
@@ -73,7 +91,8 @@
 
                         @can('tournee.voire')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tournees.index') }}">
+                                <a class="nav-link {{ request()->routeIs('tournees.*') ? 'active' : '' }}"
+                                    href="{{ route('tournees.index') }}">
                                     Tourneés
                                 </a>
                             </li>
@@ -84,7 +103,7 @@
             </li>
 
 
-            @can('produit.voire')
+            @canany(['produit.voire', 'commande.voire', 'e_commerce.voire'])
                 <li class="nav-item">
                     <div class="navbar-heading">MarketPlace</div>
                 </li>
@@ -94,26 +113,31 @@
                 <li class="nav-item">
 
 
-                    <a class="nav-link collapsed" href="#!" data-bs-toggle="collapse" data-bs-target="#navComponents"
-                        aria-expanded="false" aria-controls="navComponents">
+                    <a class="nav-link {{ $marketplaceSectionActive ? '' : 'collapsed' }}" href="#!"
+                        data-bs-toggle="collapse" data-bs-target="#navComponents"
+                        aria-expanded="{{ $marketplaceSectionActive ? 'true' : 'false' }}"
+                        aria-controls="navComponents">
                         <i data-feather="package" class="w-4 h-4 mr-2"></i>
                         MarketPlace
                     </a>
 
-                    <div id="navComponents" class="collapse" data-bs-parent="#sideNavbar">
+                    <div id="navComponents" class="collapse {{ $marketplaceSectionActive ? 'show' : '' }}"
+                        data-bs-parent="#sideNavbar">
 
                         <ul class="nav flex-col">
 
                            @can('produit.voire')
                               <li class="nav-item">
-                                 <a class="nav-link " href="{{ route('produits.index') }}">Produits</a>
+                                 <a class="nav-link {{ request()->routeIs('produits.*') ? 'active' : '' }}"
+                                    href="{{ route('produits.index') }}">Produits</a>
                               </li>
 
                            @endcan
                            
                            @can('commande.voire')
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('commandes.index') }}">
+                                    <a class="nav-link {{ request()->routeIs('commandes.*') ? 'active' : '' }}"
+                                        href="{{ route('commandes.index') }}">
                                         Commandes
                                     </a>
                                 </li>
@@ -121,7 +145,8 @@
 
                             @can('e_commerce.voire')
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('listProduit') }}">
+                                    <a class="nav-link {{ request()->routeIs('listProduit') ? 'active' : '' }}"
+                                        href="{{ route('listProduit') }}">
                                         E-commerce
                                     </a>
                                 </li>
@@ -139,7 +164,8 @@
 
             @can('employe.voire')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('employes.index') }}">
+                    <a class="nav-link {{ request()->routeIs('employes.*') ? 'active' : '' }}"
+                        href="{{ route('employes.index') }}">
                         <i data-feather="clipboard" class="w-4 h-4 mr-2"></i>
                         Employes
                     </a>
@@ -148,7 +174,8 @@
 
             @can('role.voire')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('roles.index') }}">
+                    <a class="nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}"
+                        href="{{ route('roles.index') }}">
                         <i data-feather="git-pull-request" class="w-4 h-4 mr-2"></i>
                         Roles
                     </a>
@@ -157,7 +184,8 @@
 
             @can('zone.voire')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('zones.index') }}">
+                    <a class="nav-link {{ request()->routeIs('zones.*') ? 'active' : '' }}"
+                        href="{{ route('zones.index') }}">
                         <i data-feather="map" class="w-4 h-4 mr-2"></i>
                         Zones
                     </a>
@@ -166,7 +194,8 @@
 
             @can('quartier.voire')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('quartiers.index') }}">
+                    <a class="nav-link {{ request()->routeIs('quartiers.*') ? 'active' : '' }}"
+                        href="{{ route('quartiers.index') }}">
                         <i data-feather="map-pin" class="w-4 h-4 mr-2"></i>
                         Quartiers
                     </a>
@@ -175,7 +204,8 @@
 
             @can('tarif.voire')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tarifs.index') }}">
+                    <a class="nav-link {{ request()->routeIs('tarifs.*') ? 'active' : '' }}"
+                        href="{{ route('tarifs.index') }}">
                         <i data-feather="credit-card" class="w-4 h-4 mr-2"></i>
                         Tarifs
                     </a>
@@ -184,7 +214,8 @@
 
             @can('typeHabitat.voire')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('typeHabitats.index') }}">
+                    <a class="nav-link {{ request()->routeIs('typeHabitats.*') ? 'active' : '' }}"
+                        href="{{ route('typeHabitats.index') }}">
                         <i data-feather="home" class="w-4 h-4 mr-2"></i>
                         Type d'habitat
                     </a>

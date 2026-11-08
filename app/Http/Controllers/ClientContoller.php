@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\SweetAlert;
 use App\Models\User;
 
 use Illuminate\Routing\Controllers\Middleware;
@@ -11,7 +12,6 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use SweetAlert2\Laravel\Swal;
 
 class ClientContoller extends Controller implements HasMiddleware
 {
@@ -43,52 +43,28 @@ class ClientContoller extends Controller implements HasMiddleware
 
        
 
-        if($search){
-            $query->where('nom', 'like', "%$search%")
-                ->orwhere('prenom', 'like', "%$search%")
-                ->orwhere('contacte', 'like', "%$search%");
+        if ($request->filled('search')) {
+            $query->whereHas('user', function ($userQuery) use ($search) {
+                $userQuery->where('nom', 'like', "%$search%")
+                    ->orWhere('prenom', 'like', "%$search%")
+                    ->orWhere('contacte', 'like', "%$search%");
+            });
         }
 
-        //dd($query->join('menages', 'menages.client_id', 'clients.id')->where('menages.est_abonnee', 1)->get());
-
-        if($abonnee){
-            $query->join('menages', 'menages.client_id', 'clients.id')
-                ->where('menages.est_abonnee', $abonnee)->get();
+        if ($request->filled('abonnee')) {
+            $query->whereHas('menages', function ($menageQuery) use ($abonnee) {
+                $menageQuery->where('est_abonnee', $abonnee);
+            });
         }
 
         
 
 
-        if (session(('success'))) {
-            // Toast with pause on hover
-            if (session('text')) {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'showConfirmButton' => true,
-                ]);
-            } else {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'timer' => 2000,
-                    'showConfirmButton' => false,
-                ]);
-            }
-        }
-
-        if (session(('errors'))) {
-            Swal::error([
-                'title' => session('errors'),
-                'text' => session('text'),
-                'timer' => 2000,
-                'showConfirmButton' => false,
-            ]);
-        }
+        SweetAlert::sweetAlertMessage();
 
         
        
-        $clients = $query->paginate(10);
+        $clients = $query->paginate(10)->withQueryString();
         return view('clients.index', compact('clients', 'search', 'abonnee'));
 
     }

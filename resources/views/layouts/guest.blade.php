@@ -34,7 +34,7 @@
 
     <link rel="stylesheet" href="./assets/libs/apexcharts/dist/apexcharts.css" />
 
-    <title>Dash UI - TailwindCSS HTML Admin Template Free</title>
+    <title> @yield('titre',"Espoire Plus" )  </title>
 </head>
 
     <body class="font-sans text-gray-900 antialiased">

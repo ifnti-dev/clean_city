@@ -128,23 +128,23 @@
 
 
                 <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
-                    <form method="get" action="{{ route('listProduit') }}">
+                    <form method="get" action="{{ route('listProduit') }}" class="search-filter">
                         @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 ">
+                        <div class="search-filter-fields">
                             {{-- Recherche --}}
                             <div class="lg:col-span-2">
                                 <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
                                     Recherche
                                 </label>
 
-                                <input type="text" name="search" id="search" value="{{ $search }}"
+                                <input type="search" name="search" id="search" value="{{ $search }}"
                                     placeholder="label, description"
                                     class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                             </div>
 
                         </div>
 
-                        <div class="flex justify-end gap-3 mt-5">
+                        <div class="search-filter-actions">
 
                             <a href="{{ route('listProduit') }}">
                                 <x-secondary-button type="button"

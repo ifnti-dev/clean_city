@@ -3,38 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tarif;
+use App\Models\SweetAlert;
 use Illuminate\Http\Request;
-use SweetAlert2\Laravel\Swal;
 
 class TarifController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $filters = $request->validate([
+            'search' => ['nullable', 'string', 'max:255'],
+            'montant_min' => ['nullable', 'numeric', 'min:0'],
+            'montant_max' => ['nullable', 'numeric', 'min:0'],
+        ]);
 
-        //sweet alerte
-        if (session(('success'))) {
-            // Toast with pause on hover
-            if (session('text')) {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'showConfirmButton' => true,
-                ]);
-            } else {
-                Swal::success([
-                    'title' => session('success'),
-                    'text' => session('text'),
-                    'timer' => 2000,
-                    'showConfirmButton' => false,
-                ]);
-            }
+        SweetAlert::sweetAlertMessage();
+
+        $query = Tarif::query();
+
+        if ($request->filled('search')) {
+            $query->where('designation', 'like', '%' . $filters['search'] . '%');
         }
 
-        $tarifs = Tarif::paginate(10);
+        if ($request->filled('montant_min')) {
+            $query->where('montant', '>=', $filters['montant_min']);
+        }
+
+        if ($request->filled('montant_max')) {
+            $query->where('montant', '<=', $filters['montant_max']);
+        }
+
+        $tarifs = $query->paginate(10)->withQueryString();
         return view('tarifs.index', compact('tarifs'));
     }
 

@@ -48,9 +48,28 @@
                     </div>
                 </div>
 
-            
-                
-
+                @php
+                    $selectedPermissions = old('permissions', $role->permissions->pluck('id')->all());
+                @endphp
+                <fieldset class="mt-6">
+                    <legend class="text-sm font-medium text-gray-700">Permissions</legend>
+                    <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                        @foreach ($permissions as $permission)
+                            <label class="flex items-center gap-2">
+                                <input
+                                    type="checkbox"
+                                    name="permissions[]"
+                                    value="{{ $permission->id }}"
+                                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                                    @checked(in_array($permission->id, $selectedPermissions))
+                                >
+                                <span class="text-sm text-gray-700">{{ $permission->name }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    <x-input-error :messages="$errors->get('permissions')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('permissions.*')" class="mt-2" />
+                </fieldset>
 
                 <!-- Bouton -->
                 <div class="flex items-center justify-end ml-auto mt-6 w-40">
@@ -66,4 +85,3 @@
     </x-slot>
 
 </x-app-layout>
-

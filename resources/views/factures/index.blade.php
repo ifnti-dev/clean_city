@@ -26,16 +26,16 @@
                 {{-- filtre --}}
                 <!-- <div class="card shadow mb-6 p-5"> -->
                 <div class=" card  mt-[-50px] p-5 mx-4 mb-6 ">
-                    <form method="get" action="{{ route('factures.index') }}">
+                    <form method="get" action="{{ route('factures.index') }}" class="search-filter">
                         @csrf
-                        <div class="flex flex-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 ">
+                        <div class="search-filter-fields">
                             {{-- Recherche --}}
 
-                            <div class="flex flex-col gap-5 lg:col-span-2  justify-center">
+                            <div class="flex flex-col gap-5 lg:col-span-4 justify-center">
 
                                 <p class="flex flex-col">Rechercher par perriode et par montant</p>
                                 
-                                <div class="flex flex-row gap-6">
+                                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                     <div class="w-full ">
                                         <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
                                             Date Debut
@@ -59,7 +59,7 @@
                                             class="block text-sm font-medium text-gray-700 mb-1">Montant</label>
                                         <input type="text" name="montant" id="montant" value="{{ $montant }}"
                                             placeholder="montant "
-                                            class="rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 w-50">
+                                            class="rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                                     </div>
 
 
@@ -71,7 +71,7 @@
 
 
                         {{-- Boutons --}}
-                        <div class="flex justify-end gap-3 mt-5">
+                        <div class="search-filter-actions">
 
                             <a href="{{ route('factures.index') }}">
                                 <x-secondary-button type="button"
@@ -137,17 +137,12 @@
 
 
 
-                                    <td class=" flex item-center gap-6 px-3 py-3 text-left ">
-
-                                        <a href="{{ route('factures.show', $facture->id) }}">
-                                            @can('facture.voire')
-                                                <x-secondary-button
-                                                    class="bg-blue-700 text-white border-blue-700 hover:bg-blue-600 hover:border-blue-600 focus:ring-blue-700">
-                                                    Voire
-                                                </x-secondary-button>
-                                            @endcan
-
-                                        </a>
+                                    <td class="px-6 py-3 text-right align-middle">
+                                        @can('facture.voire')
+                                            <x-action-menu :id="'facture-actions-' . $facture->id">
+                                                <a class="action-menu-item" href="{{ route('factures.show', $facture->id) }}">Voir</a>
+                                            </x-action-menu>
+                                        @endcan
                                     </td>
                                 </tr>
                             @empty
