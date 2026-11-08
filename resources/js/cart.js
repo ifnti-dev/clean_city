@@ -80,7 +80,6 @@
 
 class Cart {
     constructor() {
-        // Récupère les données ou initialise un tableau vide
         this.lines = JSON.parse(localStorage.getItem('mon_panier')) || [];
         this.panierfunction();
     }
