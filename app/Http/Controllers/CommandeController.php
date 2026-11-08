@@ -59,6 +59,9 @@ class CommandeController extends Controller
     
 
     function afficherPanier(){
+
+
+    
         return view('produits.panier');
     }
     
