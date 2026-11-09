@@ -47,7 +47,8 @@
 
                             <div class="flex justify-start items-center gap-2 mt-4 max-sm:flex-col max-sm:gap-2">
 
-                                @if ($abonnement->menage->est_abonnee==0 && $abonnement->menage->est_radier==0 )
+                                {{-- Un abonné non radié peut être radié directement, même s'il est encore actif. --}}
+                                @if ($abonnement->menage->est_abonnee && !$abonnement->menage->est_radier)
                                 @can('menage.radier')
                                 <form action="{{ route('abonnements.radier', $abonnement->id) }}" method="post">
                                     @csrf
@@ -72,7 +73,9 @@
                                 @endcan
                                 @endif
 
-                                @if ($abonnement->menage->est_abonnee==1 && $abonnement->etat=='ACTIF')
+                                {{-- Seul un abonnement actif non radié peut être désabonné. --}}
+                                @if ($abonnement->menage->est_abonnee && !$abonnement->menage->est_radier && $abonnement->etat === 'ACTIF')
+                                @can('menage.desabonnee')
                                 <form action="{{ route('menages.desabonnee', $abonnement->id) }}" method="post">
                                     @csrf
 
@@ -81,6 +84,7 @@
                                         Désabonner
                                     </x-secondary-button>
                                 </form>
+                                @endcan
                                 @endif
 
 

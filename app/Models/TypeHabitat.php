@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TypeHabitat extends Model
 {
-    //
     protected $table = 'type_habitats';
     protected $fillable = ['designation'];
 
-    public function menages():HasMany {
+    public function menages(): HasMany
+    {
         return $this->hasMany(Menage::class);
     }
 }
-

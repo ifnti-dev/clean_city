@@ -6,6 +6,7 @@ use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuartierController;
 use App\Http\Controllers\TourneeController;
@@ -13,10 +14,6 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TarifController;
 use App\Http\Controllers\TypeHabitatController;
 use App\Http\Controllers\ZoneController;
-use App\Models\Client;
-use App\Models\Employe;
-use App\Models\Menage;
-use App\Models\Tournee;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,20 +22,9 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboard', function () {
-
-    $total_client = Client::total_client();
-    $total_employe = Employe::total_employe();
-    $total_menage = Menage::total_menage();
-    $total_menage_non_en_regle = Menage::total_menage_non_en_regle();
-    $total_tournee = Tournee::total_tournee();
-
-    // dd($total_client);
-
-
-    return view('dashboard',
-    compact('total_menage','total_menage_non_en_regle'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', DashboardController::class)
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

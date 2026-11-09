@@ -28,6 +28,8 @@ class AbonnementController extends Controller implements HasMiddleware
             new Middleware('permission:abonnement.creer', only: ['create', 'store']),
             new Middleware('permission:abonnement.modifier', only: ['edite', 'update']),
             new Middleware('permission:menage.supprimer', only: ['destroy']),
+            new Middleware('permission:menage.radier', only: ['radierUnMenage']),
+            new Middleware('permission:menage.desabonnee', only: ['desabonneeUnMenage']),
         ];
     }
 

@@ -78,21 +78,21 @@
                 {{-- Tableau --}}
                 <div class="relative overflow-x-auto card shadow mx-4">
 
-                    <table class="text-left w-full whitespace-nowrap">
+                    <table class="w-full table-fixed text-left">
 
                         <thead>
 
-                            <tr class="border-gray-300 border-b flex  items-center">
+                            <tr class="border-gray-300 border-b">
 
-                                <th scope="col" class="w-full text-center px-6 py-3">
+                                <th scope="col" class="w-2/5 px-6 py-3">
                                     Nom du quartier
                                 </th>
-                                <th scope="col" class="w-full text-center px-6 py-3">
+                                <th scope="col" class="w-2/5 px-6 py-3">
                                     Nom de la zone
                                 </th>
 
 
-                                <th scope="col" class="w-full text-center px-6 py-3">
+                                <th scope="col" class="w-1/5 px-6 py-3 text-right">
                                     Action
                                 </th>
 
@@ -105,15 +105,15 @@
 
                             @forelse ($quartiers as $quartier)
 
-                            <tr class="border-gray-300 border-b hover:bg-gray-100 flex  items-center">
+                            <tr class="border-gray-300 border-b hover:bg-gray-100">
 
-                                <td class="py-3 px-6 w-full text-center">
+                                <td class="py-3 px-6">
 
                                     {{ $quartier->designation }}
 
                                 </td>
 
-                                <td class="py-3 px-6 w-full text-center">
+                                <td class="py-3 px-6">
 
                                     {{ $quartier->zone->designation }}
 
@@ -121,20 +121,22 @@
 
 
 
-                                <td class="px-6 py-3 text-right align-middle">
-                                    <x-action-menu :id="'quartier-actions-' . $quartier->id">
-                                        <a class="action-menu-item" href="{{ route('quartiers.edit', $quartier->id) }}">Modifier</a>
-                                    <form method="POST" action="{{ route('quartiers.destroy', $quartier->id) }}"
-                                        onsubmit="return confirm('Voulez-vous vraiment supprimer ce quartier ?')">
+                                <td class="px-6 py-3 align-middle">
+                                    <div class="flex justify-end">
+                                        <x-action-menu :id="'quartier-actions-' . $quartier->id">
+                                            <a class="action-menu-item" href="{{ route('quartiers.edit', $quartier->id) }}">Modifier</a>
+                                            <form method="POST" action="{{ route('quartiers.destroy', $quartier->id) }}"
+                                                onsubmit="return confirm('Voulez-vous vraiment supprimer ce quartier ?')">
 
-                                        @csrf
+                                                @csrf
 
-                                        @method('DELETE')
+                                                @method('DELETE')
 
-                                            <button type="submit" class="action-menu-item action-menu-item-danger">Supprimer</button>
-                                    </form>
+                                                <button type="submit" class="action-menu-item action-menu-item-danger">Supprimer</button>
+                                            </form>
 
-                                    </x-action-menu>
+                                        </x-action-menu>
+                                    </div>
                                 </td>
 
                             </tr>
